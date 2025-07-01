@@ -1,5 +1,7 @@
 package io.github.bokalebsson;
 
+import org.w3c.dom.ls.LSOutput;
+
 import java.util.UUID;
 
 public class Person {
@@ -68,4 +70,12 @@ public class Person {
     public String getFullName() {
         return this.firstName + " " + this.lastName;
     }
+
+    public String getPersonInfo() {
+        String fullName = getFullName();
+        String email = getEmail();
+        return "Fullname: " + fullName + "\tEmail: " + email;
+    }
+
+
 }
