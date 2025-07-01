@@ -77,5 +77,10 @@ public class Person {
         return "Fullname: " + fullName + "\tEmail: " + email;
     }
 
+    public String toString() {
 
+        String fullName = getFullName();
+        String email = getEmail();
+        return "Fullname= " + fullName + "\tEmail= " + email;
+    }
 }
