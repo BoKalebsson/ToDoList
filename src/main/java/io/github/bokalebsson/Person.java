@@ -64,4 +64,8 @@ public class Person {
         this.email = email;
     }
 
+    // Operations:
+    public String getFullName() {
+        return this.firstName + " " + this.lastName;
+    }
 }
