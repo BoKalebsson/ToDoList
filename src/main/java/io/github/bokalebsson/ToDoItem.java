@@ -70,4 +70,27 @@ public class ToDoItem {
     public void setDone(boolean done) {
         this.done = done;
     }
+
+    public void markDone() {
+        this.done = true;
+    }
+
+    public void markUndone() {
+        this.done = false;
+    }
+
+    // Operations:
+    public String toString() {
+        String id = getId();
+        String title = getTitle();
+        String taskDescription = getTaskDescription();
+        LocalDate deadline = getDeadline();
+        boolean isDone = isDone();
+        return String.format(
+                "Id: %s%nTitle: %s%nTask Description: %s%nDeadline: %s%nIs done: %b",
+                id, title, taskDescription, deadline, isDone
+        );
+    }
+
+
 }
