@@ -88,6 +88,10 @@ public class ToDoItem {
     }
 
     // Operations:
+    public boolean isOverdue() {
+        return LocalDate.now().isAfter(deadline);
+    }
+
     public String toString() {
         return String.format(
                 "Id: %d%nTitle: %s%nTask Description: %s%nDeadline: %s%nIs done: %b%nCreator: %s",

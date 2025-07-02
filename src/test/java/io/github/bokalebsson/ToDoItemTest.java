@@ -149,6 +149,25 @@ public class ToDoItemTest {
         assertThrows(IllegalArgumentException.class, () -> item.setDeadline(pastDate));
     }
 
+    @Test
+// Tests isOverdue() returns false for deadlines today and in the future
+    public void testIsOverdueWithTodayAndFutureDeadline() {
+        // Arrange: Create a valid Person for the creator
+        Person creator = createValidPerson();
+
+        // Act: Create a ToDoItem with deadline today
+        ToDoItem itemToday = new ToDoItem("Task Today", "Description", LocalDate.now(), creator);
+
+        // Assert: Deadline is today, so isOverdue() should return false
+        assertFalse(itemToday.isOverdue(), "Deadline is today — should not be overdue.");
+
+        // Act: Create a ToDoItem with deadline in the future
+        ToDoItem itemFuture = new ToDoItem("Task Future", "Description", LocalDate.now().plusDays(1), creator);
+
+        // Assert: Deadline is in the future, so isOverdue() should return false
+        assertFalse(itemFuture.isOverdue(), "Deadline is in the future — should not be overdue.");
+    }
+
     // Group: Done status tests
     @Test
     public void setDoneMarkDoneAndMarkUndone() {
