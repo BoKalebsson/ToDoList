@@ -40,7 +40,7 @@ public class ToDoItemTask {
 
     // Setters:
     public void setToDoItem(ToDoItem toDoItem) {
-        if (toDoItem == null){
+        if (toDoItem == null) {
             throw new IllegalArgumentException("ToDo-item cannot be null.");
         }
         this.toDoItem = toDoItem;
@@ -50,5 +50,16 @@ public class ToDoItemTask {
         this.assignee = assignee;
         // Set 'assigned' to true if 'assignee' is not null, otherwise false.
         this.assigned = (assignee != null);
+    }
+
+    // Operations:
+    public String getSummary() {
+        return String.format(
+                "ToDoItemTask{id: %d, ToDo-item: '%s', Assignee: '%s', Assigned: %s}",
+                id,
+                toDoItem.getSummary(),
+                (assignee != null) ? assignee.getSummary() : "null",
+                assigned
+        );
     }
 }
