@@ -1,28 +1,32 @@
 package io.github.bokalebsson;
 
 import java.time.LocalDate;
-import java.util.UUID;
+import java.util.Objects;
 
 public class ToDoItem {
 
+    private static int toDoItemIdCounter = 0;
+
     // Attributes:
-    private String id;
+    private int id;
     private String title;
     private String taskDescription;
     private LocalDate deadline;
+    private Person creator;
     private boolean done;
 
     // Constructor:
-    public ToDoItem(String title, String taskDescription, LocalDate deadline) {
-        this.id = UUID.randomUUID().toString();
+    public ToDoItem(String title, String taskDescription, LocalDate deadline, Person creator) {
+        this.id = ++toDoItemIdCounter;
         setTitle(title);
         setTaskDescription(taskDescription);
         setDeadline(deadline);
+        this.creator = Objects.requireNonNull(creator, "Creator cannot be null.");
         this.done = false;
     }
 
     // Getters:
-    public String getId() {
+    public int getId() {
         return this.id;
     }
 
@@ -36,6 +40,10 @@ public class ToDoItem {
 
     public LocalDate getDeadline() {
         return this.deadline;
+    }
+
+    public Person getCreator() {
+        return creator;
     }
 
     public boolean isDone() {
@@ -81,14 +89,21 @@ public class ToDoItem {
 
     // Operations:
     public String toString() {
-        String id = getId();
-        String title = getTitle();
-        String taskDescription = getTaskDescription();
-        LocalDate deadline = getDeadline();
-        boolean isDone = isDone();
         return String.format(
-                "Id: %s%nTitle: %s%nTask Description: %s%nDeadline: %s%nIs done: %b",
-                id, title, taskDescription, deadline, isDone
+                "Id: %d%nTitle: %s%nTask Description: %s%nDeadline: %s%nIs done: %b%nCreator: %s",
+                id, title, taskDescription, deadline, done, creator.getSummary()
+        );
+    }
+
+    public String getSummary() {
+        return String.format(
+                "ToDoItem{id: %d, title: '%s', description: '%s', deadline: %s, done: %b, creator: %s}",
+                id,
+                title,
+                taskDescription,
+                deadline,
+                done,
+                creator.getSummary()
         );
     }
 
