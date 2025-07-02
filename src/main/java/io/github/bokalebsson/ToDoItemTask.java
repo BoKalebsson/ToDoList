@@ -21,4 +21,21 @@ public class ToDoItemTask {
         this.assigned = (assignee != null);
     }
 
+    // Getters:
+    public int getId() {
+        return this.id;
+    }
+
+    public ToDoItem getToDoItem() {
+        return this.toDoItem;
+    }
+
+    public Person getAssignee() {
+        return this.assignee;
+    }
+
+    public boolean isAssigned() {
+        return this.assigned;
+    }
+
 }
