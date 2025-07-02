@@ -21,7 +21,26 @@ public class ToDoItem {
         this.done = false;
     }
 
+    // Getters:
+    public String getId() {
+        return this.id;
+    }
 
+    public String getTitle() {
+        return this.title;
+    }
+
+    public String getTaskDescription() {
+        return this.taskDescription;
+    }
+
+    public LocalDate getDeadline() {
+        return this.deadline;
+    }
+
+    public boolean isDone() {
+        return this.done;
+    }
 
 
 }
