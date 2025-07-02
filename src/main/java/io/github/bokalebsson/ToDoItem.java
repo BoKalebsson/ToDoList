@@ -15,9 +15,13 @@ public class ToDoItem {
     // Constructor:
     public ToDoItem(String title, String taskDescription, LocalDate deadline) {
         this.id = UUID.randomUUID().toString();
-        this.title = title;
-        this.taskDescription = taskDescription;
-        this.deadline = deadline;
+        setTitle(title);
+        setTaskDescription(taskDescription);
+        setDeadline(deadline);
         this.done = false;
     }
+
+
+
+
 }
