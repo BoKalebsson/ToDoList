@@ -38,4 +38,17 @@ public class ToDoItemTask {
         return this.assigned;
     }
 
+    // Setters:
+    public void setToDoItem(ToDoItem toDoItem) {
+        if (toDoItem == null){
+            throw new IllegalArgumentException("ToDo-item cannot be null.");
+        }
+        this.toDoItem = toDoItem;
+    }
+
+    public void setAssignee(Person assignee) {
+        this.assignee = assignee;
+        // Set 'assigned' to true if 'assignee' is not null, otherwise false.
+        this.assigned = (assignee != null);
+    }
 }
