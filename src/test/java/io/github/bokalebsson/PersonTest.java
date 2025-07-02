@@ -102,5 +102,23 @@ public class PersonTest {
         assertTrue(info.contains("Email: erik@example.com"));
     }
 
+    @Test
+    public void testToString() {
+        // Arrange: Create a Person with valid data
+        Person person = new Person("Erik", "Andersson", "erik@example.com");
+
+        // Act: Call the toString() method
+        String str = person.toString();
+
+        System.out.println(str);  // For debugging purposes – see the actual string output
+
+        // Assert: Verify that the string contains the expected data
+        // This test is flexible and does not enforce exact formatting,
+        // making it easier to maintain if the toString format changes.
+        assertTrue(str.contains("Erik"));
+        assertTrue(str.contains("Andersson"));
+        assertTrue(str.contains("erik@example.com"));
+    }
+
 
 }
