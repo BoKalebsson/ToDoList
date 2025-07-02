@@ -25,6 +25,69 @@ public class PersonTest {
     }
 
     @Test
+    public void constructorThrowsIfFirstNameNull() {
+        // Arrange & Act & Assert:
+        // Expect IllegalArgumentException when firstName is null in constructor
+        assertThrows(IllegalArgumentException.class, () -> {
+            new Person(null, "Andersson", "erik@example.com");
+        });
+    }
+
+    @Test
+    public void constructorThrowsIfFirstNameEmpty() {
+        // Arrange & Act & Assert:
+        // Expect IllegalArgumentException when firstName is empty or only spaces in constructor
+        assertThrows(IllegalArgumentException.class, () -> {
+            new Person("   ", "Andersson", "erik@example.com");
+        });
+    }
+
+    @Test
+    public void constructorThrowsIfLastNameNull() {
+        // Arrange & Act & Assert:
+        // Expect IllegalArgumentException when lastName is null in constructor
+        assertThrows(IllegalArgumentException.class, () -> {
+            new Person("Erik", null, "erik@example.com");
+        });
+    }
+
+    @Test
+    public void constructorThrowsIfLastNameEmpty() {
+        // Arrange & Act & Assert:
+        // Expect IllegalArgumentException when lastName is empty or only spaces in constructor
+        assertThrows(IllegalArgumentException.class, () -> {
+            new Person("Erik", "   ", "erik@example.com");
+        });
+    }
+
+    @Test
+    public void constructorThrowsIfEmailNull() {
+        // Arrange & Act & Assert:
+        // Expect IllegalArgumentException when email is null in constructor
+        assertThrows(IllegalArgumentException.class, () -> {
+            new Person("Erik", "Andersson", null);
+        });
+    }
+
+    @Test
+    public void constructorThrowsIfEmailEmpty() {
+        // Arrange & Act & Assert:
+        // Expect IllegalArgumentException when email is empty or only spaces in constructor
+        assertThrows(IllegalArgumentException.class, () -> {
+            new Person("Erik", "Andersson", "   ");
+        });
+    }
+
+    @Test
+    public void constructorThrowsIfEmailNoAtSymbol() {
+        // Arrange & Act & Assert:
+        // Expect IllegalArgumentException when email does not contain '@' in constructor
+        assertThrows(IllegalArgumentException.class, () -> {
+            new Person("Erik", "Andersson", "invalid.email.com");
+        });
+    }
+
+    @Test
     public void testSetFirstNameNullOrEmpty() {
         // Arrange: Create a Person object with valid initial data
         Person person = new Person("Erik", "Andersson", "erik@example.com");
