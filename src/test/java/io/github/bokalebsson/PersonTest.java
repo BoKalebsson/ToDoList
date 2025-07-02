@@ -77,5 +77,17 @@ public class PersonTest {
         });
     }
 
+    @Test
+    public void testGetFullName() {
+        // Arrange: Create a Person with given first and last name
+        Person person = new Person("Erik", "Andersson", "erik@example.com");
+
+        // Act: Get the full name
+        String fullName = person.getFullName();
+
+        // Assert: Verify that fullName is correctly concatenated
+        assertEquals("Erik Andersson", fullName);
+    }
+
 
 }
