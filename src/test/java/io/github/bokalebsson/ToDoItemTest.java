@@ -8,216 +8,212 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class ToDoItemTest {
 
+    // Helper method to create a valid Person for tests
+    private Person createValidPerson() {
+        return new Person("Erik", "Andersson", "erik@example.com");
+    }
+
+    // Helper method to create a valid ToDoItem for tests
+    private ToDoItem createValidToDoItem() {
+        return new ToDoItem("Title", "Description", LocalDate.now().plusDays(1), createValidPerson());
+    }
+
+    // Group: Constructor tests
     @Test
-    public void testConstructor() {
-        // Arrange – valid test data
+    public void constructorCreatesValidToDoItem() {
+        // Arrange - valid input data for ToDoItem
         String title = "Buy groceries";
         String desc = "Milk, Bread, Eggs";
         LocalDate deadline = LocalDate.now().plusDays(1);
+        Person creator = createValidPerson();
 
-        // Act – create ToDoItem object
-        ToDoItem item = new ToDoItem(title, desc, deadline);
+        // Act - create ToDoItem
+        ToDoItem item = new ToDoItem(title, desc, deadline, creator);
 
-        // Assert – verify all fields are set correctly
+        // Assert - verify all fields are set correctly, done is false initially, id is positive
         assertEquals(title, item.getTitle());
         assertEquals(desc, item.getTaskDescription());
         assertEquals(deadline, item.getDeadline());
+        assertEquals(creator, item.getCreator());
         assertFalse(item.isDone());
-        assertNotNull(item.getId());
+        assertTrue(item.getId() > 0);
     }
 
     @Test
-    public void constructorThrowsIfTitleNull() {
-        // Expect exception if title is null
-        assertThrows(IllegalArgumentException.class, () -> {
-            new ToDoItem(null, "desc", LocalDate.now().plusDays(1));
-        });
-    }
-
-    @Test
-    public void constructorThrowsIfTitleEmpty() {
-        // Expect exception if title is empty or blank
-        assertThrows(IllegalArgumentException.class, () -> {
-            new ToDoItem("   ", "desc", LocalDate.now().plusDays(1));
-        });
-    }
-
-    @Test
-    public void constructorThrowsIfDescNull() {
-        // Expect exception if taskDescription is null
-        assertThrows(IllegalArgumentException.class, () -> {
-            new ToDoItem("Title", null, LocalDate.now().plusDays(1));
-        });
-    }
-
-    @Test
-    public void constructorThrowsIfDescEmpty() {
-        // Expect exception if taskDescription is empty or blank
-        assertThrows(IllegalArgumentException.class, () -> {
-            new ToDoItem("Title", "   ", LocalDate.now().plusDays(1));
-        });
-    }
-
-    @Test
-    public void constructorThrowsIfDeadlineNull() {
-        // Expect exception if deadline is null
-        assertThrows(IllegalArgumentException.class, () -> {
-            new ToDoItem("Title", "desc", null);
-        });
-    }
-
-    @Test
-    public void constructorThrowsIfDeadlinePast() {
-        // Expect exception if deadline is before today
-        assertThrows(IllegalArgumentException.class, () -> {
-            new ToDoItem("Title", "desc", LocalDate.now().minusDays(1));
-        });
-    }
-
-    @Test
-    public void testSetTitle() {
+    public void constructorThrowsIfTitleNullOrEmpty() {
         // Arrange
-        ToDoItem item = new ToDoItem("Title", "desc", LocalDate.now().plusDays(1));
-        String newTitle = "New Title";
+        Person creator = createValidPerson();
+        String desc = "desc";
+        LocalDate deadline = LocalDate.now().plusDays(1);
 
-        // Act
-        item.setTitle(newTitle);
+        // Act & Assert - expect IllegalArgumentException if title is null
+        assertThrows(IllegalArgumentException.class, () -> new ToDoItem(null, desc, deadline, creator));
 
-        // Assert
-        assertEquals(newTitle, item.getTitle());
+        // Act & Assert - expect IllegalArgumentException if title is empty or whitespace
+        assertThrows(IllegalArgumentException.class, () -> new ToDoItem("  ", desc, deadline, creator));
     }
 
     @Test
-    public void setTitleThrowsIfInvalid() {
+    public void constructorThrowsIfDescriptionNullOrEmpty() {
         // Arrange
-        ToDoItem item = new ToDoItem("Title", "desc", LocalDate.now().plusDays(1));
+        Person creator = createValidPerson();
+        String title = "Title";
+        LocalDate deadline = LocalDate.now().plusDays(1);
 
-        // Act & Assert for null
+        // Act & Assert - expect IllegalArgumentException if description is null
+        assertThrows(IllegalArgumentException.class, () -> new ToDoItem(title, null, deadline, creator));
+
+        // Act & Assert - expect IllegalArgumentException if description is empty or whitespace
+        assertThrows(IllegalArgumentException.class, () -> new ToDoItem(title, "  ", deadline, creator));
+    }
+
+    @Test
+    public void constructorThrowsIfDeadlineNullOrPast() {
+        // Arrange
+        Person creator = createValidPerson();
+        String title = "Title";
+        String desc = "desc";
+
+        // Act & Assert - expect IllegalArgumentException if deadline is null
+        assertThrows(IllegalArgumentException.class, () -> new ToDoItem(title, desc, null, creator));
+
+        // Act & Assert - expect IllegalArgumentException if deadline is before today
+        assertThrows(IllegalArgumentException.class, () -> new ToDoItem(title, desc, LocalDate.now().minusDays(1), creator));
+    }
+
+    @Test
+    public void constructorThrowsIfCreatorNull() {
+        // Arrange
+        String title = "Title";
+        String desc = "desc";
+        LocalDate deadline = LocalDate.now().plusDays(1);
+
+        // Act & Assert - expect NullPointerException if creator is null (due to Objects.requireNonNull)
+        assertThrows(NullPointerException.class, () -> new ToDoItem(title, desc, deadline, null));
+    }
+
+    // Group: Setter tests
+    @Test
+    public void setTitleValidAndInvalid() {
+        // Arrange - create valid ToDoItem
+        ToDoItem item = createValidToDoItem();
+
+        // Act - set valid title
+        item.setTitle("New Title");
+
+        // Assert - title should be updated
+        assertEquals("New Title", item.getTitle());
+
+        // Act & Assert - setting title to null should throw IllegalArgumentException
         assertThrows(IllegalArgumentException.class, () -> item.setTitle(null));
 
-        // Act & Assert for empty
+        // Act & Assert - setting title to empty string should throw IllegalArgumentException
         assertThrows(IllegalArgumentException.class, () -> item.setTitle("  "));
     }
 
     @Test
-    public void testSetTaskDescription() {
-        // Arrange
-        ToDoItem item = new ToDoItem("Title", "desc", LocalDate.now().plusDays(1));
-        String newDesc = "New Description";
+    public void setTaskDescriptionValidAndInvalid() {
+        // Arrange - create valid ToDoItem
+        ToDoItem item = createValidToDoItem();
 
-        // Act
-        item.setTaskDescription(newDesc);
+        // Act - set valid task description
+        item.setTaskDescription("New description");
 
-        // Assert
-        assertEquals(newDesc, item.getTaskDescription());
-    }
+        // Assert - description should be updated
+        assertEquals("New description", item.getTaskDescription());
 
-    @Test
-    public void setDescThrowsIfInvalid() {
-        // Arrange
-        ToDoItem item = new ToDoItem("Title", "desc", LocalDate.now().plusDays(1));
-
-        // Act & Assert for null
+        // Act & Assert - setting task description to null should throw IllegalArgumentException
         assertThrows(IllegalArgumentException.class, () -> item.setTaskDescription(null));
 
-        // Act & Assert for empty
+        // Act & Assert - setting task description to empty string should throw IllegalArgumentException
         assertThrows(IllegalArgumentException.class, () -> item.setTaskDescription("  "));
     }
 
     @Test
-    public void testSetDeadline() {
-        // Arrange
-        ToDoItem item = new ToDoItem("Title", "desc", LocalDate.now().plusDays(1));
-        LocalDate newDeadline = LocalDate.now().plusDays(5);
+    public void setDeadlineValidAndInvalid() {
+        // Arrange - create valid ToDoItem
+        ToDoItem item = createValidToDoItem();
 
-        // Act
-        item.setDeadline(newDeadline);
+        // Act - set valid deadline (future date)
+        LocalDate futureDate = LocalDate.now().plusDays(5);
+        item.setDeadline(futureDate);
 
-        // Assert
-        assertEquals(newDeadline, item.getDeadline());
-    }
+        // Assert - deadline should be updated
+        assertEquals(futureDate, item.getDeadline());
 
-    @Test
-    public void setDeadlineThrowsIfNull() {
-        // Arrange
-        ToDoItem item = new ToDoItem("Title", "desc", LocalDate.now().plusDays(1));
-
-        // Act & Assert
+        // Act & Assert - setting deadline to null should throw IllegalArgumentException
         assertThrows(IllegalArgumentException.class, () -> item.setDeadline(null));
-    }
 
-    @Test
-    public void setDeadlineThrowsIfPast() {
-        // Arrange
-        ToDoItem item = new ToDoItem("Title", "desc", LocalDate.now().plusDays(1));
-        LocalDate pastDate = LocalDate.now().minusDays(2);
-
-        // Act & Assert
+        // Act & Assert - setting deadline to past date should throw IllegalArgumentException
+        LocalDate pastDate = LocalDate.now().minusDays(1);
         assertThrows(IllegalArgumentException.class, () -> item.setDeadline(pastDate));
     }
 
+    // Group: Done status tests
     @Test
-    public void testSetDone() {
-        // Arrange
-        ToDoItem item = new ToDoItem("Title", "desc", LocalDate.now().plusDays(1));
+    public void setDoneMarkDoneAndMarkUndone() {
+        // Arrange - create valid ToDoItem
+        ToDoItem item = createValidToDoItem();
 
-        // Act
+        // Assert - initially done is false
+        assertFalse(item.isDone());
+
+        // Act - set done to true
         item.setDone(true);
 
-        // Assert
+        // Assert - done should be true
         assertTrue(item.isDone());
 
-        // Act
-        item.setDone(false);
-
-        // Assert
-        assertFalse(item.isDone());
-    }
-
-    @Test
-    public void testMarkDone() {
-        // Arrange
-        ToDoItem item = new ToDoItem("Title", "desc", LocalDate.now().plusDays(1));
-
-        // Act
+        // Act - call markDone method
         item.markDone();
-
-        // Assert
         assertTrue(item.isDone());
-    }
 
-    @Test
-    public void testMarkUndone() {
-        // Arrange
-        ToDoItem item = new ToDoItem("Title", "desc", LocalDate.now().plusDays(1));
-        item.markDone();
-
-        // Act
+        // Act - call markUndone method
         item.markUndone();
 
-        // Assert
+        // Assert - done should be false
+        assertFalse(item.isDone());
+
+        // Act - set done to false explicitly
+        item.setDone(false);
+
+        // Assert - done should be false
         assertFalse(item.isDone());
     }
 
+    // Group: String representation tests
     @Test
-    public void testToString() {
-        // Arrange
-        ToDoItem item = new ToDoItem("Title", "desc", LocalDate.now().plusDays(1));
+    public void toStringContainsAllFields() {
+        // Arrange - create valid ToDoItem and mark done
+        ToDoItem item = createValidToDoItem();
         item.setDone(true);
 
-        // Act
+        // Act - get string representation
         String str = item.toString();
 
-        // Debug output (optional)
-        System.out.println(str);
-
-        // Assert – verify string contains all attributes
-        assertTrue(str.contains(item.getId()));
+        // Assert - string contains all important fields and creator summary
+        assertTrue(str.contains(String.valueOf(item.getId())));
         assertTrue(str.contains(item.getTitle()));
         assertTrue(str.contains(item.getTaskDescription()));
         assertTrue(str.contains(item.getDeadline().toString()));
         assertTrue(str.contains("true"));
+        assertTrue(str.contains(item.getCreator().getSummary()));
     }
 
+    @Test
+    public void getSummaryContainsAllFields() {
+        // Arrange - create valid ToDoItem
+        ToDoItem item = createValidToDoItem();
 
+        // Act - get summary string
+        String summary = item.getSummary();
+
+        // Assert - summary contains id, title, description, deadline, done status and creator summary
+        assertTrue(summary.contains("ToDoItem{id: " + item.getId()));
+        assertTrue(summary.contains(item.getTitle()));
+        assertTrue(summary.contains(item.getTaskDescription()));
+        assertTrue(summary.contains(item.getDeadline().toString()));
+        assertTrue(summary.contains(String.valueOf(item.isDone())));
+        assertTrue(summary.contains(item.getCreator().getSummary()));
+    }
 }
