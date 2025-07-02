@@ -15,9 +15,9 @@ public class Person {
     // Constructor:
     public Person(String firstName, String lastName, String email) {
         this.id = UUID.randomUUID().toString();
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
+        setFirstName(firstName);
+        setLastName(lastName);
+        setEmail(email);
     }
 
     // Getters:
