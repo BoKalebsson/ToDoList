@@ -1,27 +1,25 @@
 package io.github.bokalebsson;
 
-import org.w3c.dom.ls.LSOutput;
-
-import java.util.UUID;
-
 public class Person {
 
+    private static int personIdCounter = 0;
+
     // Attributes:
-    private String id;
+    private int id;
     private String firstName;
     private String lastName;
     private String email;
 
     // Constructor:
     public Person(String firstName, String lastName, String email) {
-        this.id = UUID.randomUUID().toString();
+        this.id = ++personIdCounter;
         setFirstName(firstName);
         setLastName(lastName);
         setEmail(email);
     }
 
     // Getters:
-    public String getId() {
+    public int getId() {
         return this.id;
     }
 
@@ -75,15 +73,20 @@ public class Person {
     }
 
     public String getPersonInfo() {
-        String fullName = getFullName();
-        String email = getEmail();
-        return "Fullname: " + fullName + "\tEmail: " + email;
+        return String.format(
+                "Fullname: %s %s%nEmail: %s",
+                firstName, lastName, email
+        );
     }
 
     public String toString() {
+        return String.format(
+                "Person ID: %d%nFirst Name: %s%nLast Name: %s%nEmail: %s",
+                id, firstName, lastName, email
+        );
+    }
 
-        String fullName = getFullName();
-        String email = getEmail();
-        return "Fullname= " + fullName + "\tEmail= " + email;
+    public String getSummary() {
+        return String.format("{id: %d, name: %s %s, email: %s}", id, firstName, lastName, email);
     }
 }
