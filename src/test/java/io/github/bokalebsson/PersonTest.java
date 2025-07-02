@@ -89,5 +89,18 @@ public class PersonTest {
         assertEquals("Erik Andersson", fullName);
     }
 
+    @Test
+    public void testGetPersonInfo() {
+        // Arrange: Create a Person with valid data
+        Person person = new Person("Erik", "Andersson", "erik@example.com");
+
+        // Act: Get the person info string
+        String info = person.getPersonInfo();
+
+        // Assert: Verify that the returned string contains full name and email correctly formatted
+        assertTrue(info.contains("Fullname: Erik Andersson"));
+        assertTrue(info.contains("Email: erik@example.com"));
+    }
+
 
 }
