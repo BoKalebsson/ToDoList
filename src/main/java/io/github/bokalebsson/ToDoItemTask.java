@@ -53,7 +53,7 @@ public class ToDoItemTask {
     }
 
     // Operations:
-    public String getSummary() {
+/*    public String getSummary() {
         return String.format(
                 "ToDoItemTask{id: %d, ToDo-item: '%s', Assignee: '%s', Assigned: %s}",
                 id,
@@ -61,5 +61,16 @@ public class ToDoItemTask {
                 (assignee != null) ? assignee.getSummary() : "null",
                 assigned
         );
+    }*/
+
+    public String getSummary() {
+        return String.format(
+                "--ToDoItemTask Information--%nID: %d%nToDo Item:%n%s%nAssignee:%n%s%nAssigned: %b%n--------------------",
+                id,
+                toDoItem.getSummary(),
+                (assignee != null) ? assignee.getSummary() : "None",
+                assigned
+        );
     }
+
 }

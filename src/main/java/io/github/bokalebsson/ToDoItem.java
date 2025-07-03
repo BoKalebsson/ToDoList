@@ -99,9 +99,21 @@ public class ToDoItem {
         );
     }
 
-    public String getSummary() {
+/*    public String getSummary() {
         return String.format(
                 "ToDoItem{id: %d, title: '%s', description: '%s', deadline: %s, done: %b, creator: %s}",
+                id,
+                title,
+                taskDescription,
+                deadline,
+                done,
+                creator.getSummary()
+        );
+    }*/
+
+    public String getSummary() {
+        return String.format(
+                "--ToDoItem Information--%nID: %d%nTitle: %s%nDescription: %s%nDeadline: %s%nDone: %b%nCreator:%n%s%n--------------------",
                 id,
                 title,
                 taskDescription,
