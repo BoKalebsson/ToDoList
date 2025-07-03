@@ -5,7 +5,10 @@ import java.time.LocalDate;
 public class Main {
     public static void main(String[] args) {
 
+        printSpacer();
+
         // Initialize and display a Person instance:
+        System.out.println("Initialize and display a Person instance: \n");
         Person person1 = new Person("Erik", "Andersson", "erik@gmail.com");
         System.out.println(person1.getSummary());
         printSpacer();
@@ -15,6 +18,7 @@ public class Main {
         printSpacer();
 
         // Initialize and display a ToDoItem instance:
+        System.out.println("Initialize and display a ToDoItem instance: \n");
         ToDoItem item1 = new ToDoItem("Grocery shopping!", "Go and buy milk.", LocalDate.now() , person1);
         System.out.println(item1.getSummary());
         printSpacer();
@@ -24,12 +28,19 @@ public class Main {
         printSpacer();
 
         // Initialize and display a ToDoItemTask instance:
+        System.out.println("Initialize and display a ToDoItemTask instance: \n");
         ToDoItemTask task1 = new ToDoItemTask(item1, person1);
         System.out.println(task1.getSummary());
         printSpacer();
 
         ToDoItemTask task2 = new ToDoItemTask(item2, person2);
         System.out.println(task2.getSummary());
+        printSpacer();
+
+        // Simulate setting a task to done:
+        System.out.println("Simulate setting a task to done: \n");
+        item1.markDone();
+        System.out.println(task1.getSummary());
         printSpacer();
 
     }
