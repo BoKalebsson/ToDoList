@@ -52,17 +52,6 @@ public class ToDoItemTask {
         this.assigned = (assignee != null);
     }
 
-    // Operations:
-/*    public String getSummary() {
-        return String.format(
-                "ToDoItemTask{id: %d, ToDo-item: '%s', Assignee: '%s', Assigned: %s}",
-                id,
-                toDoItem.getSummary(),
-                (assignee != null) ? assignee.getSummary() : "null",
-                assigned
-        );
-    }*/
-
     public String getSummary() {
         return String.format(
                 "--ToDoItemTask Information--%nID: %d%nToDo Item:%n%s%nAssignee:%n%s%nAssigned: %b%n--------------------",

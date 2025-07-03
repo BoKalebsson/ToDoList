@@ -86,10 +86,6 @@ public class Person {
         );
     }
 
-/*    public String getSummary() {
-        return String.format("{id: %d, name: %s %s, email: %s}", id, firstName, lastName, email);
-    }*/
-
     public String getSummary() {
         return String.format(
                 "--Person Information--%nID: %d%nName: %s %s%nEmail: %s%n--------------------",
