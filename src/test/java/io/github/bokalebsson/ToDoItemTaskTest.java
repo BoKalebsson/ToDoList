@@ -2,6 +2,8 @@ package io.github.bokalebsson;
 
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ToDoItemTaskTest {
@@ -118,7 +120,7 @@ public class ToDoItemTaskTest {
     // Group: Operation tests
 
     @Test
-    public void getSummaryReturnsFormattedStringWithAssignee() {
+    public void getSummaryReturnsFormattedBlockWithAssignee() {
         // Arrange: Create task with assignee
         ToDoItem toDoItem = createValidToDoItem();
         Person assignee = createValidPerson();
@@ -127,26 +129,39 @@ public class ToDoItemTaskTest {
         // Act: Get the summary string
         String summary = task.getSummary();
 
-        // Assert: Summary contains expected parts including assignee info and assigned true
-        assertTrue(summary.contains("ToDoItemTask{id: " + task.getId()), "Summary should contain the task id.");
-        assertTrue(summary.contains(toDoItem.getSummary()), "Summary should include ToDoItem's summary.");
-        assertTrue(summary.contains(assignee.getSummary()), "Summary should include assignee's summary.");
+        // Assert: Check parts of the new multiline format
+        assertTrue(summary.contains("--ToDoItemTask Information--"), "Summary should start with header.");
+        assertTrue(summary.contains("ID: " + task.getId()), "Summary should include the task id.");
+        assertTrue(summary.contains(toDoItem.getSummary()), "Summary should include ToDoItem's formatted summary.");
+        assertTrue(summary.contains(assignee.getSummary()), "Summary should include assignee's formatted summary.");
         assertTrue(summary.contains("Assigned: true"), "Summary should indicate assigned is true.");
     }
 
     @Test
-    public void getSummaryReturnsFormattedStringWithoutAssignee() {
-        // Arrange: Create task without assignee
-        ToDoItem toDoItem = createValidToDoItem();
-        ToDoItemTask task = new ToDoItemTask(toDoItem, null);
+    void testToDoItemTaskSummary() {
+        // Arrange
+        Person assignee = new Person("Greger", "Pettersson", "greger@gmail.com");
+        ToDoItem item = new ToDoItem("Library", "Loan pancake book", LocalDate.of(2025, 7, 5), assignee);
+        ToDoItemTask task = new ToDoItemTask(item, assignee);
 
-        // Act: Get the summary string
+        // Act
         String summary = task.getSummary();
 
-        // Assert: Summary contains expected parts including "Assignee: 'null'" and assigned false
-        assertTrue(summary.contains("ToDoItemTask{id: " + task.getId()), "Summary should contain the task id.");
-        assertTrue(summary.contains(toDoItem.getSummary()), "Summary should include ToDoItem's summary.");
-        assertTrue(summary.contains("Assignee: 'null'"), "Summary should indicate assignee is null.");
-        assertTrue(summary.contains("Assigned: false"), "Summary should indicate assigned is false.");
+        // Assert
+        String expected = String.format(
+                "--ToDoItemTask Information--%n" +
+                        "ID: %d%n" +
+                        "ToDo Item:%n%s%n" +
+                        "Assignee:%n%s%n" +
+                        "Assigned: %b%n" +
+                        "--------------------",
+                task.getId(),
+                item.getSummary(),
+                assignee.getSummary(),
+                true
+        );
+
+        assertEquals(expected, summary);
     }
+
 }

@@ -221,17 +221,18 @@ public class PersonTest {
     }
 
     @Test
-    // Tests getSummary returns the expected summary string format
     public void testGetSummary() {
-        // Arrange: Create a Person with known data
-        Person person = new Person("Erik", "Andersson", "erik@example.com");
+        // Arrange
+        Person person = new Person("Erik", "Andersson", "erik@gmail.com");
 
-        // Act: Get the summary string
+        // Act
         String summary = person.getSummary();
 
-        // Assert: Verify summary contains correct id, full name and email
-        assertTrue(summary.contains("id: " + person.getId()));
-        assertTrue(summary.contains("name: Erik Andersson"));
-        assertTrue(summary.contains("email: erik@example.com"));
+        // Assert
+        String expected = String.format(
+                "--Person Information--%nID: %d%nName: %s %s%nEmail: %s%n--------------------",
+                person.getId(), "Erik", "Andersson", "erik@gmail.com"
+        );
+        assertEquals(expected, summary);
     }
 }

@@ -220,19 +220,32 @@ public class ToDoItemTest {
     }
 
     @Test
-    public void getSummaryContainsAllFields() {
-        // Arrange - create valid ToDoItem
-        ToDoItem item = createValidToDoItem();
+    void testToDoItemSummary() {
+        // Arrange
+        Person creator = new Person("Erik", "Andersson", "erik@gmail.com");
+        ToDoItem item = new ToDoItem("Buy milk", "Go to the store", LocalDate.of(2025, 7, 4), creator);
 
-        // Act - get summary string
+        // Act
         String summary = item.getSummary();
 
-        // Assert - summary contains id, title, description, deadline, done status and creator summary
-        assertTrue(summary.contains("ToDoItem{id: " + item.getId()));
-        assertTrue(summary.contains(item.getTitle()));
-        assertTrue(summary.contains(item.getTaskDescription()));
-        assertTrue(summary.contains(item.getDeadline().toString()));
-        assertTrue(summary.contains(String.valueOf(item.isDone())));
-        assertTrue(summary.contains(item.getCreator().getSummary()));
+        // Assert
+        String expected = String.format(
+                "--ToDoItem Information--%n" +
+                        "ID: %d%n" +
+                        "Title: %s%n" +
+                        "Description: %s%n" +
+                        "Deadline: %s%n" +
+                        "Done: %b%n" +
+                        "Creator:%n%s%n" +
+                        "--------------------",
+                item.getId(),
+                "Buy milk",
+                "Go to the store",
+                LocalDate.of(2025, 7, 4),
+                false,
+                creator.getSummary()
+        );
+
+        assertEquals(expected, summary);
     }
 }
