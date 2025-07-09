@@ -67,27 +67,19 @@ public class AppUser {
     @Override
     public boolean equals(Object o) {
 
-        // Step 1: If the two objects are the same in memory, they are equal.
-        if (this == o) {
-            return true;
-        }
+        // Step 1: Check if both references point to the same object in memory.
+        if (this == o) return true;
 
-        // Step 2: If the other object is null, it can never be equal.
-        if (o == null) {
-            return false;
-        }
+        // Step 2: If the other object is null, they cannot be equal.
+        if (o == null) return false;
 
-        // Step 3: If the other object is not an AppUser, they are not comparable.
-        if (!(o instanceof AppUser)) {
-            return false;
-        }
+        // Step 3: Check if the other object is of type AppUser.
+        if (!(o instanceof AppUser)) return false;
 
-        // Step 4: Type cast the object so we can access its fields.
+        // Step 4: Cast the object to AppUser so we can access its fields.
         AppUser other = (AppUser) o;
 
-        // Step 5: Compare the fields that define identity.
-        // We compare username using .equals() (it's a String),
-        // and role using == because AppRole is an enum.
+        // Step 5: Compare fields that define identity (excluding password).
         return this.username.equals(other.username) && this.role == other.role;
     }
 

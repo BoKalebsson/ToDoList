@@ -1,5 +1,7 @@
 package io.github.bokalebsson;
 
+import java.util.Objects;
+
 public class Person {
 
     private static int personIdCounter = 0;
@@ -100,6 +102,32 @@ public class Person {
         sb.append("Email: ").append(getEmail()).append("\n");
         sb.append("---------------------------").append("\n");
         return sb.toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        // Step 1: Check if both references point to the same object in memory.
+        if (this == o) return true;
+
+        // Step 2: If the other object is null, they cannot be equal.
+        if (o == null) return false;
+
+        // Step 3: Check if the other object is of type Person.
+        if (!(o instanceof Person)) return false;
+
+        // Step 4: Cast the object to Person so we can access its fields.
+        Person other = (Person) o;
+
+        // Step 5: Compare fields that define identity (excluding credentials).
+        return this.id == other.id &&
+                this.firstName.equals(other.firstName) &&
+                this.lastName.equals(other.lastName) &&
+                this.email.equals(other.email);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, firstName, lastName, email);
     }
 
 }
