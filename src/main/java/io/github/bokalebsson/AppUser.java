@@ -9,9 +9,9 @@ public class AppUser {
 
     // Constructor:
     public AppUser(String username, String password, AppRole role) {
-        this.username = username;
-        this.password = password;
-        this.role = role;
+        setUsername(username);
+        setPassword(password);
+        setRole(role);
     }
 
     // Getters:
@@ -28,15 +28,25 @@ public class AppUser {
     }
 
     // Setters:
+    public void setUsername(String username) {
+        if(username == null || username.trim().isEmpty()) {
+            throw new IllegalArgumentException("Username cannot be null or empty.");
+        }
+        this.username = username;
+    }
+
     public void setPassword(String password) {
+        if (password == null || password.trim().isEmpty()) {
+            throw new IllegalArgumentException("Password cannot be null or empty.");
+        }
         this.password = password;
     }
 
     public void setRole(AppRole role) {
+        if (role == null){
+            throw new IllegalArgumentException("Role cannot be null.");
+        }
         this.role = role;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
 }
