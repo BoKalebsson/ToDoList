@@ -51,6 +51,15 @@ public class Main {
         AppUser Admin = new AppUser("Admin", "654321", AppRole.ROLE_APP_ADMIN);
         System.out.println(Admin);
 
+        // Simulate equals() true:
+        AppUser a = new AppUser("Erik", "abc123", AppRole.ROLE_APP_USER);
+        AppUser b = new AppUser("Erik", "123abc", AppRole.ROLE_APP_USER);
+        System.out.println("Is user a equal to user b: " + a.equals(b));
+
+        // Simulate equals() false:
+        AppUser c = new AppUser("Erik", "abc123", AppRole.ROLE_APP_USER);
+        AppUser d = new AppUser("Greger", "123abc", AppRole.ROLE_APP_USER);
+        System.out.println("Is user a equal to user b: " + c.equals(d));
 
     }
 
