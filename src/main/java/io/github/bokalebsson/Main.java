@@ -23,7 +23,7 @@ public class Main {
         System.out.println(item1.getSummary());
         printSpacer();
 
-        ToDoItem item2 = new ToDoItem("Go to the library!", "Loan a book about pancakes.", LocalDate.of(2025,7, 4 ), person2);
+        ToDoItem item2 = new ToDoItem("Go to the library!", "Loan a book about pancakes.", LocalDate.of(2026,7, 4 ), person2);
         System.out.println(item2.getSummary());
         printSpacer();
 
@@ -42,6 +42,15 @@ public class Main {
         item1.markDone();
         System.out.println(task1.getSummary());
         printSpacer();
+
+        // Simulate setting up an AppUser:
+        AppUser OriginalUser = new AppUser("Original", "123456", AppRole.ROLE_APP_USER);
+        System.out.println(OriginalUser);
+
+        // Simulate setting up an AppAdmin:
+        AppUser Admin = new AppUser("Admin", "654321", AppRole.ROLE_APP_ADMIN);
+        System.out.println(Admin);
+
 
     }
 
