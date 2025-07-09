@@ -68,6 +68,31 @@ public class Main {
         // Print the hash code of the user Admin:
         System.out.println("Hash code for user " + Admin.getUsername() + ": " + Admin.hashCode());
         printSpacer();
+
+        // Simulate testing the hashcode() and the equals():
+
+        AppUser user1 = new AppUser("Greger", "password1", AppRole.ROLE_APP_USER);
+        AppUser user2 = new AppUser("Greger", "password2", AppRole.ROLE_APP_USER);
+
+        // Print hash codes
+        System.out.println("Hash code for user1: " + user1.hashCode());
+        System.out.println("Hash code for user2: " + user2.hashCode());
+
+        // Check if hash codes are equal
+        if (user1.hashCode() == user2.hashCode()) {
+            System.out.println("Hash codes are equal, as expected.");
+        } else {
+            System.out.println("Hash codes are NOT equal, something is wrong.");
+        }
+
+        // Use equals() to check if the objects are equal
+        if (user1.equals(user2)) {
+            System.out.println("Objects are equal according to equals().");
+        } else {
+            System.out.println("Objects are NOT equal according to equals().");
+        }
+        printSpacer();
+
     }
 
     public static void printSpacer() {
