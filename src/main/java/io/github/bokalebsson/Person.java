@@ -9,6 +9,7 @@ public class Person {
     private String firstName;
     private String lastName;
     private String email;
+    private AppUser credentials;
 
     // Constructor:
     public Person(String firstName, String lastName, String email) {
@@ -38,6 +39,10 @@ public class Person {
         return this.email;
     }
 
+    public AppUser getCredentials() {
+        return this.credentials;
+    }
+
     //Setters:
     public void setFirstName(String firstName){
         if (firstName == null || firstName.trim().isEmpty()){
@@ -65,6 +70,13 @@ public class Person {
             throw new IllegalArgumentException("Email must contain a '@'.");
         }
         this.email = email;
+    }
+
+    public void setCredentials(AppUser credentials) {
+        if (credentials == null) {
+            throw new IllegalArgumentException("Credentials cannot be null.");
+        }
+        this.credentials = credentials;
     }
 
     // Operations:
