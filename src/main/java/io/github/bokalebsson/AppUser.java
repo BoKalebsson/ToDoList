@@ -1,5 +1,7 @@
 package io.github.bokalebsson;
 
+import java.util.Objects;
+
 public class AppUser {
 
     // Attributes:
@@ -87,6 +89,11 @@ public class AppUser {
         // We compare username using .equals() (it's a String),
         // and role using == because AppRole is an enum.
         return this.username.equals(other.username) && this.role == other.role;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.username, this.role);
     }
 
 }

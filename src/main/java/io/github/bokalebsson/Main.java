@@ -60,7 +60,14 @@ public class Main {
         AppUser c = new AppUser("Erik", "abc123", AppRole.ROLE_APP_USER);
         AppUser d = new AppUser("Greger", "123abc", AppRole.ROLE_APP_USER);
         System.out.println("Is user a equal to user b: " + c.equals(d));
+        printSpacer();
 
+        // Print the hash code of the user OriginalUser:
+        System.out.println("Hash code for user " + OriginalUser.getUsername() + ": " + OriginalUser.hashCode());
+
+        // Print the hash code of the user Admin:
+        System.out.println("Hash code for user " + Admin.getUsername() + ": " + Admin.hashCode());
+        printSpacer();
     }
 
     public static void printSpacer() {
