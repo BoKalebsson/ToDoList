@@ -52,14 +52,17 @@ public class ToDoItemTask {
         this.assigned = (assignee != null);
     }
 
-    public String getSummary() {
-        return String.format(
-                "--ToDoItemTask Information--%nID: %d%nToDo Item:%n%s%nAssignee:%n%s%nAssigned: %b%n--------------------",
-                id,
-                toDoItem.getSummary(),
-                (assignee != null) ? assignee.getSummary() : "None",
-                assigned
-        );
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("-- ToDoItemTask Information --").append("\n");
+        sb.append("Id: ").append(getId()).append("\n");
+        sb.append("ToDo-item: ").append("\n").append(toDoItem.toString());
+        sb.append("Assigned: ").append(isAssigned()).append("\n");
+        sb.append("---------------------------").append("\n");
+        return sb.toString();
     }
+
+
 
 }

@@ -94,13 +94,11 @@ public class Person {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("\n");
         sb.append("-- Person Information --").append("\n");
         sb.append("Id: ").append(getId()).append("\n");
         sb.append("Name: ").append(getFullName()).append("\n");
         sb.append("Email: ").append(getEmail()).append("\n");
         sb.append("---------------------------").append("\n");
-        sb.append("\n");
         return sb.toString();
     }
 

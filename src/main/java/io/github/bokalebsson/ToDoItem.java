@@ -92,24 +92,18 @@ public class ToDoItem {
         return LocalDate.now().isAfter(deadline);
     }
 
+    @Override
     public String toString() {
-        return String.format(
-                "Id: %d%nTitle: %s%nTask Description: %s%nDeadline: %s%nIs done: %b%nCreator: %s",
-                id, title, taskDescription, deadline, done, creator.getSummary()
-        );
+        StringBuilder sb = new StringBuilder();
+        sb.append("-- ToDoItem Information --").append("\n");
+        sb.append("Id: ").append(getId()).append("\n");
+        sb.append("Title: ").append(getTitle()).append("\n");
+        sb.append("Task Description: ").append(getTaskDescription()).append("\n");
+        sb.append("Deadline: ").append(getDeadline()).append("\n");
+        sb.append("Done: ").append(isDone()).append("\n");
+        sb.append("---------------------------").append("\n");
+        return sb.toString();
     }
-
-    public String getSummary() {
-        return String.format(
-                "--ToDoItem Information--%nID: %d%nTitle: %s%nDescription: %s%nDeadline: %s%nDone: %b%nCreator:%n%s%n--------------------",
-                id,
-                title,
-                taskDescription,
-                deadline,
-                done,
-                creator.getSummary()
-        );
-    }
-
 
 }
+
