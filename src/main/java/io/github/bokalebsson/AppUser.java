@@ -49,4 +49,17 @@ public class AppUser {
         this.role = role;
     }
 
+    // Operations:
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("\n");
+        sb.append("-- User Information --").append("\n");
+        sb.append("Username: ").append(username).append("\n");
+        sb.append("Role: ").append(role).append("\n");
+        sb.append("---------------------------").append("\n");
+        sb.append("\n");
+        return sb.toString();
+    }
+
 }
