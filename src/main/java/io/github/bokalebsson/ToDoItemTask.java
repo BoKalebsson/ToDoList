@@ -64,5 +64,30 @@ public class ToDoItemTask {
     }
 
 
+    @Override
+    public boolean equals(Object o) {
+
+        // Step 1: Are we comparing the same object in memory?
+        if (this == o) return true;
+
+        // Step 2: Null can't be equal to anything.
+        if (o == null) return false;
+
+        // Step 3: Is the other object of the correct type?
+        if (!(o instanceof ToDoItemTask)) return false;
+
+        // Step 4: Safe type casting.
+        ToDoItemTask other = (ToDoItemTask) o;
+
+        // Step 5: Compare all relevant fields (except creator).
+        return this.id == other.id &&
+               this.toDoItem.equals(other.toDoItem) &&
+               this.assigned == (other.assigned);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.id, this.toDoItem, this.assigned);
+    }
 
 }
