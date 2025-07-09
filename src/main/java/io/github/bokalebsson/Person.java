@@ -91,20 +91,17 @@ public class Person {
         );
     }
 
+    @Override
     public String toString() {
-        return String.format(
-                "Person ID: %d%nFirst Name: %s%nLast Name: %s%nEmail: %s",
-                id, firstName, lastName, email
-        );
+        StringBuilder sb = new StringBuilder();
+        sb.append("\n");
+        sb.append("-- Person Information --").append("\n");
+        sb.append("Id: ").append(getId()).append("\n");
+        sb.append("Name: ").append(getFullName()).append("\n");
+        sb.append("Email: ").append(getEmail()).append("\n");
+        sb.append("---------------------------").append("\n");
+        sb.append("\n");
+        return sb.toString();
     }
 
-    public String getSummary() {
-        return String.format(
-                "--Person Information--%nID: %d%nName: %s %s%nEmail: %s%n--------------------",
-                id,
-                firstName,
-                lastName,
-                email
-        );
-    }
 }
