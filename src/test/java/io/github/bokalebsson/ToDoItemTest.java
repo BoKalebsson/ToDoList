@@ -208,18 +208,15 @@ public class ToDoItemTest {
     }
 
     @Test
-    // isOverdue returns true when deadline is in the past
-    public void overdue_past_true() {
-        // Arrange
-        Person creator = createValidPerson();
+// Group: Deadline validation
+    void deadline_in_past_throws_exception() {
+        // Arrange: Create a Person object as required by constructor
+        Person creator = new Person("Bo", "Kalebsson", "bo@email.com");
 
-        // Act: ToDoItem with deadline yesterday (force by reflection or constructor workaround)
-        // Since constructor disallows past date, simulate by setting deadline directly for test:
-        ToDoItem item = new ToDoItem("Task", "desc", LocalDate.now().plusDays(1), creator);
-        item.setDeadline(LocalDate.now().minusDays(1));
-
-        // Assert: Overdue returns true
-        assertTrue(item.isOverdue());
+        // Act & Assert: Expect IllegalArgumentException when passing past deadline
+        assertThrows(IllegalArgumentException.class, () -> {
+            new ToDoItem("Do", "Past task", LocalDate.now().minusDays(1), creator);
+        });
     }
 
     // Group: toString tests
