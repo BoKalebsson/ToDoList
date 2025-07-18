@@ -211,7 +211,7 @@ public class ToDoItemTest {
 // Group: Deadline validation
     void deadline_in_past_throws_exception() {
         // Arrange: Create a Person object as required by constructor
-        Person creator = new Person("Bo", "Kalebsson", "bo@email.com");
+        Person creator = new Person("Erik", "Andersson", "erik@email.com");
 
         // Act & Assert: Expect IllegalArgumentException when passing past deadline
         assertThrows(IllegalArgumentException.class, () -> {
