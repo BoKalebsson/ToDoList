@@ -1,5 +1,6 @@
 package io.github.bokalebsson;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
@@ -8,160 +9,155 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class ToDoItemTaskTest {
 
-    // Helper method to create a valid Person for tests
-    private Person createValidPerson() {
-        return new Person("Erik", "Andersson", "erik@example.com");
+    private ToDoItem item;
+    private Person person;
+
+    // Arrange reusable objects before each test
+    @BeforeEach
+    void setUp() {
+        person = new Person("Erik", "Andersson", "erik@email.com");
+        item = new ToDoItem("Clean", "Kitchen cleaning", LocalDate.now().plusDays(1), person);
     }
 
-    // Helper method to create a valid ToDoItem for tests
-    private ToDoItem createValidToDoItem() {
-        return new ToDoItem("Title", "Description", java.time.LocalDate.now().plusDays(1), createValidPerson());
-    }
-
-    // Group: Constructor tests
-
+    // Group: Constructor and initialization
     @Test
-    public void constructorAssignsIdAndFieldsCorrectly() {
-        // Arrange: Prepare a valid ToDoItem and Person
-        ToDoItem toDoItem = createValidToDoItem();
-        Person assignee = createValidPerson();
+    void createWithAssignee() {
+        // Act: Create task with an assignee
+        ToDoItemTask task = new ToDoItemTask(item, person);
 
-        // Act: Create a ToDoItemTask with both toDoItem and assignee
-        ToDoItemTask task = new ToDoItemTask(toDoItem, assignee);
-
-        // Assert: Verify that id is positive, fields are assigned properly, and assigned flag is true
-        assertTrue(task.getId() > 0, "ID should be greater than zero.");
-        assertEquals(toDoItem, task.getToDoItem(), "ToDoItem should be set correctly.");
-        assertEquals(assignee, task.getAssignee(), "Assignee should be set correctly.");
-        assertTrue(task.isAssigned(), "Assigned flag should be true when assignee is not null.");
+        // Assert: Values should match input
+        assertNotNull(task.getId());
+        assertEquals(item, task.getToDoItem());
+        assertEquals(person, task.getAssignee());
+        assertTrue(task.isAssigned());
     }
 
     @Test
-    public void constructorAllowsNullAssigneeAndSetsAssignedFalse() {
-        // Arrange: Prepare a valid ToDoItem without an assignee
-        ToDoItem toDoItem = createValidToDoItem();
+    void createWithoutAssignee() {
+        // Act: Create task with null assignee
+        ToDoItemTask task = new ToDoItemTask(item, null);
 
-        // Act: Create a ToDoItemTask with null assignee
-        ToDoItemTask task = new ToDoItemTask(toDoItem, null);
-
-        // Assert: Verify that assignee is null and assigned flag is false
-        assertEquals(toDoItem, task.getToDoItem(), "ToDoItem should be set correctly.");
-        assertNull(task.getAssignee(), "Assignee should be null.");
-        assertFalse(task.isAssigned(), "Assigned flag should be false when assignee is null.");
+        // Assert: Assigned should be false, assignee null
+        assertNull(task.getAssignee());
+        assertFalse(task.isAssigned());
     }
 
     @Test
-    public void constructorThrowsIfToDoItemNull() {
-        // Arrange, Act & Assert: Creating a ToDoItemTask with null toDoItem should throw NullPointerException
-        assertThrows(NullPointerException.class, () -> new ToDoItemTask(null, createValidPerson()), "Constructor should throw NullPointerException if ToDoItem is null.");
+    void createWithNullItemThrows() {
+        // Assert: Creating with null item should throw
+        assertThrows(NullPointerException.class, () -> new ToDoItemTask(null, person));
     }
 
-    // Group: Getter tests
-
+    // Group: Setter behavior
     @Test
-    public void gettersReturnExpectedValues() {
-        // Arrange: Create task with valid ToDoItem and assignee
-        ToDoItem toDoItem = createValidToDoItem();
-        Person assignee = createValidPerson();
-        ToDoItemTask task = new ToDoItemTask(toDoItem, assignee);
-
-        // Act & Assert: Verify all getters return the correct values
-        assertEquals(toDoItem, task.getToDoItem(), "getToDoItem() should return correct ToDoItem.");
-        assertEquals(assignee, task.getAssignee(), "getAssignee() should return correct Person.");
-        assertTrue(task.isAssigned(), "isAssigned() should be true.");
-        assertTrue(task.getId() > 0, "getId() should return positive ID.");
-    }
-
-    // Group: Setter tests
-
-    @Test
-    public void setToDoItemUpdatesWhenValid() {
-        // Arrange: Create task and a new ToDoItem to set
-        ToDoItemTask task = new ToDoItemTask(createValidToDoItem(), null);
-        ToDoItem newToDoItem = createValidToDoItem();
-
-        // Act: Set the new ToDoItem
-        task.setToDoItem(newToDoItem);
-
-        // Assert: Verify the ToDoItem was updated
-        assertEquals(newToDoItem, task.getToDoItem(), "setToDoItem() should update the ToDoItem field.");
-    }
-
-    @Test
-    public void setToDoItemThrowsIfNull() {
+    void setValidItem() {
         // Arrange: Create task
-        ToDoItemTask task = new ToDoItemTask(createValidToDoItem(), null);
+        ToDoItemTask task = new ToDoItemTask(item, person);
+        ToDoItem newItem = new ToDoItem("Laundry", "Wash clothes", LocalDate.now().plusDays(2), person);
 
-        // Act & Assert: Setting ToDoItem to null should throw IllegalArgumentException
-        assertThrows(IllegalArgumentException.class, () -> task.setToDoItem(null), "setToDoItem() should throw IllegalArgumentException when given null.");
+        // Act: Set new item
+        task.setToDoItem(newItem);
+
+        // Assert: Item should be updated
+        assertEquals(newItem, task.getToDoItem());
     }
 
     @Test
-    public void setAssigneeUpdatesAssigneeAndAssignedFlag() {
-        // Arrange: Create task with no assignee
-        ToDoItemTask task = new ToDoItemTask(createValidToDoItem(), null);
-        Person newAssignee = createValidPerson();
+    void setNullItemThrows() {
+        // Arrange: Create task
+        ToDoItemTask task = new ToDoItemTask(item, person);
 
-        // Act: Set a new assignee
-        task.setAssignee(newAssignee);
+        // Assert: Setting null item throws
+        assertThrows(IllegalArgumentException.class, () -> task.setToDoItem(null));
+    }
 
-        // Assert: Assignee is updated and assigned flag is true
-        assertEquals(newAssignee, task.getAssignee(), "setAssignee() should update the assignee.");
-        assertTrue(task.isAssigned(), "Assigned flag should be true after setting a non-null assignee.");
+    @Test
+    void setAssigneeUpdatesFlag() {
+        // Arrange: Create task with null assignee
+        ToDoItemTask task = new ToDoItemTask(item, null);
+
+        // Act: Set assignee
+        task.setAssignee(person);
+
+        // Assert: Flag is updated
+        assertEquals(person, task.getAssignee());
+        assertTrue(task.isAssigned());
+    }
+
+    @Test
+    void setAssigneeToNullUnassigns() {
+        // Arrange: Create task with assignee
+        ToDoItemTask task = new ToDoItemTask(item, person);
 
         // Act: Set assignee to null
         task.setAssignee(null);
 
-        // Assert: Assignee is null and assigned flag is false
-        assertNull(task.getAssignee(), "setAssignee() should allow setting assignee to null.");
-        assertFalse(task.isAssigned(), "Assigned flag should be false after setting assignee to null.");
+        // Assert: Assignee removed, flag false
+        assertNull(task.getAssignee());
+        assertFalse(task.isAssigned());
     }
 
-    // Group: Operation tests
-
+    // Group: Equals and hashCode
     @Test
-    public void getSummaryReturnsFormattedBlockWithAssignee() {
-        // Arrange: Create task with assignee
-        ToDoItem toDoItem = createValidToDoItem();
-        Person assignee = createValidPerson();
-        ToDoItemTask task = new ToDoItemTask(toDoItem, assignee);
+    void equalsSameObject() {
+        // Arrange: Create task
+        ToDoItemTask task = new ToDoItemTask(item, person);
 
-        // Act: Get the summary string
-        String summary = task.getSummary();
-
-        // Assert: Check parts of the new multiline format
-        assertTrue(summary.contains("--ToDoItemTask Information--"), "Summary should start with header.");
-        assertTrue(summary.contains("ID: " + task.getId()), "Summary should include the task id.");
-        assertTrue(summary.contains(toDoItem.getSummary()), "Summary should include ToDoItem's formatted summary.");
-        assertTrue(summary.contains(assignee.getSummary()), "Summary should include assignee's formatted summary.");
-        assertTrue(summary.contains("Assigned: true"), "Summary should indicate assigned is true.");
+        // Assert: Should equal itself
+        assertEquals(task, task);
     }
 
     @Test
-    void testToDoItemTaskSummary() {
-        // Arrange
-        Person assignee = new Person("Greger", "Pettersson", "greger@gmail.com");
-        ToDoItem item = new ToDoItem("Library", "Loan pancake book", LocalDate.of(2025, 7, 5), assignee);
-        ToDoItemTask task = new ToDoItemTask(item, assignee);
+    void equalsNullObject() {
+        // Arrange: Create task
+        ToDoItemTask task = new ToDoItemTask(item, person);
 
-        // Act
-        String summary = task.getSummary();
-
-        // Assert
-        String expected = String.format(
-                "--ToDoItemTask Information--%n" +
-                        "ID: %d%n" +
-                        "ToDo Item:%n%s%n" +
-                        "Assignee:%n%s%n" +
-                        "Assigned: %b%n" +
-                        "--------------------",
-                task.getId(),
-                item.getSummary(),
-                assignee.getSummary(),
-                true
-        );
-
-        assertEquals(expected, summary);
+        // Assert: Should not equal null
+        assertNotEquals(null, task);
     }
 
+    @Test
+    void equalsDifferentType() {
+        // Arrange: Create task
+        ToDoItemTask task = new ToDoItemTask(item, person);
+
+        // Assert: Should not equal object of different type
+        assertNotEquals("some string", task);
+    }
+
+    @Test
+    void equalsDifferentIdFails() {
+        // Arrange: Create two tasks with different IDs
+        ToDoItemTask task1 = new ToDoItemTask(item, person);
+        ToDoItemTask task2 = new ToDoItemTask(item, person);
+
+        // Assert: Different ID → not equal
+        assertNotEquals(task1, task2);
+    }
+
+    @Test
+    void hashConsistentWithEquals() {
+        // Arrange: Create two equal references
+        ToDoItemTask task = new ToDoItemTask(item, person);
+        ToDoItemTask sameRef = task;
+
+        // Assert: Same hash if same object
+        assertEquals(task.hashCode(), sameRef.hashCode());
+    }
+
+    // Group: toString output
+    @Test
+    void toStringIncludesExpectedData() {
+        // Arrange: Create task
+        ToDoItemTask task = new ToDoItemTask(item, person);
+
+        // Act: Generate toString
+        String result = task.toString();
+
+        // Assert: Key data should be present
+        assertTrue(result.contains("ToDoItemTask"));
+        assertTrue(result.contains("Id: " + task.getId()));
+        assertTrue(result.contains("Assigned: true"));
+        assertTrue(result.contains(item.toString()));
+    }
 }
