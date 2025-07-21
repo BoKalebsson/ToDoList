@@ -213,4 +213,29 @@ public class PersonTest {
         assertNotEquals(null, person);
         assertNotEquals("some string", person);
     }
+
+// Group: ID assignment via sequencer
+
+    @Test
+    // IDs are positive numbers
+    public void idsArePositive() {
+        // Arrange & Act: Create a Person instance
+        Person person = new Person("Anna", "Berg", "anna@example.com");
+
+        // Assert: Check that id is greater than zero
+        assertTrue(person.getId() > 0, "Person id should be positive.");
+    }
+
+    @Test
+    // IDs increase sequentially for new persons
+    public void idsIncreaseSequentially() {
+        // Arrange & Act: Create multiple Person instances
+        Person p1 = new Person("Anna", "Berg", "anna@example.com");
+        Person p2 = new Person("Bob", "Svensson", "bob@example.com");
+        Person p3 = new Person("Carl", "Nilsson", "carl@example.com");
+
+        // Assert: Each subsequent id is greater than the previous one
+        assertTrue(p2.getId() > p1.getId(), "Second person's id should be greater than first.");
+        assertTrue(p3.getId() > p2.getId(), "Third person's id should be greater than second.");
+    }
 }
