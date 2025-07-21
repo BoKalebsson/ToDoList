@@ -268,4 +268,29 @@ public class ToDoItemTest {
         // Assert: Different objects with different ids have different hashCodes
         assertNotEquals(item1.hashCode(), item2.hashCode());
     }
+
+    // Group: ID assignment via sequencer
+    @Test
+    // IDs are positive numbers
+    public void idsArePositive() {
+        // Arrange & Act: Create a ToDoItem
+        ToDoItem item = new ToDoItem("Task", "desc", LocalDate.now().plusDays(1), createValidPerson());
+
+        // Assert: ID should be greater than zero
+        assertTrue(item.getId() > 0, "ToDoItem ID should be a positive number.");
+    }
+
+    @Test
+    // IDs increase sequentially for new ToDoItems
+    public void idsIncreaseSequentially() {
+        // Arrange & Act: Create multiple ToDoItems
+        ToDoItem item1 = new ToDoItem("Task1", "desc", LocalDate.now().plusDays(1), createValidPerson());
+        ToDoItem item2 = new ToDoItem("Task2", "desc", LocalDate.now().plusDays(1), createValidPerson());
+        ToDoItem item3 = new ToDoItem("Task3", "desc", LocalDate.now().plusDays(1), createValidPerson());
+
+        // Assert: IDs should increase in order
+        assertTrue(item2.getId() > item1.getId(), "Second item's ID should be greater than first.");
+        assertTrue(item3.getId() > item2.getId(), "Third item's ID should be greater than second.");
+    }
+
 }
