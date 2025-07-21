@@ -9,7 +9,7 @@ public class ToDoItemIdSequencerTest {
 
     @BeforeEach
     void setUp() {
-        TodoItemIdSequencer.reset();
+        ToDoItemIdSequencer.reset();
     }
 
     // Group: nextId()
@@ -18,7 +18,7 @@ public class ToDoItemIdSequencerTest {
     public void returnsOneInitially() {
 
         // Arrange & Act: Get the first ID to initialize the counter
-        int firstId = TodoItemIdSequencer.nextId();
+        int firstId = ToDoItemIdSequencer.nextId();
 
         // Assert:
         assertEquals(1, firstId, "nextId() should return 1 on first call.");
@@ -27,10 +27,10 @@ public class ToDoItemIdSequencerTest {
     @Test
     public void returnsTwoAfterOneCall() {
         // Arrange: Get the first ID to initialize the counter
-        TodoItemIdSequencer.nextId(); // Should return 1
+        ToDoItemIdSequencer.nextId(); // Should return 1
 
         // Act: Get the second ID
-        int secondId = TodoItemIdSequencer.nextId(); // Should return 2
+        int secondId = ToDoItemIdSequencer.nextId(); // Should return 2
 
         // Assert: Verify that the second call returns 2
         assertEquals(2, secondId, "nextId() should return 2 on second call");
@@ -42,13 +42,13 @@ public class ToDoItemIdSequencerTest {
     public void resetSetsIdToOne() {
 
         // Arrange: Call nextId() a few times to increment the counter
-        TodoItemIdSequencer.nextId(); // 1
-        TodoItemIdSequencer.nextId(); // 2
-        TodoItemIdSequencer.nextId(); // 3
+        ToDoItemIdSequencer.nextId(); // 1
+        ToDoItemIdSequencer.nextId(); // 2
+        ToDoItemIdSequencer.nextId(); // 3
 
         // Act: Reset the sequencer
-        TodoItemIdSequencer.reset();
-        int resetId = TodoItemIdSequencer.nextId(); // Should return 1 again
+        ToDoItemIdSequencer.reset();
+        int resetId = ToDoItemIdSequencer.nextId(); // Should return 1 again
 
         // Assert: After reset, the ID should start from 1
         assertEquals(1, resetId, "After reset(), nextId() should return 1.");
@@ -58,13 +58,13 @@ public class ToDoItemIdSequencerTest {
     @Test
     public void multipleResetsStartFromOne() {
         // Arrange
-        TodoItemIdSequencer.nextId(); // 1
+        ToDoItemIdSequencer.nextId(); // 1
 
         // Act
-        TodoItemIdSequencer.reset();
-        TodoItemIdSequencer.reset();
-        TodoItemIdSequencer.reset();
-        int idAfterResets = TodoItemIdSequencer.nextId();
+        ToDoItemIdSequencer.reset();
+        ToDoItemIdSequencer.reset();
+        ToDoItemIdSequencer.reset();
+        int idAfterResets = ToDoItemIdSequencer.nextId();
 
         // Assert
         assertEquals(1, idAfterResets, "Multiple reset() calls should still result in nextId() returning 1.");
@@ -74,11 +74,11 @@ public class ToDoItemIdSequencerTest {
     @Test
     public void resetAfterFirstCallRestartsFromOne() {
         // Arrange
-        TodoItemIdSequencer.nextId(); // 1
+        ToDoItemIdSequencer.nextId(); // 1
 
         // Act
-        TodoItemIdSequencer.reset();
-        int idAfterReset = TodoItemIdSequencer.nextId();
+        ToDoItemIdSequencer.reset();
+        int idAfterReset = ToDoItemIdSequencer.nextId();
 
         // Assert
         assertEquals(1, idAfterReset, "After reset(), nextId() should start again from 1.");
@@ -90,14 +90,14 @@ public class ToDoItemIdSequencerTest {
     public void returnsCorrectValueAfterMultipleCalls() {
 
         // Arrange: Call nextId() multiple times
-        TodoItemIdSequencer.nextId(); // 1
-        TodoItemIdSequencer.nextId(); // 2
-        TodoItemIdSequencer.nextId(); // 3
-        TodoItemIdSequencer.nextId(); // 4
-        TodoItemIdSequencer.nextId(); // 5
+        ToDoItemIdSequencer.nextId(); // 1
+        ToDoItemIdSequencer.nextId(); // 2
+        ToDoItemIdSequencer.nextId(); // 3
+        ToDoItemIdSequencer.nextId(); // 4
+        ToDoItemIdSequencer.nextId(); // 5
 
         // Act: Call nextId() again to get the 6th ID
-        int sixthId = TodoItemIdSequencer.nextId();
+        int sixthId = ToDoItemIdSequencer.nextId();
 
         // Assert: The returned value should be 6
         assertEquals(6, sixthId, "nextId() should return 6 after 5 previous calls.");

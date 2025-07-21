@@ -1,6 +1,6 @@
 package io.github.bokalebsson.data.sequencers;
 
-public class TodoItemIdSequencer {
+public class ToDoItemTaskIdSequencer {
 
     private static int currentId = 0;
 
