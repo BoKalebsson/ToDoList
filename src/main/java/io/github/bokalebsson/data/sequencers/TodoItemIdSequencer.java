@@ -12,6 +12,10 @@ public class TodoItemIdSequencer {
         return currentId;
     }
 
+    public static void reset() {
+        currentId = 0;
+    }
+
     public static void setCurrentId(int id){
         if(id < 1) {
             throw new IllegalArgumentException("Id cannot be zero or negative.");
