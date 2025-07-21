@@ -36,5 +36,23 @@ public class PersonIdSequencerTest {
         assertEquals(2, secondId, "nextId() should return 2 on second call");
     }
 
+    // Group: reset() behavior
+
+    @Test
+    public void reset_SetsIdBackToOne() {
+
+        // Arrange: Call nextId() a few times to increment the counter
+        PersonIdSequencer.nextId(); // 1
+        PersonIdSequencer.nextId(); // 2
+        PersonIdSequencer.nextId(); // 3
+
+        // Act: Reset the sequencer
+        PersonIdSequencer.reset();
+        int resetId = PersonIdSequencer.nextId(); // Should return 1 again
+
+        // Assert: After reset, the ID should start from 1
+        assertEquals(1, resetId, "After reset(), nextId() should return 1.");
+    }
+
 
 }
