@@ -12,10 +12,12 @@ public class PersonIdSequencerTest {
         PersonIdSequencer.reset();
     }
 
-    @Test
-    public void nextId_ReturnsOneInitially() {
+    // Group: nextId()
 
-        // Arrange & Act:
+    @Test
+    public void shouldReturnOneInitially() {
+
+        // Arrange & Act: Get the first ID to initialize the counter
         int firstId = PersonIdSequencer.nextId();
 
         // Assert:
@@ -23,7 +25,7 @@ public class PersonIdSequencerTest {
     }
 
     @Test
-    public void nextId_IncrementsOnSecondCall() {
+    public void shouldReturnTwoAfterOneCall() {
         // Arrange: Get the first ID to initialize the counter
         PersonIdSequencer.nextId(); // Should return 1
 
