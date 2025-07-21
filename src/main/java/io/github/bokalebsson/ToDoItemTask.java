@@ -1,10 +1,11 @@
 package io.github.bokalebsson;
 
+import io.github.bokalebsson.data.sequencers.ToDoItemIdSequencer;
+import io.github.bokalebsson.data.sequencers.ToDoItemTaskIdSequencer;
+
 import java.util.Objects;
 
 public class ToDoItemTask {
-
-    private static int toDoItemTaskIdCounter = 0;
 
     // Attributes:
     private int id;
@@ -14,7 +15,7 @@ public class ToDoItemTask {
 
     // Constructor:
     public ToDoItemTask(ToDoItem toDoItem, Person assignee) {
-        this.id = ++toDoItemTaskIdCounter;
+        this.id = ToDoItemTaskIdSequencer.nextId();
 
         this.toDoItem = Objects.requireNonNull(toDoItem, "ToDoItem cannot be null.");
         this.assignee = assignee;

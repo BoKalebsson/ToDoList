@@ -1,10 +1,10 @@
 package io.github.bokalebsson;
 
+import io.github.bokalebsson.data.sequencers.PersonIdSequencer;
+
 import java.util.Objects;
 
 public class Person {
-
-    private static int personIdCounter = 0;
 
     // Attributes:
     private int id;
@@ -15,7 +15,7 @@ public class Person {
 
     // Constructor:
     public Person(String firstName, String lastName, String email) {
-        this.id = ++personIdCounter;
+        this.id = PersonIdSequencer.nextId();
         setFirstName(firstName);
         setLastName(lastName);
         setEmail(email);

@@ -1,11 +1,11 @@
 package io.github.bokalebsson;
 
+import io.github.bokalebsson.data.sequencers.ToDoItemIdSequencer;
+
 import java.time.LocalDate;
 import java.util.Objects;
 
 public class ToDoItem {
-
-    private static int toDoItemIdCounter = 0;
 
     // Attributes:
     private int id;
@@ -17,7 +17,7 @@ public class ToDoItem {
 
     // Constructor:
     public ToDoItem(String title, String taskDescription, LocalDate deadline, Person creator) {
-        this.id = ++toDoItemIdCounter;
+        this.id = ToDoItemIdSequencer.nextId();
         setTitle(title);
         setTaskDescription(taskDescription);
         setDeadline(deadline);
