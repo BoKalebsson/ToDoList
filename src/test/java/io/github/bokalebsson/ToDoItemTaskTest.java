@@ -160,4 +160,29 @@ public class ToDoItemTaskTest {
         assertTrue(result.contains("Assigned: true"));
         assertTrue(result.contains(item.toString()));
     }
+
+    // Group: ID assignment via sequencer
+
+    @Test
+        // ID should be a positive number
+    void idsArePositive() {
+        // Arrange: Create a task
+        ToDoItemTask task = new ToDoItemTask(item, person);
+
+        // Assert: ID should be greater than zero
+        assertTrue(task.getId() > 0, "Task ID should be a positive number.");
+    }
+
+    @Test
+        // IDs increase sequentially
+    void idsIncreaseSequentially() {
+        // Arrange: Create multiple tasks
+        ToDoItemTask task1 = new ToDoItemTask(item, person);
+        ToDoItemTask task2 = new ToDoItemTask(item, person);
+        ToDoItemTask task3 = new ToDoItemTask(item, person);
+
+        // Assert: IDs should increase in order
+        assertTrue(task2.getId() > task1.getId(), "Second task ID should be greater than first.");
+        assertTrue(task3.getId() > task2.getId(), "Third task ID should be greater than second.");
+    }
 }
