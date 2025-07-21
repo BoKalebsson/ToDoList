@@ -15,7 +15,7 @@ public class PersonIdSequencerTest {
     // Group: nextId()
 
     @Test
-    public void shouldReturnOneInitially() {
+    public void returnsOneInitially() {
 
         // Arrange & Act: Get the first ID to initialize the counter
         int firstId = PersonIdSequencer.nextId();
@@ -25,7 +25,7 @@ public class PersonIdSequencerTest {
     }
 
     @Test
-    public void shouldReturnTwoAfterOneCall() {
+    public void returnsTwoAfterOneCall() {
         // Arrange: Get the first ID to initialize the counter
         PersonIdSequencer.nextId(); // Should return 1
 
@@ -39,7 +39,7 @@ public class PersonIdSequencerTest {
     // Group: reset() behavior
 
     @Test
-    public void reset_SetsIdBackToOne() {
+    public void resetSetsIdToOne() {
 
         // Arrange: Call nextId() a few times to increment the counter
         PersonIdSequencer.nextId(); // 1
@@ -54,5 +54,53 @@ public class PersonIdSequencerTest {
         assertEquals(1, resetId, "After reset(), nextId() should return 1.");
     }
 
+    // Group: repeated reset()
+    @Test
+    public void multipleResetsStartFromOne() {
+        // Arrange
+        PersonIdSequencer.nextId(); // 1
+
+        // Act
+        PersonIdSequencer.reset();
+        PersonIdSequencer.reset();
+        PersonIdSequencer.reset();
+        int idAfterResets = PersonIdSequencer.nextId();
+
+        // Assert
+        assertEquals(1, idAfterResets, "Multiple reset() calls should still result in nextId() returning 1.");
+    }
+
+    // Group: reset() early
+    @Test
+    public void resetAfterFirstCallRestartsFromOne() {
+        // Arrange
+        PersonIdSequencer.nextId(); // 1
+
+        // Act
+        PersonIdSequencer.reset();
+        int idAfterReset = PersonIdSequencer.nextId();
+
+        // Assert
+        assertEquals(1, idAfterReset, "After reset(), nextId() should start again from 1.");
+    }
+
+    // Group: Multiple calls to nextId()
+
+    @Test
+    public void returnsCorrectValueAfterMultipleCalls() {
+
+        // Arrange: Call nextId() multiple times
+        PersonIdSequencer.nextId(); // 1
+        PersonIdSequencer.nextId(); // 2
+        PersonIdSequencer.nextId(); // 3
+        PersonIdSequencer.nextId(); // 4
+        PersonIdSequencer.nextId(); // 5
+
+        // Act: Call nextId() again to get the 6th ID
+        int sixthId = PersonIdSequencer.nextId();
+
+        // Assert: The returned value should be 6
+        assertEquals(6, sixthId, "nextId() should return 6 after 5 previous calls.");
+    }
 
 }
