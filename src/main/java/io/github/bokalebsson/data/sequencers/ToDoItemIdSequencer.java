@@ -12,7 +12,8 @@ public class ToDoItemIdSequencer {
         return currentId;
     }
 
-    public static void reset() {
+    // Used for testing only.
+    static void reset() {
         currentId = 0;
     }
 
