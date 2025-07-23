@@ -97,8 +97,11 @@ public class Main {
         // Adding the first person to the collection:
         persons.persist(evert);
 
-        // Finding and printing out a person from a collection (This will crash if the id is a negative number or 0):
-        System.out.println("Person found in collection: \n" + persons.findById(1));
+        /*
+        * Finding and printing out a person with id from a collection
+        * (This will trigger an exception if id is a negative number or zero):
+        */
+        System.out.println("Person found by id in collection: \n" + persons.findById(1));
 
         // Initialize and display another Person instance:
         Person elin = new Person("Elin", "Hansson", "elin@test.nu");
@@ -112,6 +115,12 @@ public class Main {
         for (Person person : persons.findAll()){
             System.out.println(person);
         }
+
+        /*
+         * Finding and printing out a person with email from a collection
+         * (This will trigger an exception if the email is null, empty or not found)
+         */
+        System.out.println("Person found by email in collection: \n" + persons.findByEmail("elin@test.nu"));
 
 
 
