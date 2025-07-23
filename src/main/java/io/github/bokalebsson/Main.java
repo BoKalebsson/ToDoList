@@ -1,11 +1,15 @@
 package io.github.bokalebsson;
 
+import io.github.bokalebsson.data.impl.PersonDAOCollection;
+
 import java.time.LocalDate;
+import java.util.Map;
 
 public class Main {
     public static void main(String[] args) {
 
-               // Initialize and display a Person instance:
+        // Code testing before DAO:
+    /*  // Initialize and display a Person instance:
         System.out.println("Initialize and display a Person instance: \n");
         Person person1 = new Person("Erik", "Andersson", "erik@gmail.com");
         System.out.println(person1);
@@ -79,7 +83,40 @@ public class Main {
         } else {
             System.out.println("Objects are NOT equal according to equals().");
         }
-        printSpacer();
+        printSpacer();*/
+
+        // Code testing after DAO:
+
+        // Initialize a collection instance:
+        PersonDAOCollection persons = new PersonDAOCollection();
+
+        // Initialize and display a Person instance:
+        Person evert = new Person("Evert", "Karlsson", "evert@test.nu");
+        System.out.println("Person 1 created: \n" + evert);
+
+        // Adding the first person to the collection:
+        persons.persist(evert);
+
+        // Finding and printing out a person from a collection (This will crash if the id is a negative number or 0):
+        System.out.println("Person found in collection: \n" + persons.findById(1));
+
+        // Initialize and display another Person instance:
+        Person elin = new Person("Elin", "Hansson", "elin@test.nu");
+        System.out.println("Person 2 created: \n" + elin);
+
+        // Adding the second person to the collection:
+        persons.persist(elin);
+
+        // Printing out the entire list of persons:
+        System.out.println("All persons in the list: ");
+        for (Person person : persons.findAll()){
+            System.out.println(person);
+        }
+
+
+
+
+
 
 
     }
