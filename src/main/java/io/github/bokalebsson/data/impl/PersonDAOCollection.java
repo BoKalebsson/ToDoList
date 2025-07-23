@@ -3,10 +3,7 @@ package io.github.bokalebsson.data.impl;
 import io.github.bokalebsson.Person;
 import io.github.bokalebsson.data.PersonDAO;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class PersonDAOCollection implements PersonDAO {
 
@@ -54,7 +51,7 @@ public class PersonDAOCollection implements PersonDAO {
 
     @Override
     public Collection<Person> findAll() {
-        return List.of();
+        return new ArrayList<>(persons.values());
     }
 
     @Override
