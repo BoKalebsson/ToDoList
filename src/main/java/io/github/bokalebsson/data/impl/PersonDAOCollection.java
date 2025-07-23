@@ -61,9 +61,6 @@ public class PersonDAOCollection implements PersonDAO {
         throw new IllegalArgumentException("No one found with the following email: " + email);
     }
 
-
-
-
     @Override
     public Collection<Person> findAll() {
         return new ArrayList<>(persons.values());
@@ -71,6 +68,15 @@ public class PersonDAOCollection implements PersonDAO {
 
     @Override
     public void remove(int id) {
+
+        if(id <= 0){
+            throw new IllegalArgumentException("Id is not allowed to be zero or negative.");
+        }
+
+        if(!persons.containsKey(id)) {
+            throw new IllegalArgumentException("No one found with the following id: " + id);
+        }
+        persons.remove(id);
 
     }
 
