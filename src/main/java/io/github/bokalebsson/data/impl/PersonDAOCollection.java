@@ -1,4 +1,52 @@
 package io.github.bokalebsson.data.impl;
 
-public class PersonDAOCollection {
+import io.github.bokalebsson.Person;
+import io.github.bokalebsson.data.PersonDAO;
+
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+public class PersonDAOCollection implements PersonDAO {
+
+    private final Map<Integer, Person> persons = new HashMap<>();
+
+    @Override
+    public Person persist(Person person) {
+
+        // Check if person is null:
+        if(person == null){
+            throw new IllegalArgumentException("Person is not allowed to be null.");
+        }
+
+        // Get the person's id:
+        int personId = person.getId();
+
+        // Add if key is missing in map, or update the value if key exists:
+        persons.put(personId, person);
+
+        // Return the person:
+        return person;
+    }
+
+    @Override
+    public Person findById(int id) {
+        return null;
+    }
+
+    @Override
+    public Person findByEmail(String email) {
+        return null;
+    }
+
+    @Override
+    public Collection<Person> findAll() {
+        return List.of();
+    }
+
+    @Override
+    public void remove(int id) {
+
+    }
 }
