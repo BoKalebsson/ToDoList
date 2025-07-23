@@ -122,11 +122,14 @@ public class Main {
          */
         System.out.println("Person found by email in collection: \n" + persons.findByEmail("elin@test.nu"));
 
+        // Simulating removing a person by id from the collection:
+        persons.remove(1);
 
-
-
-
-
+        // Printing out the entire list of persons after removing one:
+        System.out.println("All persons in the list, after calling the remove(): ");
+        for (Person person : persons.findAll()){
+            System.out.println(person);
+        }
 
     }
 
