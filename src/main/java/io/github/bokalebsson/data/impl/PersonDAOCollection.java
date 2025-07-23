@@ -32,7 +32,19 @@ public class PersonDAOCollection implements PersonDAO {
 
     @Override
     public Person findById(int id) {
-        return null;
+
+        // Check if id is negative or zero:
+        if(id <= 0){
+            throw new IllegalArgumentException("Id is not allowed to be zero or negative.");
+        }
+
+        // Check if the id is in the map:
+        if(!persons.containsKey(id)) {
+            throw new IllegalArgumentException("No person found with id: " + id);
+        }
+
+        // Return the person:
+        return persons.get(id);
     }
 
     @Override
