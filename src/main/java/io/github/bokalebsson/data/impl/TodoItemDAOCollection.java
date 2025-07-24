@@ -50,7 +50,7 @@ public class TodoItemDAOCollection implements ToDoItemDAO {
 
     @Override
     public Collection<ToDoItem> findAll() {
-        return List.of();
+        return new ArrayList<>(todoItems.values());
     }
 
     @Override
