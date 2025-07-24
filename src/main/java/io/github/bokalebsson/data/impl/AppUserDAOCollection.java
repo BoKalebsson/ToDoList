@@ -20,7 +20,7 @@ public class AppUserDAOCollection implements AppUserDAO {
         // Get the appUsers username:
         String username = appUser.getUsername();
 
-        // Check if appUser already exists:
+        // Check if appUser already exists in the collection:
         if(users.containsKey(username)) {
             throw new IllegalArgumentException("Username already exists: " + username);
         }
