@@ -4,14 +4,32 @@ import io.github.bokalebsson.ToDoItem;
 import io.github.bokalebsson.data.ToDoItemDAO;
 
 import java.time.LocalDate;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 public class TodoItemDAOCollection implements ToDoItemDAO {
 
+    Map<Integer, ToDoItem> todoItems = new HashMap<>();
+
     @Override
     public ToDoItem persist(ToDoItem toDoItem) {
-        return null;
+
+        // Check if ToDoItem is null
+        if (toDoItem == null) {
+            throw new IllegalArgumentException("ToDoItem is not allowed to be null.");
+        }
+
+        // Get the ToDoItem's id:
+        int toDoItemId = toDoItem.getId();
+
+        if (todoItems.containsKey(toDoItemId)) {
+            throw new IllegalArgumentException("ToDoItem already exists: " + toDoItemId);
+        }
+
+        // Add if key is missing in map, or update the value if key exists:
+        todoItems.put(toDoItemId, toDoItem);
+
+        // Return the toDoItem:
+        return toDoItem;
     }
 
     @Override
