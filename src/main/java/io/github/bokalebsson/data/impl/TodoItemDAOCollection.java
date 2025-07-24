@@ -55,7 +55,17 @@ public class TodoItemDAOCollection implements ToDoItemDAO {
 
     @Override
     public Collection<ToDoItem> findAllByDoneStatus(boolean done) {
-        return List.of();
+
+        // Create a new list to hold ToDoItems with status done:
+        Collection<ToDoItem> doneToDoItems = new ArrayList<>();
+
+        for (ToDoItem toDoItem : todoItems.values()) {
+
+            if (toDoItem.isDone() == done) {
+                doneToDoItems.add(toDoItem);
+            }
+        }
+        return doneToDoItems;
     }
 
     @Override
