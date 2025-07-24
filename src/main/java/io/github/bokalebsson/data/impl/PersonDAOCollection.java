@@ -20,7 +20,11 @@ public class PersonDAOCollection implements PersonDAO {
         // Get the person's id:
         int personId = person.getId();
 
-        // Add if key is missing in map, or update the value if key exists:
+        if (persons.containsKey(personId)) {
+            throw new IllegalArgumentException("Person already exists: " + personId);
+        }
+
+        // Add the person to the collection:
         persons.put(personId, person);
 
         // Return the person:

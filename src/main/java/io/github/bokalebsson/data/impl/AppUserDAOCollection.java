@@ -28,6 +28,7 @@ public class AppUserDAOCollection implements AppUserDAO {
         // Add the appUser to the map:
         users.put(username, appUser);
 
+        // Returns the appUser:
         return appUser;
     }
 

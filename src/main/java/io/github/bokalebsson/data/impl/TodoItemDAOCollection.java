@@ -25,7 +25,7 @@ public class TodoItemDAOCollection implements ToDoItemDAO {
             throw new IllegalArgumentException("ToDoItem already exists: " + toDoItemId);
         }
 
-        // Add if key is missing in map, or update the value if key exists:
+        // Adds the toDoItem to the collection:
         todoItems.put(toDoItemId, toDoItem);
 
         // Return the toDoItem:
