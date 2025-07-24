@@ -1,5 +1,6 @@
 package io.github.bokalebsson;
 
+import io.github.bokalebsson.data.impl.AppUserDAOCollection;
 import io.github.bokalebsson.data.impl.PersonDAOCollection;
 
 import java.time.LocalDate;
@@ -129,6 +130,41 @@ public class Main {
         System.out.println("All persons in the list, after calling the remove(): ");
         for (Person person : persons.findAll()){
             System.out.println(person);
+        }
+
+        // Initialize a collection instance:
+        AppUserDAOCollection users = new AppUserDAOCollection();
+
+        // Creating some AppUsers:
+        AppUser user1 = new AppUser("Leif", "123456", AppRole.ROLE_APP_USER);
+        AppUser user2 = new AppUser("Sofie", "654321", AppRole.ROLE_APP_ADMIN);
+
+        // Adding the AppUsers to the collection:
+        users.persist(user1);
+        users.persist(user2);
+
+        // Printing out the entire list of AppUsers:
+        System.out.println("All AppUsers in the list: ");
+        for (AppUser appUser : users.findAll()) {
+            System.out.println(appUser);
+        }
+
+        /*
+         * Finding and printing out a appUser with username from the collection:
+         * (This will trigger an exception if the username is null, empty or not found)
+         */
+        System.out.println("Person found by username in collection: \n" + users.findByUsername("Leif"));
+
+        /*
+         * Simulating removing appUser with username from the collection:
+         * (This will trigger an exception if the username is null, empty or not found)
+         */
+        users.remove("Leif");
+
+        // Printing out the entire list of AppUsers after removing one:
+        System.out.println("All AppUsers in the list, after calling the remove(): ");
+        for (AppUser appUser : users.findAll()) {
+            System.out.println(appUser);
         }
 
     }
