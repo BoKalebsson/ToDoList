@@ -123,7 +123,23 @@ public class TodoItemDAOCollection implements ToDoItemDAO {
 
     @Override
     public Collection<ToDoItem> findByDeadlineBefore(LocalDate date) {
-        return List.of();
+
+        if (date == null) {
+            throw new IllegalArgumentException("Date is not allowed to be null.");
+        }
+
+        // Create a new list to hold ToDoItems before Deadline:
+        Collection<ToDoItem> itemsBeforeDeadline = new ArrayList<>();
+
+        for (ToDoItem toDoItem : todoItems.values()) {
+
+            LocalDate deadline = toDoItem.getDeadline();
+
+            if (deadline.isBefore(date)) {
+                itemsBeforeDeadline.add(toDoItem);
+            }
+        }
+        return itemsBeforeDeadline;
     }
 
     @Override
