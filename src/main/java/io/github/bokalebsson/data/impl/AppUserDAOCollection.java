@@ -3,10 +3,7 @@ package io.github.bokalebsson.data.impl;
 import io.github.bokalebsson.AppUser;
 import io.github.bokalebsson.data.AppUserDAO;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class AppUserDAOCollection implements AppUserDAO {
 
@@ -36,7 +33,16 @@ public class AppUserDAOCollection implements AppUserDAO {
 
     @Override
     public AppUser findByUsername(String username) {
-        return null;
+
+        if (username == null || username.trim().isEmpty()){
+            throw new IllegalArgumentException("Username cannot be null or empty.");
+        }
+
+        AppUser appUser = users.get(username);
+        if (appUser == null) {
+            throw new NoSuchElementException("No user found with username: " + username);
+        }
+        return appUser;
     }
 
     @Override
