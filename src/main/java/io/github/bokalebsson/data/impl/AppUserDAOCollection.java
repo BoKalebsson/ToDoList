@@ -53,5 +53,15 @@ public class AppUserDAOCollection implements AppUserDAO {
     @Override
     public void remove(String username) {
 
+        if (username == null || username.trim().isEmpty()){
+            throw new IllegalArgumentException("Username cannot be null or empty.");
+        }
+
+        if(!users.containsKey(username)) {
+            throw new IllegalArgumentException("No one found with the following username: " + username);
+        }
+
+        users.remove(username);
     }
+
 }
