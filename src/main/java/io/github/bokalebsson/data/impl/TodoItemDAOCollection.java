@@ -34,7 +34,18 @@ public class TodoItemDAOCollection implements ToDoItemDAO {
 
     @Override
     public ToDoItem findById(int id) {
-        return null;
+
+        // Check if id is negative or zero:
+        if(id <= 0){
+            throw new IllegalArgumentException("Id is not allowed to be zero or negative.");
+        }
+
+        // Check if the id is in the map:
+        if(!todoItems.containsKey(id)) {
+            throw new IllegalArgumentException("No ToDo-item found with id: " + id);
+        }
+        // Return the toDoItem:
+        return todoItems.get(id);
     }
 
     @Override
