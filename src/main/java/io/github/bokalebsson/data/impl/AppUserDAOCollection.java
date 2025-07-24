@@ -47,7 +47,7 @@ public class AppUserDAOCollection implements AppUserDAO {
 
     @Override
     public Collection<AppUser> findAll() {
-        return List.of();
+        return new ArrayList<>(users.values());
     }
 
     @Override
