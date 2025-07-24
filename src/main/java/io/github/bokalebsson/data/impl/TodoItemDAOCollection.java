@@ -70,7 +70,30 @@ public class TodoItemDAOCollection implements ToDoItemDAO {
 
     @Override
     public Collection<ToDoItem> findByTitleContains(String title) {
-        return List.of();
+
+        // Check if title is null or empty:
+        if (title == null || title.trim().isEmpty()){
+            throw new IllegalArgumentException("Title cannot be null or empty.");
+        }
+
+        // Create a new list to hold ToDoItems with matching titles:
+        Collection<ToDoItem> matchingTitles = new ArrayList<>();
+
+        // Title to lower-case:
+        String searchTitle = title.toLowerCase();
+
+        for (ToDoItem toDoItem : todoItems.values()) {
+
+            // toDoItem's title to lower-case:
+            String itemTitle = toDoItem.getTitle().toLowerCase();
+
+            // Check if it contains the searchTitle. Note: contains, not equals.
+            if (itemTitle.contains(searchTitle)){
+                matchingTitles.add(toDoItem);
+            }
+        }
+        // Return the matching titles:
+        return matchingTitles;
     }
 
     @Override
