@@ -21,17 +21,16 @@ public class AppUserDAOCollection implements AppUserDAO {
         }
 
         // Get the appUsers username:
-        String userName = appUser.getUsername();
+        String username = appUser.getUsername();
 
         // Check if appUser already exists:
-        if(users.containsKey(userName)) {
-            throw new IllegalArgumentException("Username already exists: " + userName);
+        if(users.containsKey(username)) {
+            throw new IllegalArgumentException("Username already exists: " + username);
         }
 
         // Add the appUser to the map:
-        users.put(userName, appUser);
+        users.put(username, appUser);
 
-        // Return the appUser:
         return appUser;
     }
 
