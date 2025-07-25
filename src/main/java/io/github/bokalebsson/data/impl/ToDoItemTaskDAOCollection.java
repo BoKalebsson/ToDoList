@@ -5,7 +5,7 @@ import io.github.bokalebsson.data.ToDoItemTaskDAO;
 
 import java.util.*;
 
-public class TodoItemTaskDAOCollection implements ToDoItemTaskDAO {
+public class ToDoItemTaskDAOCollection implements ToDoItemTaskDAO {
 
     Map<Integer, ToDoItemTask> todoItemTasks = new HashMap<>();
 
