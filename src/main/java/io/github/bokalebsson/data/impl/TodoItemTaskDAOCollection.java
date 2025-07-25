@@ -59,15 +59,15 @@ public class TodoItemTaskDAOCollection implements ToDoItemTaskDAO {
     public Collection<ToDoItemTask> findByAssignedStatus(boolean assigned) {
 
         // Create a new list to hold ToDoItemTasks with status assigned:
-        Collection<ToDoItemTask> doneToDoItemTasks = new ArrayList<>();
+        Collection<ToDoItemTask> matchingAssignedTasks = new ArrayList<>();
 
         for (ToDoItemTask toDoItemTask : todoItemTasks.values()) {
 
             if (toDoItemTask.isAssigned() == assigned) {
-                doneToDoItemTasks.add(toDoItemTask);
+                matchingAssignedTasks.add(toDoItemTask);
             }
         }
-        return doneToDoItemTasks;
+        return matchingAssignedTasks;
     }
 
     @Override
