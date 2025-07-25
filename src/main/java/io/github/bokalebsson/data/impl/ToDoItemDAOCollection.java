@@ -6,7 +6,7 @@ import io.github.bokalebsson.data.ToDoItemDAO;
 import java.time.LocalDate;
 import java.util.*;
 
-public class TodoItemDAOCollection implements ToDoItemDAO {
+public class ToDoItemDAOCollection implements ToDoItemDAO {
 
     Map<Integer, ToDoItem> todoItems = new HashMap<>();
 
