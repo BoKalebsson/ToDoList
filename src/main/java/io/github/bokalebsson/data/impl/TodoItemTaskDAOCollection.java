@@ -99,5 +99,13 @@ public class TodoItemTaskDAOCollection implements ToDoItemTaskDAO {
     @Override
     public void remove(int id) {
 
+        if(id <= 0){
+            throw new IllegalArgumentException("Id is not allowed to be zero or negative.");
+        }
+
+        if(!todoItemTasks.containsKey(id)) {
+            throw new IllegalArgumentException("No ToDoItemTask found with the following id: " + id);
+        }
+        todoItemTasks.remove(id);
     }
 }
