@@ -4,12 +4,35 @@ import io.github.bokalebsson.ToDoItemTask;
 import io.github.bokalebsson.data.ToDoItemTaskDAO;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class TodoItemTaskDAOCollection implements ToDoItemTaskDAO {
+
+    Map<Integer, ToDoItemTask> todoItemTasks = new HashMap<>();
+
     @Override
     public ToDoItemTask persist(ToDoItemTask toDoItemTask) {
-        return null;
+
+        // Check if ToDoItemTask is null
+        if (toDoItemTask == null) {
+            throw new IllegalArgumentException("ToDoItemTask is not allowed to be null.");
+        }
+
+        // Get the ToDoItemTask's id:
+        int toDoItemTaskId = toDoItemTask.getId();
+
+        if (todoItemTasks.containsKey(toDoItemTaskId)) {
+            throw new IllegalArgumentException("ToDoItemTask already exists: " + toDoItemTaskId);
+        }
+
+        // Adds the toDoItemTask to the collection:
+        todoItemTasks.put(toDoItemTaskId, toDoItemTask);
+
+        // Return the toDoItemTask:
+        return toDoItemTask;
+
     }
 
     @Override
