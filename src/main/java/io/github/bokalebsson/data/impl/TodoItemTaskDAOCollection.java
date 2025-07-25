@@ -72,7 +72,28 @@ public class TodoItemTaskDAOCollection implements ToDoItemTaskDAO {
 
     @Override
     public Collection<ToDoItemTask> findByPersonId(int personId) {
-        return List.of();
+
+        // Check if id is negative or zero:
+        if(personId <= 0){
+            throw new IllegalArgumentException("Id is not allowed to be zero or negative.");
+        }
+
+        // Create a new list to hold ToDoItemTasks with same personId:
+        Collection<ToDoItemTask> matchingIdItems = new ArrayList<>();
+
+        for (ToDoItemTask toDoItemTask : todoItemTasks.values()) {
+
+            // Creator should never be null. It is handled in the constructor of ToDoItems.
+            if (toDoItemTask.getToDoItem().getCreator() == null) {
+                throw new IllegalStateException("Creator is not allowed to be null");
+            }
+
+            if (toDoItemTask.getToDoItem().getCreator().getId() == personId) {
+                matchingIdItems.add(toDoItemTask);
+            }
+        }
+        return matchingIdItems;
+
     }
 
     @Override
