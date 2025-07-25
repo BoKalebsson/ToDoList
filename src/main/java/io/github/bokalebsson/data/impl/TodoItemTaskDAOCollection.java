@@ -1,6 +1,5 @@
 package io.github.bokalebsson.data.impl;
 
-import io.github.bokalebsson.ToDoItem;
 import io.github.bokalebsson.ToDoItemTask;
 import io.github.bokalebsson.data.ToDoItemTaskDAO;
 
