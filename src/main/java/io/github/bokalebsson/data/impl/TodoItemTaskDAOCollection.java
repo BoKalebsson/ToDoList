@@ -1,12 +1,10 @@
 package io.github.bokalebsson.data.impl;
 
+import io.github.bokalebsson.ToDoItem;
 import io.github.bokalebsson.ToDoItemTask;
 import io.github.bokalebsson.data.ToDoItemTaskDAO;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class TodoItemTaskDAOCollection implements ToDoItemTaskDAO {
 
@@ -54,12 +52,22 @@ public class TodoItemTaskDAOCollection implements ToDoItemTaskDAO {
 
     @Override
     public Collection<ToDoItemTask> findAll() {
-        return List.of();
+        return new ArrayList<>(todoItemTasks.values());
     }
 
     @Override
     public Collection<ToDoItemTask> findByAssignedStatus(boolean assigned) {
-        return List.of();
+
+        // Create a new list to hold ToDoItemTasks with status assigned:
+        Collection<ToDoItemTask> doneToDoItemTasks = new ArrayList<>();
+
+        for (ToDoItemTask toDoItemTask : todoItemTasks.values()) {
+
+            if (toDoItemTask.isAssigned() == assigned) {
+                doneToDoItemTasks.add(toDoItemTask);
+            }
+        }
+        return doneToDoItemTasks;
     }
 
     @Override
