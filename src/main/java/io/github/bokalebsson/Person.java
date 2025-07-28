@@ -80,9 +80,10 @@ public class Person {
     }
 
     public void setCredentials(AppUser credentials) {
-        if (credentials == null) {
+        // Note: Accepts null to allow JSON deserialization.
+        /* if (credentials == null) {
             throw new IllegalArgumentException("Credentials cannot be null.");
-        }
+        }*/
         this.credentials = credentials;
     }
 
