@@ -241,7 +241,7 @@ public class Main {
             System.err.println("Something went wrong trying to load the file: " + e.getMessage());
         }*/
 
-        // Code testing with Jackson and FileStorage Manager with ToDoItemTasks:
+/*        // Code testing with Jackson and FileStorage Manager with ToDoItemTasks:
         FileStorageManager fileStorageManager = new FileStorageManager();
 
         // File to save to and read from
@@ -272,7 +272,42 @@ public class Main {
             }
         } catch (IOException e) {
             System.err.println("Something went wrong trying to load the file: " + e.getMessage());
+        }*/
+
+        // Code testing with Jackson and FileStorage Manager with AppUser:
+        FileStorageManager fileStorageManager = new FileStorageManager();
+
+        // File to save to and read from
+        File file = new File("appusers.json");
+
+        // Create sample data
+        AppUser user1 = new AppUser("alice", "password123", AppRole.ROLE_APP_USER);
+        AppUser user2 = new AppUser("bob", "securepass", AppRole.ROLE_APP_ADMIN);
+
+        List<AppUser> users = new ArrayList<>();
+        users.add(user1);
+        users.add(user2);
+
+        // Save the list to a file
+        try {
+            fileStorageManager.saveListToFile(users, file, AppUser.class);
+            System.out.println("The list was saved to file. \n");
+        } catch (IOException e) {
+            System.err.println("Something went wrong trying to save the file: " + e.getMessage());
         }
+
+        // Load the list from the file
+        try {
+            List<AppUser> loadedUsers = fileStorageManager.loadListFromFile(file, AppUser.class);
+            System.out.println("Loaded users: \n");
+            for (AppUser loadedUser : loadedUsers) {
+                System.out.println(loadedUser);
+            }
+        } catch (IOException e) {
+            System.err.println("Something went wrong trying to load the file: " + e.getMessage());
+        }
+
+
 
     }
 
