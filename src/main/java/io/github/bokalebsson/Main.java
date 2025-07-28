@@ -323,6 +323,29 @@ public class Main {
 
         // 2. WORK AREA – Manipulate data:
 
+        // Initializing and printing out a user:
+        AppUser user = new AppUser("Erik", "123456", AppRole.ROLE_APP_USER);
+        System.out.println(user);
+
+        // Initializing and printing out a person:
+        Person person = new Person("Erik", "Andersson", "erik@test.nu", user);
+        persons.add(person);
+        System.out.println(person);
+
+        // Initializing and printing out a toDoItem:
+        ToDoItem toDoItem = new ToDoItem("Grocery Shopping",
+                                "Buy milk and eggs",
+                                LocalDate.now().plusDays(3),
+                                person);
+        toDoItems.add(toDoItem);
+        System.out.println(toDoItem);
+
+        // Initializing and printing out a toDoItemTask:
+        ToDoItemTask toDoItemTask = new ToDoItemTask(toDoItem, person);
+        toDoItemTasks.add(toDoItemTask);
+        System.out.println(toDoItemTask);
+
+
         // 3. SHUTDOWN – Save data to files:
         applicationDataManager.saveData();
     }
