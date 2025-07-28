@@ -56,6 +56,8 @@ public class AppUser {
         this.role = role;
     }
 
+    public static final AppUser GUEST = new AppUser("guest", "guest", AppRole.ROLE_APP_GUEST);
+
     // Operations:
     @Override
     public String toString() {
