@@ -186,7 +186,7 @@ public class Main {
         // Trying to save the list to a file:
         try {
             fileStorageManager.saveListToFile(persons, file, Person.class);
-            System.out.println("The list was saved to file.");
+            System.out.println("The list was saved to file. \n");
         } catch (IOException e) {
             System.out.println("Something went wrong trying to save the file: " + e.getMessage());
         }
@@ -194,7 +194,7 @@ public class Main {
         // Try to read from the file:
         try {
             List<Person> loadedPersons = fileStorageManager.loadListFromFile(file, Person.class);
-            System.out.println("The list loaded from file:");
+            System.out.println("The list loaded from file: \n");
             for (Person p : loadedPersons) {
                 System.out.println(p);
             }
