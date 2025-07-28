@@ -274,7 +274,7 @@ public class Main {
             System.err.println("Something went wrong trying to load the file: " + e.getMessage());
         }*/
 
-        // Code testing with Jackson and FileStorage Manager with AppUser:
+/*        // Code testing with Jackson and FileStorage Manager with AppUser:
         FileStorageManager fileStorageManager = new FileStorageManager();
 
         // File to save to and read from
@@ -289,8 +289,8 @@ public class Main {
         users.add(user2);
 
         // Save the list to a file
-        /* "NOTE: Passwords here are stored in plain text for learning purposes.
-        In a real application, some sort of hash and secure storage would be used."*/
+        *//* "NOTE: Passwords here are stored in plain text for learning purposes.
+        In a real application, some sort of hash and secure storage would be used."*//*
         try {
             fileStorageManager.saveListToFile(users, file, AppUser.class);
             System.out.println("The list was saved to file. \n");
@@ -307,7 +307,7 @@ public class Main {
             }
         } catch (IOException e) {
             System.err.println("Something went wrong trying to load the file: " + e.getMessage());
-        }
+        }*/
 
 
 
