@@ -2,6 +2,8 @@ package io.github.bokalebsson.data.util;
 
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -15,6 +17,9 @@ public class FileStorageManager {
         if (file == null) throw new IllegalArgumentException("File is null");
 
         ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
+        mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+
         mapper.writeValue(file, list);
     }
 
@@ -23,6 +28,8 @@ public class FileStorageManager {
         if (!file.exists()) throw new FileNotFoundException("File does not exist: " + file.getAbsolutePath());
 
         ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
+        mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 
         JavaType listType = mapper.getTypeFactory().constructCollectionType(List.class, type);
 
