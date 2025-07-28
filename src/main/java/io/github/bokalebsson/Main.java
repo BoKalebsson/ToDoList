@@ -202,7 +202,7 @@ public class Main {
             System.out.println("Something went wrong trying to load the file: " + e.getMessage());
         }*/
 
-        // Code testing with Jackson and FileStorage Manager with ToDoItems:
+/*        // Code testing with Jackson and FileStorage Manager with ToDoItems:
         FileStorageManager fileStorageManager = new FileStorageManager();
 
         // Add a person that needs to be the creator:
@@ -236,6 +236,39 @@ public class Main {
             System.out.println("The list loaded from file: \n");
             for (ToDoItem item : loadedItems) {
                 System.out.println(item);
+            }
+        } catch (IOException e) {
+            System.err.println("Something went wrong trying to load the file: " + e.getMessage());
+        }*/
+
+        // Code testing with Jackson and FileStorage Manager with ToDoItemTasks:
+        FileStorageManager fileStorageManager = new FileStorageManager();
+
+        // File to save to and read from
+        File file = new File("todoitemtasks.json");
+
+        // Create sample data
+        Person person = new Person("Alice", "Johnson", "alice@example.com");
+        ToDoItem toDoItem = new ToDoItem("Finish report", "Complete the financial report", LocalDate.now().plusDays(3), person);
+        ToDoItemTask task = new ToDoItemTask(toDoItem, person);
+
+        List<ToDoItemTask> tasks = new ArrayList<>();
+        tasks.add(task);
+
+        // Save the list to a file
+        try {
+            fileStorageManager.saveListToFile(tasks, file, ToDoItemTask.class);
+            System.out.println("The list was saved to file. \n");
+        } catch (IOException e) {
+            System.err.println("Something went wrong trying to save the file: " + e.getMessage());
+        }
+
+        // Load the list from the file
+        try {
+            List<ToDoItemTask> loadedTasks = fileStorageManager.loadListFromFile(file, ToDoItemTask.class);
+            System.out.println("Loaded tasks: \n");
+            for (ToDoItemTask loadedTask : loadedTasks) {
+                System.out.println(loadedTask);
             }
         } catch (IOException e) {
             System.err.println("Something went wrong trying to load the file: " + e.getMessage());
