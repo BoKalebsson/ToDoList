@@ -289,6 +289,8 @@ public class Main {
         users.add(user2);
 
         // Save the list to a file
+        /* "NOTE: Passwords here are stored in plain text for learning purposes.
+        In a real application, some sort of hash and secure storage would be used."*/
         try {
             fileStorageManager.saveListToFile(users, file, AppUser.class);
             System.out.println("The list was saved to file. \n");
