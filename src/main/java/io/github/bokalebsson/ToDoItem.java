@@ -16,6 +16,11 @@ public class ToDoItem {
     private boolean done;
 
     // Constructor:
+
+    //Required for JSON deserialization (Jackson), Do not use this manually.
+    ToDoItem() {
+    }
+
     public ToDoItem(String title, String taskDescription, LocalDate deadline, Person creator) {
         this.id = ToDoItemIdSequencer.nextId();
         setTitle(title);

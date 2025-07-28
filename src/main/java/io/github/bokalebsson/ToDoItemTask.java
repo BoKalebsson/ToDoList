@@ -14,9 +14,13 @@ public class ToDoItemTask {
     private boolean assigned;
 
     // Constructor:
+
+    //Required for JSON deserialization (Jackson), Do not use this manually.
+    ToDoItemTask() {
+    }
+
     public ToDoItemTask(ToDoItem toDoItem, Person assignee) {
         this.id = ToDoItemTaskIdSequencer.nextId();
-
         this.toDoItem = Objects.requireNonNull(toDoItem, "ToDoItem cannot be null.");
         this.assignee = assignee;
         this.assigned = (assignee != null);

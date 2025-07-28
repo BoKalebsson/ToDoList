@@ -10,6 +10,11 @@ public class AppUser {
     private AppRole role;
 
     // Constructor:
+
+    //Required for JSON deserialization (Jackson), Do not use this manually.
+    AppUser() {
+    }
+
     public AppUser(String username, String password, AppRole role) {
         setUsername(username);
         setPassword(password);

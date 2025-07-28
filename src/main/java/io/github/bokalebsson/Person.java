@@ -14,6 +14,11 @@ public class Person {
     private AppUser credentials;
 
     // Constructor:
+
+    //Required for JSON deserialization (Jackson), Do not use this manually.
+    Person() {
+    }
+
     public Person(String firstName, String lastName, String email) {
         this.id = PersonIdSequencer.nextId();
         setFirstName(firstName);
