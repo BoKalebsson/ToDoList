@@ -1,5 +1,6 @@
 package io.github.bokalebsson;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.github.bokalebsson.data.sequencers.ToDoItemIdSequencer;
 
 import java.time.LocalDate;
@@ -93,6 +94,7 @@ public class ToDoItem {
     }
 
     // Operations:
+    @JsonIgnore
     public boolean isOverdue() {
         return LocalDate.now().isAfter(deadline);
     }
