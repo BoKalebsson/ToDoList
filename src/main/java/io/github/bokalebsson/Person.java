@@ -25,6 +25,15 @@ public class Person {
         setFirstName(firstName);
         setLastName(lastName);
         setEmail(email);
+        this.credentials = AppUser.GUEST;
+    }
+
+    public Person(String firstName, String lastName, String email, AppUser credentials) {
+        this.id = PersonIdSequencer.nextId();
+        setFirstName(firstName);
+        setLastName(lastName);
+        setEmail(email);
+        this.credentials = Objects.requireNonNull(credentials, "Credentials cannot be null.");
     }
 
     // Getters:
@@ -81,11 +90,11 @@ public class Person {
     }
 
     public void setCredentials(AppUser credentials) {
-        // Note: Accepts null to allow JSON deserialization.
-        /* if (credentials == null) {
-            throw new IllegalArgumentException("Credentials cannot be null.");
-        }*/
-        this.credentials = credentials;
+        if (credentials == null) {
+            this.credentials = AppUser.GUEST;
+        } else {
+            this.credentials = credentials;
+        }
     }
 
     // Operations:
