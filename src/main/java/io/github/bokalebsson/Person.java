@@ -1,5 +1,6 @@
 package io.github.bokalebsson;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.github.bokalebsson.data.sequencers.PersonIdSequencer;
 
 import java.util.Objects;
@@ -88,10 +89,12 @@ public class Person {
     }
 
     // Operations:
+    @JsonIgnore
     public String getFullName() {
         return this.firstName + " " + this.lastName;
     }
 
+    @JsonIgnore
     public String getPersonInfo() {
         return String.format(
                 "Fullname: %s %s%nEmail: %s",
