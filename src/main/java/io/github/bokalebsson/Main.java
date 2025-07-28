@@ -2,6 +2,7 @@ package io.github.bokalebsson;
 
 import io.github.bokalebsson.data.impl.AppUserDAOCollection;
 import io.github.bokalebsson.data.impl.PersonDAOCollection;
+import io.github.bokalebsson.data.util.ApplicationDataManager;
 import io.github.bokalebsson.data.util.FileStorageManager;
 
 import java.io.File;
@@ -309,8 +310,21 @@ public class Main {
             System.err.println("Something went wrong trying to load the file: " + e.getMessage());
         }*/
 
+        // This will be the new cleaner Main after cleanup:
 
+        // 1. STARTUP – Load data from files:
+        String dataFolderPath = "data";
+        ApplicationDataManager applicationDataManager = new ApplicationDataManager(dataFolderPath);
+        applicationDataManager.loadData();
 
+        List<Person> persons = applicationDataManager.getPersons();
+        List<ToDoItem> toDoItems = applicationDataManager.getToDoItems();
+        List<ToDoItemTask> toDoItemTasks = applicationDataManager.getToDoItemTasks();
+
+        // 2. WORK AREA – Manipulate data:
+
+        // 3. SHUTDOWN – Save data to files:
+        applicationDataManager.saveData();
     }
 
     public static void printSpacer() {
