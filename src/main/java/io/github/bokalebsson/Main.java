@@ -2,8 +2,13 @@ package io.github.bokalebsson;
 
 import io.github.bokalebsson.data.impl.AppUserDAOCollection;
 import io.github.bokalebsson.data.impl.PersonDAOCollection;
+import io.github.bokalebsson.data.util.FileStorageManager;
 
+import java.io.File;
+import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class Main {
@@ -86,7 +91,7 @@ public class Main {
         }
         printSpacer();*/
 
-        // Code testing after DAO:
+/*        // Code testing after DAO:
 
         // Initialize a collection instance:
         PersonDAOCollection persons = new PersonDAOCollection();
@@ -98,10 +103,10 @@ public class Main {
         // Adding the first person to the collection:
         persons.persist(evert);
 
-        /*
+        *//*
         * Finding and printing out a person with id from a collection
         * (This will trigger an exception if id is a negative number or zero):
-        */
+        *//*
         System.out.println("Person found by id in collection: \n" + persons.findById(1));
 
         // Initialize and display another Person instance:
@@ -117,10 +122,10 @@ public class Main {
             System.out.println(person);
         }
 
-        /*
+        *//*
          * Finding and printing out a person with email from a collection
          * (This will trigger an exception if the email is null, empty or not found)
-         */
+         *//*
         System.out.println("Person found by email in collection: \n" + persons.findByEmail("elin@test.nu"));
 
         // Simulating removing a person by id from the collection:
@@ -149,22 +154,52 @@ public class Main {
             System.out.println(appUser);
         }
 
-        /*
+        *//*
          * Finding and printing out a appUser with username from the collection:
          * (This will trigger an exception if the username is null, empty or not found)
-         */
+         *//*
         System.out.println("Person found by username in collection: \n" + users.findByUsername("Leif"));
 
-        /*
+        *//*
          * Simulating removing appUser with username from the collection:
          * (This will trigger an exception if the username is null, empty or not found)
-         */
+         *//*
         users.remove("Leif");
 
         // Printing out the entire list of AppUsers after removing one:
         System.out.println("All AppUsers in the list, after calling the remove(): ");
         for (AppUser appUser : users.findAll()) {
             System.out.println(appUser);
+        }*/
+
+        // Code testing with Jackson and FileStorage Manager:
+        FileStorageManager fileStorageManager = new FileStorageManager();
+
+        // Create a list with Persons:
+        List<Person> persons = new ArrayList<>();
+        persons.add(new Person("Erik", "Svensson", "erik@example.com"));
+        persons.add(new Person("Anna", "Bengtsson", "anna@example.com"));
+
+        // Define the file to save to / load from:
+        File file = new File("persons.json");
+
+        // Trying to save the list to a file:
+        try {
+            fileStorageManager.saveListToFile(persons, file, Person.class);
+            System.out.println("The list was saved to file.");
+        } catch (IOException e) {
+            System.out.println("Something went wrong trying to save the file: " + e.getMessage());
+        }
+
+        // Try to read from the file:
+        try {
+            List<Person> loadedPersons = fileStorageManager.loadListFromFile(file, Person.class);
+            System.out.println("The list loaded from file:");
+            for (Person p : loadedPersons) {
+                System.out.println(p);
+            }
+        } catch (IOException e) {
+            System.out.println("Something went wrong trying to load the file: " + e.getMessage());
         }
 
     }
