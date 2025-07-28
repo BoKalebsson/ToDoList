@@ -172,7 +172,7 @@ public class Main {
             System.out.println(appUser);
         }*/
 
-        // Code testing with Jackson and FileStorage Manager:
+/*        // Code testing with Jackson and FileStorage Manager with Persons:
         FileStorageManager fileStorageManager = new FileStorageManager();
 
         // Create a list with Persons:
@@ -200,6 +200,45 @@ public class Main {
             }
         } catch (IOException e) {
             System.out.println("Something went wrong trying to load the file: " + e.getMessage());
+        }*/
+
+        // Code testing with Jackson and FileStorage Manager with ToDoItems:
+        FileStorageManager fileStorageManager = new FileStorageManager();
+
+        // Add a person that needs to be the creator:
+        Person creator = new Person("Elin", "Hansson", "elin@example.com");
+
+        // Create some ToDoItems:
+        ToDoItem item1 = new ToDoItem("Cleaning", "Vacuum and mop the floors", LocalDate.now().plusDays(1), creator);
+        ToDoItem item2 = new ToDoItem("Study", "Repeat Java", LocalDate.now().plusDays(2), creator);
+        ToDoItem item3 = new ToDoItem("Exercise", "Run 5 km", LocalDate.now().plusDays(3), creator);
+
+        // Mark one as done:
+        item2.setDone(true);
+
+        // Create a list with ToDoItems:
+        List<ToDoItem> items = new ArrayList<>();
+        items.add(item1);
+        items.add(item2);
+        items.add(item3);
+
+        File file = new File("todoitems.json");
+
+        try {
+            fileStorageManager.saveListToFile(items, file, ToDoItem.class);
+            System.out.println("ToDoItems was saved to file. \n");
+        } catch (IOException e) {
+            System.err.println("Something went wrong trying to save the file: " + e.getMessage());
+        }
+
+        try {
+            List<ToDoItem> loadedItems = fileStorageManager.loadListFromFile(file, ToDoItem.class);
+            System.out.println("The list loaded from file: \n");
+            for (ToDoItem item : loadedItems) {
+                System.out.println(item);
+            }
+        } catch (IOException e) {
+            System.err.println("Something went wrong trying to load the file: " + e.getMessage());
         }
 
     }
