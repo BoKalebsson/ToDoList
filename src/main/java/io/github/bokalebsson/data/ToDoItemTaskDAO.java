@@ -46,6 +46,14 @@ public interface ToDoItemTaskDAO {
     Collection<ToDoItemTask> findByPersonId(int personId);
 
     /**
+     * Updates an existing ToDoItemTask.
+     *
+     * @param task the task to update
+     * @return the updated task
+     */
+    ToDoItemTask update(ToDoItemTask task);
+
+    /**
      * Removes a task by its ID.
      *
      * @param id The ID of the task to remove.
