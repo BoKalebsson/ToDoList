@@ -8,7 +8,38 @@ import java.util.*;
 
 public class ToDoItemDAOCollection implements ToDoItemDAO {
 
-    Map<Integer, ToDoItem> todoItems = new HashMap<>();
+    private Map<Integer, ToDoItem> todoItems = new HashMap<>();
+
+    // Constructor: Default
+    public ToDoItemDAOCollection() {
+        this.todoItems = new HashMap<>();
+    }
+
+    // Constructor: Load from Collection<ToDoItem> and build internal Map
+    public ToDoItemDAOCollection(Collection<ToDoItem> toDoItemCollection) {
+        // Check if the collection is null
+        if (toDoItemCollection == null) {
+            throw new IllegalArgumentException("ToDoItem collection cannot be null.");
+        }
+
+        // Create a new empty map to hold items
+        Map<Integer, ToDoItem> map = new HashMap<>();
+
+        // Populate the map with each item from the collection
+        for (ToDoItem item : toDoItemCollection) {
+            int id = item.getId();
+
+            // Check for duplicate IDs to avoid overwriting
+            if (map.containsKey(id)) {
+                throw new IllegalArgumentException("Duplicate ToDoItem ID found: " + id);
+            }
+
+            map.put(id, item);
+        }
+
+        // Assign the map to our internal collection
+        this.todoItems = map;
+    }
 
     @Override
     public ToDoItem persist(ToDoItem toDoItem) {
@@ -161,6 +192,33 @@ public class ToDoItemDAOCollection implements ToDoItemDAO {
             }
         }
         return itemsAfterDeadline;
+    }
+
+    @Override
+    public ToDoItem update(ToDoItem toDoItem) {
+        // 1. Check if the input is null
+        if (toDoItem == null) {
+            throw new IllegalArgumentException("ToDoItem cannot be null.");
+        }
+
+        // 2. Get the item's id
+        int id = toDoItem.getId();
+
+        // 3. Check if the id is valid
+        if (id <= 0) {
+            throw new IllegalArgumentException("ToDoItem id must be greater than zero.");
+        }
+
+        // 4. Check if item with this id exists
+        if (!todoItems.containsKey(id)) {
+            throw new IllegalArgumentException("ToDoItem with id " + id + " does not exist.");
+        }
+
+        // 5. Update the item in the map
+        todoItems.put(id, toDoItem);
+
+        // 6. Return the updated item
+        return toDoItem;
     }
 
     @Override
