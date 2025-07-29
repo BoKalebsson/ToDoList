@@ -7,7 +7,38 @@ import java.util.*;
 
 public class PersonDAOCollection implements PersonDAO {
 
-    private final Map<Integer, Person> persons = new HashMap<>();
+    private Map<Integer, Person> persons = new HashMap<>();
+
+    // Constructor: Default
+    public PersonDAOCollection() {
+        this.persons = new HashMap<>();
+    }
+
+    // Constructor: Load from Collection<Person> and build internal Map
+    public PersonDAOCollection(Collection<Person> personCollection) {
+        // Check if the collection is null
+        if (personCollection == null) {
+            throw new IllegalArgumentException("Person collection cannot be null.");
+        }
+
+        // Create a new empty map to hold persons
+        Map<Integer, Person> map = new HashMap<>();
+
+        // Populate the map with each person from the collection
+        for (Person person : personCollection) {
+            int id = person.getId();
+
+            // Check for duplicate IDs to avoid overwriting
+            if (map.containsKey(id)) {
+                throw new IllegalArgumentException("Duplicate person ID found: " + id);
+            }
+
+            map.put(id, person);
+        }
+
+        // Assign the map to our internal collection
+        this.persons = map;
+    }
 
     @Override
     public Person persist(Person person) {
