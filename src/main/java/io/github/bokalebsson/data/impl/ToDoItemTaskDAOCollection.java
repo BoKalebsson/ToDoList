@@ -7,7 +7,38 @@ import java.util.*;
 
 public class ToDoItemTaskDAOCollection implements ToDoItemTaskDAO {
 
-    Map<Integer, ToDoItemTask> todoItemTasks = new HashMap<>();
+    private Map<Integer, ToDoItemTask> todoItemTasks = new HashMap<>();
+
+    // Constructor: Default
+    public ToDoItemTaskDAOCollection() {
+        this.todoItemTasks = new HashMap<>();
+    }
+
+    // Constructor: Load from Collection<ToDoItemTask> and build internal Map
+    public ToDoItemTaskDAOCollection(Collection<ToDoItemTask> toDoItemTaskCollection) {
+        // Check if the collection is null
+        if (toDoItemTaskCollection == null) {
+            throw new IllegalArgumentException("ToDoItemTask collection cannot be null.");
+        }
+
+        // Create a new empty map to hold tasks
+        Map<Integer, ToDoItemTask> map = new HashMap<>();
+
+        // Populate the map with each task from the collection
+        for (ToDoItemTask task : toDoItemTaskCollection) {
+            int id = task.getId();
+
+            // Check for duplicate IDs to avoid overwriting
+            if (map.containsKey(id)) {
+                throw new IllegalArgumentException("Duplicate ToDoItemTask ID found: " + id);
+            }
+
+            map.put(id, task);
+        }
+
+        // Assign the map to our internal collection
+        this.todoItemTasks = map;
+    }
 
     @Override
     public ToDoItemTask persist(ToDoItemTask toDoItemTask) {
@@ -93,6 +124,33 @@ public class ToDoItemTaskDAOCollection implements ToDoItemTaskDAO {
         }
         return matchingIdItems;
 
+    }
+
+    @Override
+    public ToDoItemTask update(ToDoItemTask toDoItemTask) {
+        // 1. Check if the input is null
+        if (toDoItemTask == null) {
+            throw new IllegalArgumentException("ToDoItemTask cannot be null.");
+        }
+
+        // 2. Get the item's id
+        int id = toDoItemTask.getId();
+
+        // 3. Check if the id is valid
+        if (id <= 0) {
+            throw new IllegalArgumentException("ToDoItemTask id must be greater than zero.");
+        }
+
+        // 4. Check if item with this id exists
+        if (!todoItemTasks.containsKey(id)) {
+            throw new IllegalArgumentException("ToDoItemTask with id " + id + " does not exist.");
+        }
+
+        // 5. Update the item in the map
+        todoItemTasks.put(id, toDoItemTask);
+
+        // 6. Return the updated item
+        return toDoItemTask;
     }
 
     @Override
