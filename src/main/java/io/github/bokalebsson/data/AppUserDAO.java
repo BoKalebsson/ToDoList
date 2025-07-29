@@ -27,6 +27,13 @@ public interface AppUserDAO {
     Collection<AppUser> findAll();
 
     /**
+     * Updates an existing AppUser in the data store.
+     * @param appUser the AppUser object with updated data
+     * @return the updated AppUser object
+     */
+    AppUser update(AppUser appUser);
+
+    /**
      * Removes an AppUser from the data store by their username.
      * @param username the username of the AppUser to remove
      */
