@@ -101,6 +101,32 @@ public class PersonDAOCollection implements PersonDAO {
         return new ArrayList<>(persons.values());
     }
 
+    public Person update(Person person) {
+        // 1. Check if the input is null
+        if (person == null) {
+            throw new IllegalArgumentException("Person cannot be null.");
+        }
+
+        // 2. Get the person's id
+        int id = person.getId();
+
+        // 3. Check if the id is valid
+        if (id <= 0) {
+            throw new IllegalArgumentException("Person id must be greater than zero.");
+        }
+
+        // 4. Check if person with this id exists
+        if (!persons.containsKey(id)) {
+            throw new IllegalArgumentException("Person with id " + id + " does not exist.");
+        }
+
+        // 5. Update the person in the map
+        persons.put(id, person);
+
+        // 6. Return the updated person
+        return person;
+    }
+
     @Override
     public void remove(int id) {
 
