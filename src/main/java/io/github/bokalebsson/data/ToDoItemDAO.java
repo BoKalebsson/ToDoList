@@ -71,6 +71,14 @@ public interface ToDoItemDAO {
     Collection<ToDoItem> findByDeadlineAfter(LocalDate date);
 
     /**
+     * Updates an existing ToDoItem.
+     *
+     * @param toDoItem the item to update
+     * @return the updated item
+     */
+    ToDoItem update(ToDoItem toDoItem);
+
+    /**
      * Removes a ToDoItem by its ID.
      *
      * @param id the ID of the item to remove
