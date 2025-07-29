@@ -34,6 +34,13 @@ public interface PersonDAO {
     Collection<Person> findAll();
 
     /**
+     * Updates an existing Person in the data store.
+     * @param person the Person object with updated data
+     * @return the updated Person object
+     */
+    Person update(Person person);
+
+    /**
      * Removes a Person from the data store by their unique id.
      * @param id the unique identifier of the Person to remove
      */
