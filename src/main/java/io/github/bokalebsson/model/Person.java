@@ -1,4 +1,4 @@
-package io.github.bokalebsson;
+package io.github.bokalebsson.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.github.bokalebsson.data.sequencers.PersonIdSequencer;

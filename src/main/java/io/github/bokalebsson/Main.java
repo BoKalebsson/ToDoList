@@ -1,16 +1,13 @@
 package io.github.bokalebsson;
 
-import io.github.bokalebsson.data.impl.AppUserDAOCollection;
-import io.github.bokalebsson.data.impl.PersonDAOCollection;
 import io.github.bokalebsson.data.util.ApplicationDataManager;
-import io.github.bokalebsson.data.util.FileStorageManager;
+import io.github.bokalebsson.model.AppUser;
+import io.github.bokalebsson.model.Person;
+import io.github.bokalebsson.model.ToDoItem;
+import io.github.bokalebsson.model.ToDoItemTask;
 
-import java.io.File;
-import java.io.IOException;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class Main {
     public static void main(String[] args) {

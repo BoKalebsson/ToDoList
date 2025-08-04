@@ -1,5 +1,9 @@
 package io.github.bokalebsson;
 
+import io.github.bokalebsson.model.Person;
+import io.github.bokalebsson.model.ToDoItem;
+import io.github.bokalebsson.model.ToDoItemTask;
+
 import java.util.List;
 
 public class DataBundle {

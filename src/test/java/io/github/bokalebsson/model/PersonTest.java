@@ -1,5 +1,6 @@
-package io.github.bokalebsson;
+package io.github.bokalebsson.model;
 
+import io.github.bokalebsson.AppRole;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

@@ -1,6 +1,6 @@
 package io.github.bokalebsson.data;
 
-import io.github.bokalebsson.Person;
+import io.github.bokalebsson.model.Person;
 
 import java.util.Collection;
 

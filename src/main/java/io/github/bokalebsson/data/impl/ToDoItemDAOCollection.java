@@ -1,6 +1,6 @@
 package io.github.bokalebsson.data.impl;
 
-import io.github.bokalebsson.ToDoItem;
+import io.github.bokalebsson.model.ToDoItem;
 import io.github.bokalebsson.data.ToDoItemDAO;
 
 import java.time.LocalDate;

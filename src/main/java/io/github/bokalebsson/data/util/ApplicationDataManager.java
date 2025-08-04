@@ -1,8 +1,8 @@
 package io.github.bokalebsson.data.util;
 
-import io.github.bokalebsson.Person;
-import io.github.bokalebsson.ToDoItem;
-import io.github.bokalebsson.ToDoItemTask;
+import io.github.bokalebsson.model.Person;
+import io.github.bokalebsson.model.ToDoItem;
+import io.github.bokalebsson.model.ToDoItemTask;
 
 import java.io.File;
 import java.io.IOException;

@@ -1,4 +1,6 @@
-package io.github.bokalebsson;
+package io.github.bokalebsson.model;
+
+import io.github.bokalebsson.AppRole;
 
 import java.util.Objects;
 
