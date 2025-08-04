@@ -129,7 +129,7 @@ public class PersonTest {
     }
 
     @Test
-    // setCredentials updates correctly, throws on null
+// setCredentials updates correctly, sets GUEST on null
     public void setCredentialsWorks() {
         // Arrange: Create Person and AppUser instances
         Person person = new Person("Erik", "Andersson", "erik@example.com");
@@ -141,8 +141,11 @@ public class PersonTest {
         // Assert: Verify credentials set correctly
         assertEquals(user, person.getCredentials());
 
-        // Act & Assert: Setting null credentials throws exception
-        assertThrows(IllegalArgumentException.class, () -> person.setCredentials(null));
+        // Act: Set null credentials (should default to GUEST)
+        person.setCredentials(null);
+
+        // Assert: Verify fallback to GUEST
+        assertEquals(AppUser.GUEST, person.getCredentials());
     }
 
     // Group: Other methods
