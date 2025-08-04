@@ -40,6 +40,14 @@ public class ToDoItemTaskDAOCollection implements ToDoItemTaskDAO {
         this.todoItemTasks = map;
     }
 
+    // Helper method: Converts a given list of ToDoItemTask objects into the internal map representation.
+    public void setItems(List<ToDoItemTask> toDoItemTaskList) {
+        todoItemTasks.clear();
+        for (ToDoItemTask task : toDoItemTaskList) {
+            todoItemTasks.put(task.getId(), task);
+        }
+    }
+
     @Override
     public ToDoItemTask persist(ToDoItemTask toDoItemTask) {
 
