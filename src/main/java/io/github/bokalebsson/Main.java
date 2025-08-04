@@ -1,35 +1,40 @@
 package io.github.bokalebsson;
 
+import io.github.bokalebsson.data.impl.PersonDAOCollection;
+import io.github.bokalebsson.data.impl.ToDoItemDAOCollection;
+import io.github.bokalebsson.data.impl.ToDoItemTaskDAOCollection;
 import io.github.bokalebsson.data.util.ApplicationDataManager;
-import io.github.bokalebsson.model.*;
 
-import java.time.LocalDate;
-import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
 
-        // This will be the new cleaner Main after cleanup:
+        // 1. STARTUP – Read data
 
-        // 1. STARTUP – Load data from files:
+        // Create filepath:
+        String dataFolderPath = "data";
 
+        // Create DAO collections:
+        PersonDAOCollection personDAO = new PersonDAOCollection();
+        ToDoItemDAOCollection toDoItemDAO = new ToDoItemDAOCollection();
+        ToDoItemTaskDAOCollection toDoItemTaskDAO = new ToDoItemTaskDAOCollection();
+
+        // Create and load Application Data Manager:
+        ApplicationDataManager applicationDataManager = new ApplicationDataManager(
+                dataFolderPath, personDAO, toDoItemDAO, toDoItemTaskDAO
+        );
+
+        // Load data from JSON-files and Sequencers:
+        applicationDataManager.loadData();
 
         // 2. WORK AREA – Manipulate data:
-
-        // Initializing and printing out a user:
-
-
-        // Initializing and printing out a person:
-
-
-        // Initializing and printing out a toDoItem:
-
-
-        // Initializing and printing out a toDoItemTask:
 
 
 
         // 3. SHUTDOWN – Save data to files:
+
+        // Save data from JSON-files and Sequencers:
+        applicationDataManager.saveData();
 
     }
 
