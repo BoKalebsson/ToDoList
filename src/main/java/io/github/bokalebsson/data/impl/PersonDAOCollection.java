@@ -40,6 +40,14 @@ public class PersonDAOCollection implements PersonDAO {
         this.persons = map;
     }
 
+    // Helper methods: Converts a given list of Person objects into the internal map representation.
+    public void setItems(List<Person> personList) {
+        persons.clear();
+        for (Person person : personList) {
+            persons.put(person.getId(), person);
+        }
+    }
+
     @Override
     public Person persist(Person person) {
 
