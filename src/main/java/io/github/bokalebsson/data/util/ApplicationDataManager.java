@@ -1,5 +1,8 @@
 package io.github.bokalebsson.data.util;
 
+import io.github.bokalebsson.data.impl.PersonDAOCollection;
+import io.github.bokalebsson.data.impl.ToDoItemDAOCollection;
+import io.github.bokalebsson.data.impl.ToDoItemTaskDAOCollection;
 import io.github.bokalebsson.model.Person;
 import io.github.bokalebsson.model.ToDoItem;
 import io.github.bokalebsson.model.ToDoItemTask;
@@ -18,12 +21,14 @@ public class ApplicationDataManager {
     private final File toDoItemFile;
     private final File toDoItemTaskFile;
 
+    private final PersonDAOCollection personDAO;
+    private final ToDoItemDAOCollection toDoItemDAO;
+    private final ToDoItemTaskDAOCollection toDoItemTaskDAO;
 
-    private List<Person> persons;
-    private List<ToDoItem> toDoItems;
-    private List<ToDoItemTask> toDoItemTasks;
-
-    public ApplicationDataManager(String dataFolderPath) {
+    public ApplicationDataManager(String dataFolderPath,
+                                  PersonDAOCollection personDAO,
+                                  ToDoItemDAOCollection toDoItemDAO,
+                                  ToDoItemTaskDAOCollection toDoItemTaskDAO) {
 
         // Initialize helper objects:
         this.fileStorageManager = new FileStorageManager();
@@ -34,16 +39,16 @@ public class ApplicationDataManager {
         this.toDoItemFile = new File(dataFolderPath + "/todoitems.json");
         this.toDoItemTaskFile = new File(dataFolderPath + "/todoitemtasks.json");
 
+        // Assign DAO references:
+        this.personDAO = personDAO;
+        this.toDoItemDAO = toDoItemDAO;
+        this.toDoItemTaskDAO = toDoItemTaskDAO;
+
         // Create the data folder if it doesn't exist:
         File dataFolder = new File(dataFolderPath);
         if (!dataFolder.exists()) {
             dataFolder.mkdirs();
         }
-
-        // Initialize lists as empty:
-        this.persons = new ArrayList<>();
-        this.toDoItems = new ArrayList<>();
-        this.toDoItemTasks = new ArrayList<>();
     }
 
     // Load all data and sequencer values from files, create empty files if missing
@@ -53,6 +58,7 @@ public class ApplicationDataManager {
         sequencerDataManager.load();
 
         // Load persons:
+        List<Person> persons;
         if (personFile.exists()) {
             try {
                 persons = fileStorageManager.loadListFromFile(personFile, Person.class);
@@ -68,8 +74,11 @@ public class ApplicationDataManager {
                 System.err.println("Failed to create empty persons file: " + e.getMessage());
             }
         }
+        personDAO.setItems(persons);
+
 
         // Load toDoItems:
+        List<ToDoItem> toDoItems;
         if (toDoItemFile.exists()) {
             try {
                 toDoItems = fileStorageManager.loadListFromFile(toDoItemFile, ToDoItem.class);
@@ -85,8 +94,10 @@ public class ApplicationDataManager {
                 System.err.println("Failed to create empty toDoItems-file: " + e.getMessage());
             }
         }
+        toDoItemDAO.setItems(toDoItems);
 
         // Load toDoItemTasks:
+        List<ToDoItemTask> toDoItemTasks;
         if (toDoItemTaskFile.exists()) {
             try {
                 toDoItemTasks = fileStorageManager.loadListFromFile(toDoItemTaskFile, ToDoItemTask.class);
@@ -102,41 +113,30 @@ public class ApplicationDataManager {
                 System.err.println("Failed to create empty toDoItemTasks-file: " + e.getMessage());
             }
         }
+        toDoItemTaskDAO.setItems(toDoItemTasks);
     }
+
 
     // Save all data and sequencer values to files:
     public void saveData() {
         try {
-            fileStorageManager.saveListToFile(persons, personFile, Person.class);
+            fileStorageManager.saveListToFile(new ArrayList<>(personDAO.findAll()), personFile, Person.class);
         } catch (IOException e) {
             System.err.println("Failed to save persons: " + e.getMessage());
         }
 
         try {
-            fileStorageManager.saveListToFile(toDoItems, toDoItemFile, ToDoItem.class);
+            fileStorageManager.saveListToFile(new ArrayList<>(toDoItemDAO.findAll()), toDoItemFile, ToDoItem.class);
         } catch (IOException e) {
             System.err.println("Failed to save toDoItems: " + e.getMessage());
         }
 
         try {
-            fileStorageManager.saveListToFile(toDoItemTasks, toDoItemTaskFile, ToDoItemTask.class);
+            fileStorageManager.saveListToFile(new ArrayList<>(toDoItemTaskDAO.findAll()), toDoItemTaskFile, ToDoItemTask.class);
         } catch (IOException e) {
             System.err.println("Failed to save toDoItemTasks: " + e.getMessage());
         }
 
         sequencerDataManager.save();
-    }
-
-    // Getters to access the data lists:
-    public List<Person> getPersons() {
-        return persons;
-    }
-
-    public List<ToDoItem> getToDoItems() {
-        return toDoItems;
-    }
-
-    public List<ToDoItemTask> getToDoItemTasks() {
-        return toDoItemTasks;
     }
 }
