@@ -1,10 +1,7 @@
 package io.github.bokalebsson;
 
 import io.github.bokalebsson.data.util.ApplicationDataManager;
-import io.github.bokalebsson.model.AppUser;
-import io.github.bokalebsson.model.Person;
-import io.github.bokalebsson.model.ToDoItem;
-import io.github.bokalebsson.model.ToDoItemTask;
+import io.github.bokalebsson.model.*;
 
 import java.time.LocalDate;
 import java.util.List;

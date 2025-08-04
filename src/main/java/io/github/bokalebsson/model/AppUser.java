@@ -1,7 +1,5 @@
 package io.github.bokalebsson.model;
 
-import io.github.bokalebsson.AppRole;
-
 import java.util.Objects;
 
 public class AppUser {

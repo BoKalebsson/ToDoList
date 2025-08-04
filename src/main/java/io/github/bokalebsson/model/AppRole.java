@@ -1,4 +1,4 @@
-package io.github.bokalebsson;
+package io.github.bokalebsson.model;
 
 public enum AppRole {
     ROLE_APP_USER,
