@@ -1,8 +1,10 @@
 package io.github.bokalebsson.data.util;
 
+import io.github.bokalebsson.data.impl.AppUserDAOCollection;
 import io.github.bokalebsson.data.impl.PersonDAOCollection;
 import io.github.bokalebsson.data.impl.ToDoItemDAOCollection;
 import io.github.bokalebsson.data.impl.ToDoItemTaskDAOCollection;
+import io.github.bokalebsson.model.AppUser;
 import io.github.bokalebsson.model.Person;
 import io.github.bokalebsson.model.ToDoItem;
 import io.github.bokalebsson.model.ToDoItemTask;
@@ -17,16 +19,19 @@ public class ApplicationDataManager {
     private final FileStorageManager fileStorageManager;
     private final SequencerDataManager sequencerDataManager;
 
-    private final File personFile;
-    private final File toDoItemFile;
-    private final File toDoItemTaskFile;
-
     private final PersonDAOCollection personDAO;
+    private final AppUserDAOCollection appUserDAO;
     private final ToDoItemDAOCollection toDoItemDAO;
     private final ToDoItemTaskDAOCollection toDoItemTaskDAO;
 
+    private final File personFile;
+    private final File appUserFile;
+    private final File toDoItemFile;
+    private final File toDoItemTaskFile;
+
     public ApplicationDataManager(String dataFolderPath,
                                   PersonDAOCollection personDAO,
+                                  AppUserDAOCollection appUserDAO,
                                   ToDoItemDAOCollection toDoItemDAO,
                                   ToDoItemTaskDAOCollection toDoItemTaskDAO) {
 
@@ -36,11 +41,13 @@ public class ApplicationDataManager {
 
         // Initialize the file paths:
         this.personFile = new File(dataFolderPath + "/persons.json");
+        this.appUserFile = new File(dataFolderPath + "/appusers.json");
         this.toDoItemFile = new File(dataFolderPath + "/todoitems.json");
         this.toDoItemTaskFile = new File(dataFolderPath + "/todoitemtasks.json");
 
         // Assign DAO references:
         this.personDAO = personDAO;
+        this.appUserDAO = appUserDAO;
         this.toDoItemDAO = toDoItemDAO;
         this.toDoItemTaskDAO = toDoItemTaskDAO;
 
@@ -75,6 +82,25 @@ public class ApplicationDataManager {
             }
         }
         personDAO.setItems(persons);
+
+        // Load appUsers:
+        List<AppUser> appUsers;
+        if (appUserFile.exists()) {
+            try {
+                appUsers = fileStorageManager.loadListFromFile(appUserFile, AppUser.class);
+            } catch (IOException e) {
+                System.err.println("Failed to load appUsers-file: " + e.getMessage());
+                appUsers = new ArrayList<>();
+            }
+        } else {
+            appUsers = new ArrayList<>();
+            try {
+                fileStorageManager.saveListToFile(appUsers, appUserFile, AppUser.class);
+            } catch (IOException e) {
+                System.err.println("Failed to create empty appUsers-file: " + e.getMessage());
+            }
+        }
+        appUserDAO.setItems(appUsers);
 
 
         // Load toDoItems:
@@ -123,6 +149,12 @@ public class ApplicationDataManager {
             fileStorageManager.saveListToFile(new ArrayList<>(personDAO.findAll()), personFile, Person.class);
         } catch (IOException e) {
             System.err.println("Failed to save persons: " + e.getMessage());
+        }
+
+        try {
+            fileStorageManager.saveListToFile(new ArrayList<>(appUserDAO.findAll()), appUserFile, AppUser.class);
+        } catch (IOException e) {
+            System.err.println("Failed to save appUsers: " + e.getMessage());
         }
 
         try {
