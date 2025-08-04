@@ -40,6 +40,14 @@ public class AppUserDAOCollection implements AppUserDAO {
         this.users = map;
     }
 
+    // Helper method: Converts a given list of AppUser objects into the internal map representation.
+    public void setItems(List<AppUser> appUserList) {
+        users.clear();
+        for (AppUser appUser : appUserList) {
+            users.put(appUser.getUsername(), appUser);
+        }
+    }
+
     @Override
     public AppUser persist(AppUser appUser) {
 
