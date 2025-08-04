@@ -22,6 +22,7 @@ public class FileStorageManager {
         mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
         mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+        mapper.enable(SerializationFeature.INDENT_OUTPUT);
     }
 
     public <T> void saveListToFile(List<T> list, File file, Class<T> type) throws IOException {
