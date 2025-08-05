@@ -1,4 +1,4 @@
-package io.github.bokalebsson.dao.util;
+package io.github.bokalebsson.util;
 
 import io.github.bokalebsson.dao.impl.AppUserDAOCollection;
 import io.github.bokalebsson.dao.impl.PersonDAOCollection;

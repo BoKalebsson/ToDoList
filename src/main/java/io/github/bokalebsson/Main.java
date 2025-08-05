@@ -4,7 +4,7 @@ import io.github.bokalebsson.dao.impl.AppUserDAOCollection;
 import io.github.bokalebsson.dao.impl.PersonDAOCollection;
 import io.github.bokalebsson.dao.impl.ToDoItemDAOCollection;
 import io.github.bokalebsson.dao.impl.ToDoItemTaskDAOCollection;
-import io.github.bokalebsson.dao.util.ApplicationDataManager;
+import io.github.bokalebsson.util.ApplicationDataManager;
 import io.github.bokalebsson.model.*;
 
 import java.time.LocalDate;

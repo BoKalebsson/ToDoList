@@ -1,4 +1,4 @@
-package io.github.bokalebsson.dao.util;
+package io.github.bokalebsson.util;
 
 import io.github.bokalebsson.dao.sequencers.PersonIdSequencer;
 import io.github.bokalebsson.dao.sequencers.ToDoItemIdSequencer;
