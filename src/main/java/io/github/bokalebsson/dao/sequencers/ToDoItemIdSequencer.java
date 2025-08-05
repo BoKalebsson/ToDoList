@@ -1,6 +1,6 @@
-package io.github.bokalebsson.data.sequencers;
+package io.github.bokalebsson.dao.sequencers;
 
-public class ToDoItemTaskIdSequencer {
+public class ToDoItemIdSequencer {
 
     private static int currentId = 0;
 

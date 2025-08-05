@@ -1,4 +1,4 @@
-package io.github.bokalebsson.data;
+package io.github.bokalebsson.dao;
 
 import io.github.bokalebsson.model.ToDoItem;
 

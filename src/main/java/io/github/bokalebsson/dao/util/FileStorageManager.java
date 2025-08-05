@@ -1,4 +1,4 @@
-package io.github.bokalebsson.data.util;
+package io.github.bokalebsson.dao.util;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JavaType;

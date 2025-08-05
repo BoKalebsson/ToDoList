@@ -1,7 +1,7 @@
-package io.github.bokalebsson.data.impl;
+package io.github.bokalebsson.dao.impl;
 
 import io.github.bokalebsson.model.Person;
-import io.github.bokalebsson.data.PersonDAO;
+import io.github.bokalebsson.dao.PersonDAO;
 
 import java.util.*;
 

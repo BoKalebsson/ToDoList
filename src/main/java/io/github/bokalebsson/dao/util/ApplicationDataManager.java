@@ -1,9 +1,9 @@
-package io.github.bokalebsson.data.util;
+package io.github.bokalebsson.dao.util;
 
-import io.github.bokalebsson.data.impl.AppUserDAOCollection;
-import io.github.bokalebsson.data.impl.PersonDAOCollection;
-import io.github.bokalebsson.data.impl.ToDoItemDAOCollection;
-import io.github.bokalebsson.data.impl.ToDoItemTaskDAOCollection;
+import io.github.bokalebsson.dao.impl.AppUserDAOCollection;
+import io.github.bokalebsson.dao.impl.PersonDAOCollection;
+import io.github.bokalebsson.dao.impl.ToDoItemDAOCollection;
+import io.github.bokalebsson.dao.impl.ToDoItemTaskDAOCollection;
 import io.github.bokalebsson.model.AppUser;
 import io.github.bokalebsson.model.Person;
 import io.github.bokalebsson.model.ToDoItem;

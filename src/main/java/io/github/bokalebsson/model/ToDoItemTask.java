@@ -1,6 +1,6 @@
 package io.github.bokalebsson.model;
 
-import io.github.bokalebsson.data.sequencers.ToDoItemTaskIdSequencer;
+import io.github.bokalebsson.dao.sequencers.ToDoItemTaskIdSequencer;
 
 import java.util.Objects;
 

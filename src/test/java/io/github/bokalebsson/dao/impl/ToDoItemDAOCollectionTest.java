@@ -1,4 +1,4 @@
-package io.github.bokalebsson.data.impl;
+package io.github.bokalebsson.dao.impl;
 
 public class ToDoItemDAOCollectionTest {
 }

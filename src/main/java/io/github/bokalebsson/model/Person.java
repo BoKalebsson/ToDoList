@@ -1,7 +1,7 @@
 package io.github.bokalebsson.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import io.github.bokalebsson.data.sequencers.PersonIdSequencer;
+import io.github.bokalebsson.dao.sequencers.PersonIdSequencer;
 
 import java.util.Objects;
 

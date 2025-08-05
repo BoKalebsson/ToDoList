@@ -1,4 +1,4 @@
-package io.github.bokalebsson.data.sequencers;
+package io.github.bokalebsson.dao.sequencers;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

@@ -1,10 +1,10 @@
 package io.github.bokalebsson;
 
-import io.github.bokalebsson.data.impl.AppUserDAOCollection;
-import io.github.bokalebsson.data.impl.PersonDAOCollection;
-import io.github.bokalebsson.data.impl.ToDoItemDAOCollection;
-import io.github.bokalebsson.data.impl.ToDoItemTaskDAOCollection;
-import io.github.bokalebsson.data.util.ApplicationDataManager;
+import io.github.bokalebsson.dao.impl.AppUserDAOCollection;
+import io.github.bokalebsson.dao.impl.PersonDAOCollection;
+import io.github.bokalebsson.dao.impl.ToDoItemDAOCollection;
+import io.github.bokalebsson.dao.impl.ToDoItemTaskDAOCollection;
+import io.github.bokalebsson.dao.util.ApplicationDataManager;
 import io.github.bokalebsson.model.*;
 
 import java.time.LocalDate;

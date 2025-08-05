@@ -1,8 +1,8 @@
-package io.github.bokalebsson.data.util;
+package io.github.bokalebsson.dao.util;
 
-import io.github.bokalebsson.data.sequencers.PersonIdSequencer;
-import io.github.bokalebsson.data.sequencers.ToDoItemIdSequencer;
-import io.github.bokalebsson.data.sequencers.ToDoItemTaskIdSequencer;
+import io.github.bokalebsson.dao.sequencers.PersonIdSequencer;
+import io.github.bokalebsson.dao.sequencers.ToDoItemIdSequencer;
+import io.github.bokalebsson.dao.sequencers.ToDoItemTaskIdSequencer;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;

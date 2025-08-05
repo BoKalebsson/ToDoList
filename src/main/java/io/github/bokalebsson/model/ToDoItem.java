@@ -1,7 +1,7 @@
 package io.github.bokalebsson.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import io.github.bokalebsson.data.sequencers.ToDoItemIdSequencer;
+import io.github.bokalebsson.dao.sequencers.ToDoItemIdSequencer;
 
 import java.time.LocalDate;
 import java.util.Objects;

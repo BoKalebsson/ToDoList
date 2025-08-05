@@ -1,7 +1,7 @@
-package io.github.bokalebsson.data.impl;
+package io.github.bokalebsson.dao.impl;
 
 import io.github.bokalebsson.model.ToDoItemTask;
-import io.github.bokalebsson.data.ToDoItemTaskDAO;
+import io.github.bokalebsson.dao.ToDoItemTaskDAO;
 
 import java.util.*;
 
