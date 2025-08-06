@@ -4,13 +4,9 @@ import java.util.Scanner;
 
 public class UserInputManager {
 
-    private final Scanner scanner;
+    private static final Scanner scanner = new Scanner(System.in);
 
-    public UserInputManager(Scanner scanner) {
-        this.scanner = scanner;
-    }
-
-    public String readNonEmptyString(String prompt) {
+    public static String readNonEmptyString(String prompt) {
         String input;
         do {
             System.out.print(prompt);
@@ -22,7 +18,7 @@ public class UserInputManager {
         return input.trim();
     }
 
-    public String readValidName(String prompt) {
+    public static String readValidName(String prompt) {
         String input;
         do {
             System.out.print(prompt);
@@ -34,7 +30,7 @@ public class UserInputManager {
         return input.trim();
     }
 
-    public String readValidEmail(String prompt) {
+    public static String readValidEmail(String prompt) {
         String input;
         do {
             System.out.print(prompt);
@@ -46,7 +42,7 @@ public class UserInputManager {
         return input.trim();
     }
 
-    public String readPositiveInteger(String prompt) {
+    public static String readPositiveInteger(String prompt) {
         String input;
         do {
             System.out.print(prompt);
@@ -58,7 +54,24 @@ public class UserInputManager {
         return input.trim();
     }
 
-    public String readFutureDate(String prompt) {
+    public static int readIntInRange(String prompt, int min, int max) {
+        int number;
+        do {
+            System.out.print(prompt);
+            try {
+                number = Integer.parseInt(scanner.nextLine());
+                if (number >= min && number <= max) {
+                    return number;
+                } else {
+                    System.out.println("Input must be between " + min + " and " + max);
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid number.");
+            }
+        } while (true);
+    }
+
+    public static String readFutureDate(String prompt) {
         String input;
         do {
             System.out.print(prompt);

@@ -2,6 +2,11 @@ package io.github.bokalebsson.cli;
 
 import java.util.Scanner;
 
+import io.github.bokalebsson.cli.PersonCLI;
+import io.github.bokalebsson.cli.ToDoItemCLI;
+import io.github.bokalebsson.cli.ToDoItemTaskCLI;
+import io.github.bokalebsson.cli.AppUserCLI;
+
 import io.github.bokalebsson.dao.impl.PersonDAOCollection;
 import io.github.bokalebsson.dao.impl.AppUserDAOCollection;
 import io.github.bokalebsson.dao.impl.ToDoItemDAOCollection;
@@ -9,7 +14,7 @@ import io.github.bokalebsson.dao.impl.ToDoItemTaskDAOCollection;
 
 public class MainCLI {
 
-    private final Scanner scanner = new Scanner(System.in);
+    private static final Scanner scanner = new Scanner(System.in);
 
     private final PersonCLI personCLI;
     private final ToDoItemCLI toDoItemCLI;
@@ -18,7 +23,7 @@ public class MainCLI {
 
     public MainCLI(AppUserDAOCollection appUserDAO, PersonDAOCollection personDAO,
                    ToDoItemDAOCollection toDoItemDAO, ToDoItemTaskDAOCollection toDoItemTaskDAO) {
-        this.personCLI = new PersonCLI(personDAO, appUserDAO, scanner);
+        this.personCLI = new PersonCLI(personDAO, appUserDAO);
         this.toDoItemCLI = new ToDoItemCLI(toDoItemDAO, personDAO, scanner);
         this.toDoItemTaskCLI = new ToDoItemTaskCLI(toDoItemTaskDAO, toDoItemDAO, personDAO, scanner);
         this.appUserCLI = new AppUserCLI(appUserDAO, scanner);

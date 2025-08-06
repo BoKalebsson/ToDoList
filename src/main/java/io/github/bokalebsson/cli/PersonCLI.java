@@ -1,110 +1,119 @@
 package io.github.bokalebsson.cli;
 
+import io.github.bokalebsson.dao.PersonDAO;
 import io.github.bokalebsson.dao.impl.PersonDAOCollection;
+import io.github.bokalebsson.dao.AppUserDAO;
 import io.github.bokalebsson.dao.impl.AppUserDAOCollection;
-import io.github.bokalebsson.model.Person;
 import io.github.bokalebsson.model.AppUser;
+import io.github.bokalebsson.model.Person;
+import io.github.bokalebsson.util.UserInputManager;
 
 import java.util.Collection;
-import java.util.Scanner;
 
 public class PersonCLI {
 
-    private final PersonDAOCollection personDAO;
-    private final AppUserDAOCollection appUserDAO;
-    private final Scanner scanner;
+    private final PersonDAO personDAO;
+    private final AppUserDAO appUserDAO;
 
-    public PersonCLI(PersonDAOCollection personDAO, AppUserDAOCollection appUserDAO, Scanner scanner) {
+    public PersonCLI(PersonDAO personDAO, AppUserDAO appUserDAO) {
         this.personDAO = personDAO;
         this.appUserDAO = appUserDAO;
-        this.scanner = scanner;
     }
 
     public void run() {
         boolean running = true;
-
         while (running) {
             System.out.println("\n--- Person Menu ---");
-            System.out.println("1. List all persons");
-            System.out.println("2. Add new person");
-            System.out.println("0. Back to main menu");
+            System.out.println("1. Create Person");
+            System.out.println("2. List All Persons");
+            System.out.println("0. Back to Main Menu");
             System.out.print("Choose an option: ");
 
-            String choice = scanner.nextLine();
+            int choice = UserInputManager.readIntInRange("", 0, 2);
 
             switch (choice) {
-                case "1" -> listPersons();
-                case "2" -> addPerson();
-                case "0" -> running = false;
-                default -> System.out.println("Invalid choice. Please try again.");
+                case 1:
+                    createPerson();
+                    break;
+                case 2:
+                    listAllPersons();
+                    break;
+                case 0:
+                    running = false;
+                    break;
+                default:
+                    System.out.println("Invalid choice, please try again.");
             }
         }
     }
 
-    private void listPersons() {
+    public void createPerson() {
+        System.out.println("\n--- Create Person ---");
+
+        String firstName = UserInputManager.readValidName("Enter first name: ");
+        String lastName = UserInputManager.readValidName("Enter last name: ");
+        String email = UserInputManager.readValidEmail("Enter email: ");
+
+        AppUser selectedAppUser = chooseAppUserOrGuest();
+
+        Person person;
+        if (selectedAppUser == null) {
+            // No AppUser selected – use constructor that assigns Guest by default
+            person = new Person(firstName, lastName, email);
+        } else {
+            person = new Person(firstName, lastName, email, selectedAppUser);
+        }
+
+        personDAO.persist(person);
+        System.out.println("Person created: " + person.getFirstName() + " " + person.getLastName());
+    }
+
+    private AppUser chooseAppUserOrGuest() {
+        Collection<AppUser> appUsers = appUserDAO.findAll();
+        if (appUsers.isEmpty()) {
+            System.out.println("No AppUsers found. Guest will be used by default.");
+            return null;
+        }
+
+        System.out.println("Available AppUsers:");
+        int index = 1;
+        for (AppUser user : appUsers) {
+            System.out.println(index + ". " + user.getUsername() + " (" + user.getRole() + ")");
+            index++;
+        }
+        System.out.println("0. Use Guest");
+
+        int choice = UserInputManager.readIntInRange("Choose AppUser by number (or 0 for Guest): ", 0, appUsers.size());
+
+        if (choice == 0) {
+            return null;
+        }
+
+        // Get AppUser by index (without streams)
+        int i = 1;
+        for (AppUser user : appUsers) {
+            if (i == choice) return user;
+            i++;
+        }
+
+        // Should not reach here
+        System.out.println("Invalid choice, defaulting to Guest.");
+        return null;
+    }
+
+    public void listAllPersons() {
+        System.out.println("\n--- All Persons ---");
         Collection<Person> persons = personDAO.findAll();
+
         if (persons.isEmpty()) {
             System.out.println("No persons found.");
             return;
         }
-        System.out.println("\nList of persons:");
-        for (Person p : persons) {
-            System.out.println(p);
+
+        for (Person person : persons) {
+            System.out.println(person.getId() + ": " + person.getFirstName() + " " +
+                    person.getLastName() + " - " +
+                    person.getCredentials().getUsername());
         }
-    }
-
-    private void addPerson() {
-        System.out.print("Enter first name: ");
-        String firstName = scanner.nextLine().trim();
-
-        System.out.print("Enter last name: ");
-        String lastName = scanner.nextLine().trim();
-
-        System.out.print("Enter email: ");
-        String email = scanner.nextLine().trim();
-
-        AppUser user = selectAppUser();
-        if (user == null) {
-            System.out.println("No valid user selected. Cancelling person creation.");
-            return;
-        }
-
-        try {
-            Person newPerson = new Person(firstName, lastName, email, user);
-            personDAO.persist(newPerson);
-            System.out.println("Person created: " + newPerson);
-        } catch (Exception e) {
-            System.out.println("Error creating person: " + e.getMessage());
-        }
-    }
-
-    private AppUser selectAppUser() {
-        Collection<AppUser> users = appUserDAO.findAll();
-        if (users.isEmpty()) {
-            System.out.println("No AppUsers found. You need to create users first.");
-            return null;
-        }
-
-        System.out.println("Select an AppUser by number:");
-        int i = 1;
-        for (AppUser user : users) {
-            System.out.println(i++ + ". " + user);
-        }
-        System.out.print("Your choice: ");
-
-        String input = scanner.nextLine();
-        try {
-            int index = Integer.parseInt(input) - 1;
-            if (index >= 0 && index < users.size()) {
-                // To get element at index from Collection, convert to array:
-                AppUser[] userArray = users.toArray(new AppUser[0]);
-                return userArray[index];
-            } else {
-                System.out.println("Invalid selection.");
-            }
-        } catch (NumberFormatException e) {
-            System.out.println("Invalid input, please enter a number.");
-        }
-        return null;
     }
 }
