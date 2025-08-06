@@ -1,3 +1,12 @@
+package io.github.bokalebsson.cli;
+
+import java.util.Scanner;
+
+import io.github.bokalebsson.dao.impl.PersonDAOCollection;
+import io.github.bokalebsson.dao.impl.AppUserDAOCollection;
+import io.github.bokalebsson.dao.impl.ToDoItemDAOCollection;
+import io.github.bokalebsson.dao.impl.ToDoItemTaskDAOCollection;
+
 public class MainCLI {
 
     private final Scanner scanner = new Scanner(System.in);
@@ -7,8 +16,8 @@ public class MainCLI {
     private final ToDoItemTaskCLI toDoItemTaskCLI;
     private final AppUserCLI appUserCLI;
 
-    public MainCLI(PersonDAOCollection personDAO, ToDoItemDAOCollection toDoItemDAO,
-                   ToDoItemTaskDAOCollection toDoItemTaskDAO, AppUserDAOCollection appUserDAO) {
+    public MainCLI(AppUserDAOCollection appUserDAO, PersonDAOCollection personDAO,
+                   ToDoItemDAOCollection toDoItemDAO, ToDoItemTaskDAOCollection toDoItemTaskDAO) {
         this.personCLI = new PersonCLI(personDAO, scanner);
         this.toDoItemCLI = new ToDoItemCLI(toDoItemDAO, personDAO, scanner);
         this.toDoItemTaskCLI = new ToDoItemTaskCLI(toDoItemTaskDAO, toDoItemDAO, personDAO, scanner);
@@ -18,7 +27,7 @@ public class MainCLI {
     public void run() {
         boolean running = true;
         while (running) {
-            System.out.println("==== Main Menu ====");
+            System.out.println("\n==== Main Menu ====");
             System.out.println("1. Manage Persons");
             System.out.println("2. Manage ToDoItems");
             System.out.println("3. Manage ToDoItemTasks");
