@@ -30,6 +30,7 @@ public class InputValidator {
     // Checks if the name contains only letters, spaces or hyphens
     public static boolean isValidName(String input) {
         if (input == null) return false;
+        if (input.trim().isEmpty()) return false;
         return input.matches("^[A-Za-zåäöÅÄÖ\\-\\s]+$");
     }
 
