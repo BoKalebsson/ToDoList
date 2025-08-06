@@ -1,12 +1,12 @@
 package io.github.bokalebsson;
 
+import io.github.bokalebsson.cli.MainCLI;
 import io.github.bokalebsson.dao.impl.AppUserDAOCollection;
 import io.github.bokalebsson.dao.impl.PersonDAOCollection;
 import io.github.bokalebsson.dao.impl.ToDoItemDAOCollection;
 import io.github.bokalebsson.dao.impl.ToDoItemTaskDAOCollection;
 import io.github.bokalebsson.util.ApplicationDataManager;
 import io.github.bokalebsson.model.*;
-import io.github.bokalebsson.cli.CLI;
 
 import java.time.LocalDate;
 
@@ -20,7 +20,7 @@ public class Application {
     private ToDoItemTaskDAOCollection toDoItemTaskDAO;
     private ApplicationDataManager applicationDataManager;
 
-    private CLI cli;
+    private MainCLI cli;
 
     // Constructor for filepathing to JSON and properties-files:
     public Application(String dataFolderPath) {
@@ -50,7 +50,7 @@ public class Application {
     }
 
     private void runCLI() {
-        cli = new CLI(appUserDAO, personDAO, toDoItemDAO, toDoItemTaskDAO);
+        cli = new MainCLI(appUserDAO, personDAO, toDoItemDAO, toDoItemTaskDAO);
         cli.run();
     }
 
