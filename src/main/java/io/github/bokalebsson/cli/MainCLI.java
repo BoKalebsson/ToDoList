@@ -18,7 +18,7 @@ public class MainCLI {
 
     public MainCLI(AppUserDAOCollection appUserDAO, PersonDAOCollection personDAO,
                    ToDoItemDAOCollection toDoItemDAO, ToDoItemTaskDAOCollection toDoItemTaskDAO) {
-        this.personCLI = new PersonCLI(personDAO, scanner);
+        this.personCLI = new PersonCLI(personDAO, appUserDAO, scanner);
         this.toDoItemCLI = new ToDoItemCLI(toDoItemDAO, personDAO, scanner);
         this.toDoItemTaskCLI = new ToDoItemTaskCLI(toDoItemTaskDAO, toDoItemDAO, personDAO, scanner);
         this.appUserCLI = new AppUserCLI(appUserDAO, scanner);
