@@ -6,6 +6,7 @@ import io.github.bokalebsson.dao.impl.ToDoItemDAOCollection;
 import io.github.bokalebsson.dao.impl.ToDoItemTaskDAOCollection;
 import io.github.bokalebsson.util.ApplicationDataManager;
 import io.github.bokalebsson.model.*;
+import io.github.bokalebsson.cli.CLI;
 
 import java.time.LocalDate;
 
@@ -19,6 +20,8 @@ public class Application {
     private ToDoItemTaskDAOCollection toDoItemTaskDAO;
     private ApplicationDataManager applicationDataManager;
 
+    private CLI cli;
+
     // Constructor for filepathing to JSON and properties-files:
     public Application(String dataFolderPath) {
         this.dataFolderPath = dataFolderPath;
@@ -26,7 +29,8 @@ public class Application {
 
     public void start() {
         loadData();
-        workArea();
+        runCLI();
+        //workArea();
         saveData();
         System.out.println("Application closed. Data saved.");
     }
@@ -43,6 +47,11 @@ public class Application {
                 dataFolderPath, personDAO, appUserDAO, toDoItemDAO, toDoItemTaskDAO);
 
         applicationDataManager.loadData();
+    }
+
+    private void runCLI() {
+        cli = new CLI(appUserDAO, personDAO, toDoItemDAO, toDoItemTaskDAO);
+        cli.run();
     }
 
     private void workArea() {
