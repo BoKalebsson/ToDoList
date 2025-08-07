@@ -128,28 +128,33 @@ public class PersonCLI {
 
         System.out.print("Enter the ID of the person to remove: ");
         int id;
+
         try {
+            // Try to parse ID from input
             id = Integer.parseInt(scanner.nextLine().trim());
+
+            // Try to fetch the person (may throw IllegalArgumentException)
+            Person person = personDAO.findById(id);
+
+            System.out.println("Found: " + person);
+            System.out.print("Are you sure you want to remove this person? (y/n): ");
+            String confirmation = scanner.nextLine().trim().toLowerCase();
+
+            if (confirmation.equals("y")) {
+                personDAO.remove(id);
+                System.out.println("Person successfully removed.");
+            } else {
+                System.out.println("Deletion cancelled.");
+            }
+
         } catch (NumberFormatException e) {
             System.out.println("Invalid ID. Must be a number.");
-            return;
-        }
 
-        Person person = personDAO.findById(id);
-        if (person == null) {
-            System.out.println("No person found with ID " + id);
-            return;
-        }
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
 
-        System.out.println("Found: " + person);
-        System.out.print("Are you sure you want to remove this person? (y/n): ");
-        String confirmation = scanner.nextLine().trim().toLowerCase();
-
-        if (confirmation.equals("y")) {
-            personDAO.remove(id);
-            System.out.println("Person successfully removed.");
-        } else {
-            System.out.println("Deletion cancelled.");
+        } catch (Exception e) {
+            System.out.println("An unexpected error occurred: " + e.getMessage());
         }
     }
 }
