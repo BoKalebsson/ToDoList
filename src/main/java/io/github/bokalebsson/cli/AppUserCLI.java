@@ -23,6 +23,7 @@ public class AppUserCLI {
             System.out.println("\n--- AppUser Menu ---");
             System.out.println("1. List all users");
             System.out.println("2. Add new user");
+            System.out.println("3. Remove user");
             System.out.println("0. Back to main menu");
             System.out.print("Choose an option: ");
 
@@ -34,6 +35,9 @@ public class AppUserCLI {
                     break;
                 case "2":
                     addUser();
+                    break;
+                case "3":
+                    removeUser();
                     break;
                 case "0":
                     running = false;
@@ -85,5 +89,34 @@ public class AppUserCLI {
         AppUser newUser = new AppUser(username, password, role);
         appUserDAO.persist(newUser);
         System.out.println("User added: " + newUser);
+    }
+
+    public void removeUser() {
+        System.out.println("\n=== Remove User ===");
+
+        // Ask for username
+        System.out.print("Enter the username of the user to remove: ");
+        String username = scanner.nextLine().trim();
+
+        // Check if user exists
+        Optional<AppUser> userOpt = appUserDAO.findByUsername(username);
+        if (userOpt.isEmpty()) {
+            System.out.println("No user found with username \"" + username + "\".");
+            return;
+        }
+
+        AppUser user = userOpt.get();
+
+        // Show user info before deletion
+        System.out.println("Found: " + user);
+        System.out.print("Are you sure you want to remove this user? (y/n): ");
+        String confirmation = scanner.nextLine().trim().toLowerCase();
+
+        if (confirmation.equals("y")) {
+            appUserDAO.remove(username);
+            System.out.println("User successfully removed.");
+        } else {
+            System.out.println("Deletion cancelled.");
+        }
     }
 }
