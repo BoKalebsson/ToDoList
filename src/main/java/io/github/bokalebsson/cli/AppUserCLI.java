@@ -61,6 +61,7 @@ public class AppUserCLI {
         System.out.println("Select role:");
         System.out.println("1. ROLE_APP_ADMIN");
         System.out.println("2. ROLE_APP_USER");
+        System.out.println("3. ROLE_APP_GUEST");
         System.out.print("Choose role: ");
 
         AppRole role = null;
@@ -73,8 +74,11 @@ public class AppUserCLI {
                 case "2":
                     role = AppRole.ROLE_APP_USER;
                     break;
+                case "3":
+                    role = AppRole.ROLE_APP_GUEST;
+                    break;
                 default:
-                    System.out.print("Invalid choice, please select 1 or 2: ");
+                    System.out.print("Invalid choice, please select 1, 2 or 3: ");
             }
         }
 
