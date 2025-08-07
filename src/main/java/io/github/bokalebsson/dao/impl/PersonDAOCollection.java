@@ -63,6 +63,13 @@ public class PersonDAOCollection implements PersonDAO {
             throw new IllegalArgumentException("Person already exists: " + personId);
         }
 
+        // Check for duplicate email
+        for (Person existingPerson : persons.values()) {
+            if (existingPerson.getEmail().equalsIgnoreCase(person.getEmail())) {
+                throw new IllegalArgumentException("A person with this email already exists: " + person.getEmail());
+            }
+        }
+
         // Add the person to the collection:
         persons.put(personId, person);
 
