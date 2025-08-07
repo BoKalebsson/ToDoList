@@ -29,8 +29,12 @@ public class Application {
 
     public void start() {
         loadData();
-        runCLI();
-        //workArea();
+
+        // Comment out runClI() to disable CLI-interface:
+//        runCLI();
+
+        // Comment out workArea to disable default-DAO-showcase:
+        workArea();
         saveData();
         System.out.println("Application closed. Data saved.");
     }
@@ -49,11 +53,13 @@ public class Application {
         applicationDataManager.loadData();
     }
 
+    // Use this method to show the CLI-interface (currently under development, needs fixing.)
     private void runCLI() {
         cli = new MainCLI(appUserDAO, personDAO, toDoItemDAO, toDoItemTaskDAO);
         cli.run();
     }
 
+    // Use this method to show that the application works:
     private void workArea() {
 
         // Create a new AppUser:
