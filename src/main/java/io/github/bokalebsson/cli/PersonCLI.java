@@ -26,6 +26,7 @@ public class PersonCLI {
             System.out.println("\n--- Person Menu ---");
             System.out.println("1. Create Person");
             System.out.println("2. List All Persons");
+            System.out.println("3. Remove Person");
             System.out.println("0. Back to Main Menu");
             System.out.print("Choose an option: ");
 
@@ -37,6 +38,9 @@ public class PersonCLI {
                     break;
                 case 2:
                     listAllPersons();
+                    break;
+                case 3:
+                    removePerson();
                     break;
                 case 0:
                     running = false;
@@ -89,14 +93,13 @@ public class PersonCLI {
             return null;
         }
 
-        // Get AppUser by index (without streams)
+        // Get AppUser by index
         int i = 1;
         for (AppUser user : appUsers) {
             if (i == choice) return user;
             i++;
         }
 
-        // Should not reach here
         System.out.println("Invalid choice, defaulting to Guest.");
         return null;
     }
@@ -114,6 +117,41 @@ public class PersonCLI {
             System.out.println(person.getId() + ": " + person.getFirstName() + " " +
                     person.getLastName() + " - " +
                     person.getCredentials().getUsername());
+        }
+    }
+
+    public void removePerson() {
+        System.out.println("\n=== Remove Person ===");
+
+        // Ask for ID
+        System.out.print("Enter the ID of the person to remove: ");
+        int id;
+        try {
+            id = Integer.parseInt(scanner.nextLine().trim());
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid ID. Must be a number.");
+            return;
+        }
+
+        // Check if person exists
+        Optional<Person> personOpt = personDAO.findById(id);
+        if (personOpt.isEmpty()) {
+            System.out.println("No person found with ID " + id);
+            return;
+        }
+
+        Person person = personOpt.get();
+
+        // Show person info before deletion
+        System.out.println("Found: " + person);
+        System.out.print("Are you sure you want to remove this person? (y/n): ");
+        String confirmation = scanner.nextLine().trim().toLowerCase();
+
+        if (confirmation.equals("y")) {
+            personDAO.remove(id);
+            System.out.println("Person successfully removed.");
+        } else {
+            System.out.println("Deletion cancelled.");
         }
     }
 }
