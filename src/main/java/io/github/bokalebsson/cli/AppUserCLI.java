@@ -5,6 +5,7 @@ import io.github.bokalebsson.model.AppUser;
 import io.github.bokalebsson.model.AppRole;
 
 import java.util.Scanner;
+import java.util.NoSuchElementException;
 
 public class AppUserCLI {
 
@@ -97,21 +98,26 @@ public class AppUserCLI {
         System.out.print("Enter the username of the user to remove: ");
         String username = scanner.nextLine().trim();
 
-        AppUser user = appUserDAO.findByUsername(username);
-        if (user == null) {
-            System.out.println("No user found with username \"" + username + "\".");
-            return;
-        }
+        try {
+            // Try to find the user
+            AppUser user = appUserDAO.findByUsername(username);
+            System.out.println("Found: " + user);
 
-        System.out.println("Found: " + user);
-        System.out.print("Are you sure you want to remove this user? (y/n): ");
-        String confirmation = scanner.nextLine().trim().toLowerCase();
+            // Confirm deletion
+            System.out.print("Are you sure you want to remove this user? (y/n): ");
+            String confirmation = scanner.nextLine().trim().toLowerCase();
 
-        if (confirmation.equals("y")) {
-            appUserDAO.remove(username);
-            System.out.println("User successfully removed.");
-        } else {
-            System.out.println("Deletion cancelled.");
+            if (confirmation.equals("y")) {
+                appUserDAO.remove(username);
+                System.out.println("User successfully removed.");
+            } else {
+                System.out.println("Deletion cancelled.");
+            }
+
+        } catch (IllegalArgumentException | NoSuchElementException e) {
+            System.out.println(e.getMessage());
+        } catch (Exception e) {
+            System.out.println("An unexpected error occurred: " + e.getMessage());
         }
     }
 }
