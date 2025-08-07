@@ -33,19 +33,19 @@ public class PersonCLI {
             System.out.println("0. Back to Main Menu");
             System.out.print("Choose an option: ");
 
-            int choice = UserInputManager.readIntInRange("", 0, 2);
+            String choice = scanner.nextLine();
 
             switch (choice) {
-                case 1:
+                case "1":
                     createPerson();
                     break;
-                case 2:
+                case "2":
                     listAllPersons();
                     break;
-                case 3:
+                case "3":
                     removePerson();
                     break;
-                case 0:
+                case "0":
                     running = false;
                     break;
                 default:
