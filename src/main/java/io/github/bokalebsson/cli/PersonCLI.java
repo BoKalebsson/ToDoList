@@ -9,8 +9,11 @@ import io.github.bokalebsson.model.Person;
 import io.github.bokalebsson.util.UserInputManager;
 
 import java.util.Collection;
+import java.util.Scanner;
 
 public class PersonCLI {
+
+    private final Scanner scanner = new Scanner(System.in);
 
     private final PersonDAO personDAO;
     private final AppUserDAO appUserDAO;
@@ -123,7 +126,6 @@ public class PersonCLI {
     public void removePerson() {
         System.out.println("\n=== Remove Person ===");
 
-        // Ask for ID
         System.out.print("Enter the ID of the person to remove: ");
         int id;
         try {
@@ -133,16 +135,12 @@ public class PersonCLI {
             return;
         }
 
-        // Check if person exists
-        Optional<Person> personOpt = personDAO.findById(id);
-        if (personOpt.isEmpty()) {
+        Person person = personDAO.findById(id);
+        if (person == null) {
             System.out.println("No person found with ID " + id);
             return;
         }
 
-        Person person = personOpt.get();
-
-        // Show person info before deletion
         System.out.println("Found: " + person);
         System.out.print("Are you sure you want to remove this person? (y/n): ");
         String confirmation = scanner.nextLine().trim().toLowerCase();

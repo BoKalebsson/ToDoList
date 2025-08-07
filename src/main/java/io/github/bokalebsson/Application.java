@@ -9,6 +9,7 @@ import io.github.bokalebsson.util.ApplicationDataManager;
 import io.github.bokalebsson.model.*;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 public class Application {
 
@@ -31,10 +32,10 @@ public class Application {
         loadData();
 
         // Comment out runClI() to disable CLI-interface:
-//        runCLI();
+        runCLI();
 
         // Comment out workArea to disable default-DAO-showcase:
-        workArea();
+//        workArea();
         saveData();
         System.out.println("Application closed. Data saved.");
     }

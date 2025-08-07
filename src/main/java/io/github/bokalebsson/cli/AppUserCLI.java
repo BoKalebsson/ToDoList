@@ -94,20 +94,15 @@ public class AppUserCLI {
     public void removeUser() {
         System.out.println("\n=== Remove User ===");
 
-        // Ask for username
         System.out.print("Enter the username of the user to remove: ");
         String username = scanner.nextLine().trim();
 
-        // Check if user exists
-        Optional<AppUser> userOpt = appUserDAO.findByUsername(username);
-        if (userOpt.isEmpty()) {
+        AppUser user = appUserDAO.findByUsername(username);
+        if (user == null) {
             System.out.println("No user found with username \"" + username + "\".");
             return;
         }
 
-        AppUser user = userOpt.get();
-
-        // Show user info before deletion
         System.out.println("Found: " + user);
         System.out.print("Are you sure you want to remove this user? (y/n): ");
         String confirmation = scanner.nextLine().trim().toLowerCase();
