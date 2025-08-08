@@ -61,16 +61,6 @@ public class PersonCLI {
         String lastName = UserInputManager.readValidName("Enter last name: ");
         String email = UserInputManager.readValidEmail("Enter email: ");
 
-        // Check if person with this email already exists
-        try {
-            Person existingPerson = personDAO.findByEmail(email);
-            System.out.println("Error: A person with the email '" + email + "' already exists: " +
-                    existingPerson.getFirstName() + " " + existingPerson.getLastName());
-            return;
-        } catch (IllegalArgumentException e) {
-            // No existing person found with this email - safe to create a new person
-        }
-
         AppUser selectedAppUser = chooseAppUserOrGuest();
 
         Person person;
