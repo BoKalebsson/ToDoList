@@ -54,7 +54,7 @@ public class Application {
         applicationDataManager.loadData();
     }
 
-    // Use this method to show the CLI-interface (currently under development, needs fixing.)
+    // Use this method to show the CLI-interface:
     private void runCLI() {
         cli = new MainCLI(appUserDAO, personDAO, toDoItemDAO, toDoItemTaskDAO);
         cli.run();
