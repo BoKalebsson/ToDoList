@@ -1,11 +1,13 @@
 package io.github.bokalebsson.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Objects;
 
 public class AppUser {
 
     // Attributes:
     private String username;
+    @JsonIgnore
     private String password;
     private AppRole role;
 
