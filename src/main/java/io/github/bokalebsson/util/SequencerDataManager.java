@@ -35,9 +35,23 @@ public class SequencerDataManager {
             int todoItemId = Integer.parseInt(properties.getProperty("todoItemId", "0"));
             int todoTaskId = Integer.parseInt(properties.getProperty("todoTaskId", "0"));
 
-            PersonIdSequencer.setCurrentId(personId);
-            ToDoItemIdSequencer.setCurrentId(todoItemId);
-            ToDoItemTaskIdSequencer.setCurrentId(todoTaskId);
+            if (personId >= 1) {
+                PersonIdSequencer.setCurrentId(personId);
+            } else {
+                System.out.println("Sequencer file: 'personId' missing or zero — starting from scratch.");
+            }
+
+            if (todoItemId >= 1) {
+                ToDoItemIdSequencer.setCurrentId(todoItemId);
+            } else {
+                System.out.println("Sequencer file: 'todoItemId' missing or zero — starting from scratch.");
+            }
+
+            if (todoTaskId >= 1) {
+                ToDoItemTaskIdSequencer.setCurrentId(todoTaskId);
+            } else {
+                System.out.println("Sequencer file: 'todoTaskId' missing or zero — starting from scratch.");
+            }
 
             System.out.println("Sequencer values loaded from file.");
 
