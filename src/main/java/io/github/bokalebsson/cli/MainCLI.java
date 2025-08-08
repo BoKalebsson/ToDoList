@@ -48,11 +48,11 @@ public class MainCLI {
                 case "3": toDoItemTaskCLI.run(); break;
                 case "4": appUserCLI.run(); break;
                 case "0":
-                    System.out.println("Exiting program...");
+                    System.out.println("\nExiting program...\n");
                     running = false;
                     break;
                 default:
-                    System.out.println("Invalid choice. Please try again.");
+                    System.out.println("\nInvalid choice. Please try again.");
             }
         }
     }

@@ -60,7 +60,7 @@ public class SequencerDataManager {
 
         try (FileOutputStream outputStream = new FileOutputStream(filePath.toFile())) {
             properties.store(outputStream, "Sequencer ID values");
-            System.out.println("Saving sequencer file: " + filePath + " ... Done! ✅");
+            System.out.println("Saving sequencer file: " + filePath + " ... Done! ✅\n");
         } catch (IOException e) {
             System.err.println("Saving sequencer file: " + filePath + " ... Failed to save! ❌" + e.getMessage());
         }
