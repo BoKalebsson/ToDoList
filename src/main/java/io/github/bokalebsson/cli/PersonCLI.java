@@ -51,7 +51,7 @@ public class PersonCLI {
                     running = false;
                     break;
                 default:
-                    System.out.println("Invalid choice, please try again.");
+                    System.out.println("\nInvalid choice, please try again.");
             }
         }
     }
@@ -64,7 +64,7 @@ public class PersonCLI {
             email = UserInputManager.readValidEmail("Enter email: ");
             try {
                 personDAO.findByEmail(email);
-                System.out.println("Error: A person with the email '" + email + "' already exists. Try another.");
+                System.out.println("\nError: A person with the email '" + email + "' already exists. Try another.\n");
             } catch (IllegalArgumentException e) {
                 break;
             }
@@ -85,7 +85,7 @@ public class PersonCLI {
                 }
             }
             if (appUserAlreadyAssigned) {
-                System.out.println("Error: The selected AppUser '" + selectedAppUser.getUsername() + "' is already assigned to another person.");
+                System.out.println("\nError: The selected AppUser '" + selectedAppUser.getUsername() + "' is already assigned to another person.\n");
                 System.out.println("Person creation aborted. Please choose a different AppUser.");
                 return;
             }
@@ -100,9 +100,9 @@ public class PersonCLI {
 
         try {
             personDAO.persist(person);
-            System.out.println("Person created: " + person.getFirstName() + " " + person.getLastName());
+            System.out.println("Person created: \n" + person);
         } catch (IllegalArgumentException e) {
-            System.out.println("Error: " + e.getMessage());
+            System.out.println("\nError: " + e.getMessage());
         }
     }
 
@@ -128,12 +128,12 @@ public class PersonCLI {
         }
 
         if (availableUsers.isEmpty()) {
-            System.out.println("No available AppUsers found. Guest will be used by default.");
+            System.out.println("\nNo available AppUsers found. Guest will be used by default.\n");
             return null;
         }
 
         while (true) {
-            System.out.println("Available AppUsers:");
+            System.out.println("\nAvailable AppUsers:");
             int index = 1;
             for (AppUser user : availableUsers) {
                 System.out.println(index + ". " + user.getUsername() + " (" + user.getRole() + ")");
@@ -141,7 +141,7 @@ public class PersonCLI {
             }
             System.out.println("0. Use Guest");
 
-            int choice = UserInputManager.readIntInRange("Choose AppUser by number (or 0 for Guest): ", 0, availableUsers.size());
+            int choice = UserInputManager.readIntInRange("\nChoose AppUser by number (or 0 for Guest): ", 0, availableUsers.size());
 
             if (choice == 0) {
                 return null;
@@ -151,7 +151,7 @@ public class PersonCLI {
                 return availableUsers.get(choice - 1);
             }
 
-            System.out.println("Invalid choice, please try again.");
+            System.out.println("\nInvalid choice, please try again.\n");
         }
     }
 
@@ -196,13 +196,13 @@ public class PersonCLI {
             }
 
         } catch (NumberFormatException e) {
-            System.out.println("Invalid ID. Must be a number.");
+            System.out.println("\nInvalid ID. Must be a number.");
 
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
 
         } catch (Exception e) {
-            System.out.println("An unexpected error occurred: " + e.getMessage());
+            System.out.println("\nAn unexpected error occurred: " + e.getMessage());
         }
     }
 }
