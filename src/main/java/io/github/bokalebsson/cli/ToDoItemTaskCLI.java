@@ -62,7 +62,7 @@ public class ToDoItemTaskCLI {
     }
 
     private void addTask() {
-        System.out.println("Select a ToDoItem ID to assign task to:");
+        System.out.println("\nSelect a ToDoItem ID to assign task to:");
         for (ToDoItem item : toDoItemDAO.findAll()) {
             System.out.println(item.getId() + ": " + item.getTitle());
         }
@@ -82,7 +82,7 @@ public class ToDoItemTaskCLI {
             }
         }
 
-        System.out.println("Select a Person ID to assign the task to:");
+        System.out.println("\nSelect a Person ID to assign the task to:");
         for (Person p : personDAO.findAll()) {
             System.out.println(p.getId() + ": " + p.getFirstName() + " " + p.getLastName());
         }
@@ -104,6 +104,6 @@ public class ToDoItemTaskCLI {
 
         ToDoItemTask newTask = new ToDoItemTask(selectedItem, assignedPerson);
         toDoItemTaskDAO.persist(newTask);
-        System.out.println("ToDoItemTask added: " + newTask);
+        System.out.println("\nToDoItemTask added: \n" + newTask);
     }
 }

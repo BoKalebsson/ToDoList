@@ -44,13 +44,13 @@ public class AppUserCLI {
                     running = false;
                     break;
                 default:
-                    System.out.println("Invalid choice, please try again.");
+                    System.out.println("\nInvalid choice, please try again.");
             }
         }
     }
 
     private void listUsers() {
-        System.out.println("\nListing all users:");
+        System.out.println("\nListing all users:\n");
         for (AppUser user : appUserDAO.findAll()) {
             System.out.println(user);
         }
@@ -68,13 +68,13 @@ public class AppUserCLI {
             }
 
             if (username.trim().isEmpty()) {
-                System.out.println("Error: Username cannot be empty. Please enter a valid username.");
+                System.out.println("\nError: Username cannot be empty. Please enter a valid username.");
                 continue;
             }
 
             try {
                 appUserDAO.findByUsername(username);
-                System.out.println("Error: Username '" + username + "' already exists. Try another.");
+                System.out.println("\nError: Username '" + username + "' already exists. Try another.");
             } catch (NoSuchElementException e) {
                 break;
             }
@@ -83,7 +83,7 @@ public class AppUserCLI {
         System.out.print("Enter password: ");
         String password = scanner.nextLine();
 
-        System.out.println("Select role:");
+        System.out.println("\nSelect role:");
         System.out.println("1. ROLE_APP_ADMIN");
         System.out.println("2. ROLE_APP_USER");
         System.out.println("3. ROLE_APP_GUEST");
@@ -103,7 +103,7 @@ public class AppUserCLI {
                     role = AppRole.ROLE_APP_GUEST;
                     break;
                 default:
-                    System.out.print("Invalid choice, please select 1, 2 or 3: ");
+                    System.out.print("\nInvalid choice, please select 1, 2 or 3: ");
             }
         }
 
@@ -111,9 +111,9 @@ public class AppUserCLI {
 
         try {
             appUserDAO.persist(newUser);
-            System.out.println("User added: " + newUser);
+            System.out.println("\nUser added: \n" + newUser);
         } catch (IllegalArgumentException e) {
-            System.out.println("Error: " + e.getMessage());
+            System.out.println("\nError: " + e.getMessage());
         }
     }
 
@@ -129,7 +129,7 @@ public class AppUserCLI {
             System.out.println("Found: " + user);
 
             // Confirm deletion
-            System.out.print("Are you sure you want to remove this user? (y/n): ");
+            System.out.print("\nAre you sure you want to remove this user? (y/n): ");
             String confirmation = scanner.nextLine().trim().toLowerCase();
 
             if (confirmation.equals("y")) {
@@ -142,7 +142,7 @@ public class AppUserCLI {
         } catch (IllegalArgumentException | NoSuchElementException e) {
             System.out.println(e.getMessage());
         } catch (Exception e) {
-            System.out.println("An unexpected error occurred: " + e.getMessage());
+            System.out.println("\nAn unexpected error occurred: " + e.getMessage());
         }
     }
 }

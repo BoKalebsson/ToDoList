@@ -93,7 +93,7 @@ public class ToDoItemCLI {
             }
         } while (dueDate == null);
 
-        System.out.println("Select a person ID to assign this ToDoItem to:");
+        System.out.println("Select a person ID to assign a creator for this ToDoItem:");
         for (Person p : personDAO.findAll()) {
             System.out.println(p.getId() + ": " + p.getFirstName() + " " + p.getLastName());
         }
@@ -114,6 +114,6 @@ public class ToDoItemCLI {
 
         ToDoItem newItem = new ToDoItem(title, description, dueDate, assignedPerson);
         toDoItemDAO.persist(newItem);
-        System.out.println("ToDoItem added: " + newItem);
+        System.out.println("\nToDoItem added: \n" + newItem);
     }
 }

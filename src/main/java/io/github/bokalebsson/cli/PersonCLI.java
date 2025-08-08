@@ -184,7 +184,7 @@ public class PersonCLI {
             // Try to fetch the person (may throw IllegalArgumentException)
             Person person = personDAO.findById(id);
 
-            System.out.println("Found: " + person);
+            System.out.println("\nFound: \n" + person);
             System.out.print("Are you sure you want to remove this person? (y/n): ");
             String confirmation = scanner.nextLine().trim().toLowerCase();
 
