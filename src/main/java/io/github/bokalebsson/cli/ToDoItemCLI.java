@@ -105,11 +105,10 @@ public class ToDoItemCLI {
             try {
                 int id = Integer.parseInt(idInput);
                 assignedPerson = personDAO.findById(id);
-                if (assignedPerson == null) {
-                    System.out.println("No person found with that ID, try again.");
-                }
             } catch (NumberFormatException e) {
                 System.out.println("Invalid input, enter a numeric ID.");
+            } catch (IllegalArgumentException e) {
+                System.out.println("No person found with ID: " + idInput + ". Try again.");
             }
         }
 
