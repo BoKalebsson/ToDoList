@@ -24,7 +24,7 @@ public class SequencerDataManager {
     // Load values from the properties file and set them in the sequencers
     public void load() {
         if (!filePath.toFile().exists()) {
-            System.out.println("No sequencer file found. Default values will be used.");
+            System.out.println("Loading sequencer file: " + filePath + " ... File not found, using defaults. ✅");
             return;
         }
 
@@ -37,26 +37,18 @@ public class SequencerDataManager {
 
             if (personId >= 1) {
                 PersonIdSequencer.setCurrentId(personId);
-            } else {
-                System.out.println("Sequencer file: 'personId' missing or zero — starting from scratch.");
             }
-
             if (todoItemId >= 1) {
                 ToDoItemIdSequencer.setCurrentId(todoItemId);
-            } else {
-                System.out.println("Sequencer file: 'todoItemId' missing or zero — starting from scratch.");
             }
-
             if (todoTaskId >= 1) {
                 ToDoItemTaskIdSequencer.setCurrentId(todoTaskId);
-            } else {
-                System.out.println("Sequencer file: 'todoTaskId' missing or zero — starting from scratch.");
             }
 
-            System.out.println("Sequencer values loaded from file.");
+            System.out.println("Loading sequencer file: " + filePath + " ... Done! ✅");
 
         } catch (IOException | NumberFormatException e) {
-            System.err.println("Failed to load sequencer values: " + e.getMessage());
+            System.out.println("Loading sequencer file: " + filePath + " ... Failed to load, using defaults. ✅");
         }
     }
 
@@ -68,9 +60,9 @@ public class SequencerDataManager {
 
         try (FileOutputStream outputStream = new FileOutputStream(filePath.toFile())) {
             properties.store(outputStream, "Sequencer ID values");
-            System.out.println("Sequencer values saved to file.");
+            System.out.println("Saving sequencer file: " + filePath + " ... Done! ✅");
         } catch (IOException e) {
-            System.err.println("Failed to save sequencer values: " + e.getMessage());
+            System.err.println("Saving sequencer file: " + filePath + " ... Failed to save! ❌" + e.getMessage());
         }
     }
 }
