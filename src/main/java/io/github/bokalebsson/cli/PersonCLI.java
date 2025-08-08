@@ -10,6 +10,8 @@ import io.github.bokalebsson.util.UserInputManager;
 
 import java.util.Collection;
 import java.util.Scanner;
+import java.util.List;
+import java.util.ArrayList;
 
 public class PersonCLI {
 
@@ -105,35 +107,52 @@ public class PersonCLI {
     }
 
     private AppUser chooseAppUserOrGuest() {
-        Collection<AppUser> appUsers = appUserDAO.findAll();
-        if (appUsers.isEmpty()) {
-            System.out.println("No AppUsers found. Guest will be used by default.");
+        Collection<AppUser> allAppUsers = appUserDAO.findAll();
+        Collection<Person> allPersons = personDAO.findAll();
+
+        // Collect assigned users (excl. Guest)
+        List<AppUser> assignedUsers = new ArrayList<>();
+        for (Person p : allPersons) {
+            AppUser cred = p.getCredentials();
+            if (cred != null && cred != AppUser.GUEST && !assignedUsers.contains(cred)) {
+                assignedUsers.add(cred);
+            }
+        }
+
+        // Filer away assigned users:
+        List<AppUser> availableUsers = new ArrayList<>();
+        for (AppUser user : allAppUsers) {
+            if (!assignedUsers.contains(user)) {
+                availableUsers.add(user);
+            }
+        }
+
+        if (availableUsers.isEmpty()) {
+            System.out.println("No available AppUsers found. Guest will be used by default.");
             return null;
         }
 
-        System.out.println("Available AppUsers:");
-        int index = 1;
-        for (AppUser user : appUsers) {
-            System.out.println(index + ". " + user.getUsername() + " (" + user.getRole() + ")");
-            index++;
+        while (true) {
+            System.out.println("Available AppUsers:");
+            int index = 1;
+            for (AppUser user : availableUsers) {
+                System.out.println(index + ". " + user.getUsername() + " (" + user.getRole() + ")");
+                index++;
+            }
+            System.out.println("0. Use Guest");
+
+            int choice = UserInputManager.readIntInRange("Choose AppUser by number (or 0 for Guest): ", 0, availableUsers.size());
+
+            if (choice == 0) {
+                return null;
+            }
+
+            if (choice > 0 && choice <= availableUsers.size()) {
+                return availableUsers.get(choice - 1);
+            }
+
+            System.out.println("Invalid choice, please try again.");
         }
-        System.out.println("0. Use Guest");
-
-        int choice = UserInputManager.readIntInRange("Choose AppUser by number (or 0 for Guest): ", 0, appUsers.size());
-
-        if (choice == 0) {
-            return null;
-        }
-
-        // Get AppUser by index
-        int i = 1;
-        for (AppUser user : appUsers) {
-            if (i == choice) return user;
-            i++;
-        }
-
-        System.out.println("Invalid choice, defaulting to Guest.");
-        return null;
     }
 
     public void listAllPersons() {
