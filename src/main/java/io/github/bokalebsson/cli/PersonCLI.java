@@ -57,15 +57,24 @@ public class PersonCLI {
     public void createPerson() {
         System.out.println("\n--- Create Person ---");
 
+        String email;
+        while (true) {
+            email = UserInputManager.readValidEmail("Enter email: ");
+            try {
+                personDAO.findByEmail(email);
+                System.out.println("Error: A person with the email '" + email + "' already exists. Try another.");
+            } catch (IllegalArgumentException e) {
+                break;
+            }
+        }
+
         String firstName = UserInputManager.readValidName("Enter first name: ");
         String lastName = UserInputManager.readValidName("Enter last name: ");
-        String email = UserInputManager.readValidEmail("Enter email: ");
 
         AppUser selectedAppUser = chooseAppUserOrGuest();
 
         Person person;
         if (selectedAppUser == null) {
-            // No AppUser selected – use constructor that assigns Guest by default
             person = new Person(firstName, lastName, email);
         } else {
             person = new Person(firstName, lastName, email, selectedAppUser);
