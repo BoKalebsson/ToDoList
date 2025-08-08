@@ -63,7 +63,9 @@ public class ToDoItemTask {
         sb.append("Id: ").append(getId()).append("\n");
         sb.append("ToDo-item: ").append("\n").append(toDoItem.toString());
         sb.append("Assigned: ").append(isAssigned()).append("\n");
-        System.out.println("Assigned to: " + (assignee != null ? assignee.getFirstName() + " " + assignee.getLastName() : "Unassigned"));
+        sb.append("Assigned to: ").append(assignee != null
+                ? assignee.getFirstName() + " " + assignee.getLastName()
+                : "Unassigned").append("\n");
         sb.append("---------------------------").append("\n");
         return sb.toString();
     }

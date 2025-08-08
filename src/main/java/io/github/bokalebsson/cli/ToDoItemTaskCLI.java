@@ -55,7 +55,7 @@ public class ToDoItemTaskCLI {
     }
 
     private void listTasks() {
-        System.out.println("\nListing all ToDoItemTasks:");
+        System.out.println("\nListing all ToDoItemTasks:\n");
         for (ToDoItemTask task : toDoItemTaskDAO.findAll()) {
             System.out.println(task);
         }

@@ -50,7 +50,7 @@ public class ToDoItemCLI {
     }
 
     private void listToDoItems() {
-        System.out.println("\nListing all ToDoItems:");
+        System.out.println("\nListing all ToDoItems:\n");
         for (ToDoItem item : toDoItemDAO.findAll()) {
             System.out.println(item);
         }

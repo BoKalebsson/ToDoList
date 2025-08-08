@@ -107,8 +107,9 @@ public class ToDoItem {
         sb.append("Title: ").append(getTitle()).append("\n");
         sb.append("Task Description: ").append(getTaskDescription()).append("\n");
         sb.append("Deadline: ").append(getDeadline()).append("\n");
-        System.out.println("Creator: " + (creator != null ? creator.getFirstName() + " " + creator.getLastName() : "Unknown"));
-        /*System.out.println("Assignee: " + (assignee != null ? assignee.getFirstName() + " " + assignee.getLastName() : "Unassigned"));*/
+        sb.append("Creator: ").append(creator != null
+                ? creator.getFirstName() + " " + creator.getLastName()
+                : "Unknown").append("\n");
         sb.append("Done: ").append(isDone()).append("\n");
         sb.append("---------------------------").append("\n");
         return sb.toString();
