@@ -57,8 +57,28 @@ public class AppUserCLI {
     }
 
     private void addUser() {
-        System.out.print("Enter username: ");
-        String username = scanner.nextLine();
+        String username;
+        while (true) {
+            System.out.print("Enter username (or type 'exit' to cancel): ");
+            username = scanner.nextLine();
+
+            if (username.equalsIgnoreCase("exit")) {
+                System.out.println("User creation cancelled.");
+                return;
+            }
+
+            if (username.trim().isEmpty()) {
+                System.out.println("Error: Username cannot be empty. Please enter a valid username.");
+                continue;
+            }
+
+            try {
+                appUserDAO.findByUsername(username);
+                System.out.println("Error: Username '" + username + "' already exists. Try another.");
+            } catch (NoSuchElementException e) {
+                break;
+            }
+        }
 
         System.out.print("Enter password: ");
         String password = scanner.nextLine();
@@ -88,8 +108,13 @@ public class AppUserCLI {
         }
 
         AppUser newUser = new AppUser(username, password, role);
-        appUserDAO.persist(newUser);
-        System.out.println("User added: " + newUser);
+
+        try {
+            appUserDAO.persist(newUser);
+            System.out.println("User added: " + newUser);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
     }
 
     public void removeUser() {
