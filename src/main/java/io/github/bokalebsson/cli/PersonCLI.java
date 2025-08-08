@@ -81,8 +81,12 @@ public class PersonCLI {
             person = new Person(firstName, lastName, email, selectedAppUser);
         }
 
-        personDAO.persist(person);
-        System.out.println("Person created: " + person.getFirstName() + " " + person.getLastName());
+        try {
+            personDAO.persist(person);
+            System.out.println("Person created: " + person.getFirstName() + " " + person.getLastName());
+        } catch (IllegalArgumentException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
     }
 
     private AppUser chooseAppUserOrGuest() {

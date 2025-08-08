@@ -86,7 +86,7 @@ public class Person {
         if (!email.contains("@")) {
             throw new IllegalArgumentException("Email must contain a '@'.");
         }
-        this.email = email;
+        this.email = email.trim().toLowerCase();
     }
 
     public void setCredentials(AppUser credentials) {
