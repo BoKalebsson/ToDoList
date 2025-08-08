@@ -73,6 +73,22 @@ public class PersonCLI {
 
         AppUser selectedAppUser = chooseAppUserOrGuest();
 
+        if (selectedAppUser != null && selectedAppUser != AppUser.GUEST) {
+            boolean appUserAlreadyAssigned = false;
+            Collection<Person> allPersons = personDAO.findAll();
+            for (Person p : allPersons) {
+                if (p.getCredentials() != null && p.getCredentials().equals(selectedAppUser)) {
+                    appUserAlreadyAssigned = true;
+                    break;
+                }
+            }
+            if (appUserAlreadyAssigned) {
+                System.out.println("Error: The selected AppUser '" + selectedAppUser.getUsername() + "' is already assigned to another person.");
+                System.out.println("Person creation aborted. Please choose a different AppUser.");
+                return;
+            }
+        }
+
         Person person;
         if (selectedAppUser == null) {
             person = new Person(firstName, lastName, email);
