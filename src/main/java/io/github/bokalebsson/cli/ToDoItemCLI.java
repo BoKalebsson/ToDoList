@@ -6,6 +6,7 @@ import io.github.bokalebsson.model.Person;
 import io.github.bokalebsson.model.ToDoItem;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 
@@ -57,22 +58,40 @@ public class ToDoItemCLI {
     }
 
     private void addToDoItem() {
-        System.out.print("Enter title: ");
-        String title = scanner.nextLine();
+        String title = "";
+        do {
+            System.out.print("Enter title: ");
+            title = scanner.nextLine().trim();
+            if (title.isEmpty()) {
+                System.out.println("Title cannot be empty. Please enter a valid title.");
+            }
+        } while (title.isEmpty());
 
-        System.out.print("Enter description: ");
-        String description = scanner.nextLine();
+        String description = "";
+        do {
+            System.out.print("Enter description: ");
+            description = scanner.nextLine().trim();
+            if (description.isEmpty()) {
+                System.out.println("Description cannot be empty. Please enter a valid description.");
+            }
+        } while (description.isEmpty());
 
         LocalDate dueDate = null;
-        while (dueDate == null) {
-            System.out.print("Enter due date (YYYY-MM-DD): ");
-            String dateInput = scanner.nextLine();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        do {
+            System.out.print("Enter a deadline (YYYY-MM-DD): ");
+            String input = scanner.nextLine().trim();
             try {
-                dueDate = LocalDate.parse(dateInput);
+                dueDate = LocalDate.parse(input, formatter);
+                if (dueDate.isBefore(LocalDate.now())) {
+                    System.out.println("Deadline cannot be in the past. Please enter a future date or today.");
+                    dueDate = null;
+                }
             } catch (DateTimeParseException e) {
-                System.out.println("Invalid date format, please try again.");
+                System.out.println("Invalid date format. Please enter date in YYYY-MM-DD format.");
             }
-        }
+        } while (dueDate == null);
 
         System.out.println("Select a person ID to assign this ToDoItem to:");
         for (Person p : personDAO.findAll()) {
