@@ -37,7 +37,7 @@ public class Application {
         // Comment out workArea to disable default-DAO-showcase:
 //        workArea();
         saveData();
-        System.out.println("Application closed. Data saved.");
+        System.out.println("Application closed. Data saved. ✅");
     }
 
     private void loadData() {
