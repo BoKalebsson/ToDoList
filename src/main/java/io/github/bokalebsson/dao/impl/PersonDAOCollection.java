@@ -97,14 +97,14 @@ public class PersonDAOCollection implements PersonDAO {
     @Override
     public Person findByEmail(String email) {
 
-        // Basic check for the search. More robust checks are handled by the Person-class.
-        if (email == null || email.trim().isEmpty()){
+        if (email == null || email.trim().isEmpty()) {
             throw new IllegalArgumentException("Email cannot be null or empty.");
         }
 
-        for(Person person : persons.values()){
+        String normalizedEmail = email.trim().toLowerCase();
 
-            if(person.getEmail().equals(email)) {
+        for (Person person : persons.values()) {
+            if (person.getEmail().equals(normalizedEmail)) {
                 return person;
             }
         }
