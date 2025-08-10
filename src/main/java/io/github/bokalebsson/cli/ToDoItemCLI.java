@@ -26,9 +26,10 @@ public class ToDoItemCLI {
         boolean running = true;
 
         while (running) {
-            System.out.println("\n--- ToDoItem Menu ---");
-            System.out.println("1. List all ToDoItems");
-            System.out.println("2. Add new ToDoItem");
+            System.out.println("\n--- ToDo-Item Menu ---");
+            System.out.println("1. List all ToDo-Items");
+            System.out.println("2. Add new ToDo-Item");
+            System.out.println("3. Remove ToDo-Item");
             System.out.println("0. Back to main menu");
             System.out.print("Choose an option: ");
 
@@ -41,6 +42,9 @@ public class ToDoItemCLI {
                 case "2":
                     addToDoItem();
                     break;
+                case "3":
+                    removeToDoItem();
+                    break;
                 case "0":
                     running = false;
                     break;
@@ -51,7 +55,7 @@ public class ToDoItemCLI {
     }
 
     private void listToDoItems() {
-        System.out.println("\nListing all ToDoItems:\n");
+        System.out.println("\nListing all ToDo-Items:\n");
         for (ToDoItem item : toDoItemDAO.findAll()) {
             System.out.println(item);
         }
@@ -114,6 +118,39 @@ public class ToDoItemCLI {
 
         ToDoItem newItem = new ToDoItem(title, description, dueDate, assignedPerson);
         toDoItemDAO.persist(newItem);
-        System.out.println("\nToDoItem added: \n" + newItem);
+        System.out.println("\nToDo-Item added: \n" + newItem);
+    }
+
+    public void removeToDoItem() {
+        System.out.println("\n=== Remove ToDo-Item ===");
+
+        System.out.print("Enter the ID of the ToDo-Item to remove: ");
+        int id;
+
+        try {
+            id = Integer.parseInt(scanner.nextLine().trim());
+
+            ToDoItem item = toDoItemDAO.findById(id);
+
+            System.out.println("\nFound: \n" + item);
+            System.out.print("Are you sure you want to remove this ToDo-Item? (y/n): ");
+            String confirmation = scanner.nextLine().trim().toLowerCase();
+
+            if (confirmation.equals("y")) {
+                toDoItemDAO.remove(id);
+                System.out.println("ToDo-Item successfully removed.");
+            } else {
+                System.out.println("Deletion cancelled.");
+            }
+
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid ID. Must be a number.");
+
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+
+        } catch (Exception e) {
+            System.out.println("An unexpected error occurred: " + e.getMessage());
+        }
     }
 }
