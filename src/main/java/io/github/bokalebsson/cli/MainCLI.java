@@ -34,8 +34,8 @@ public class MainCLI {
         while (running) {
             System.out.println("\n==== Main Menu ====");
             System.out.println("1. Manage Persons");
-            System.out.println("2. Manage ToDoItems");
-            System.out.println("3. Manage ToDoItemTasks");
+            System.out.println("2. Manage ToDo-Items");
+            System.out.println("3. Manage Tasks");
             System.out.println("4. Manage AppUsers");
             System.out.println("0. Exit");
             System.out.print("Choose an option: ");
