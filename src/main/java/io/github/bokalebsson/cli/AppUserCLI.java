@@ -129,7 +129,7 @@ public class AppUserCLI {
             System.out.println("Found: " + user);
 
             // Confirm deletion
-            System.out.print("\nAre you sure you want to remove this user? (y/n): ");
+            System.out.print("Are you sure you want to remove this user? (y/n): ");
             String confirmation = scanner.nextLine().trim().toLowerCase();
 
             if (confirmation.equals("y")) {
