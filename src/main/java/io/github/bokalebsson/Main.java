@@ -1,8 +1,6 @@
 package io.github.bokalebsson;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -14,6 +12,21 @@ public class Main {
         // Establish a connection:
         try (Connection connection = DriverManager.getConnection(url, user, password)) {
             System.out.println("✅ Connection successful!");
+
+            // Prepare a statement:
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM person");
+
+            // Run the query:
+            ResultSet resultSet = ps.executeQuery();
+
+            // Print the result:
+            while (resultSet.next()){
+                System.out.println(resultSet.getInt("person_id") + " - "
+                        + resultSet.getString("first_name") + " "
+                        + resultSet.getString("last_name"));
+            }
+
+
         } catch (SQLException e) {
             System.err.println("❌ Failed to connect to the database:");
             System.err.println("Error message: " + e.getMessage());
