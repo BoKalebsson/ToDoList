@@ -14,7 +14,8 @@ public class Main {
             System.out.println("✅ Connection successful!");
 
             // Prepare a statement:
-            PreparedStatement ps = connection.prepareStatement("SELECT * FROM person");
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM person WHERE first_name = ?");
+            ps.setString(1, "Erik");
 
             // Run the query:
             ResultSet resultSet = ps.executeQuery();
@@ -26,7 +27,7 @@ public class Main {
                 String firstName = resultSet.getString("first_name");
                 String lastName = resultSet.getString("last_name");
 
-                System.out.println("Id: " + personId + " - " + "Name: " + firstName + " " + lastName);
+                System.out.println("Id: " + personId + " | " + "Name: " + firstName + " " + lastName);
 
             }
 
