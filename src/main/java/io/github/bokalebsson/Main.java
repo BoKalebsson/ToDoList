@@ -21,9 +21,13 @@ public class Main {
 
             // Print the result:
             while (resultSet.next()){
-                System.out.println(resultSet.getInt("person_id") + " - "
-                        + resultSet.getString("first_name") + " "
-                        + resultSet.getString("last_name"));
+
+                int personId = resultSet.getInt("person_id");
+                String firstName = resultSet.getString("first_name");
+                String lastName = resultSet.getString("last_name");
+
+                System.out.println("Id: " + personId + " - " + "Name: " + firstName + " " + lastName);
+
             }
 
 
