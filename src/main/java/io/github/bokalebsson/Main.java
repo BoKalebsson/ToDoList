@@ -1,17 +1,21 @@
 package io.github.bokalebsson;
 
+import io.github.bokalebsson.dao.database.DatabaseConnection;
+import io.github.bokalebsson.dao.database.MySQLDatabaseConnection;
+
 import java.sql.*;
 
 public class Main {
     public static void main(String[] args) {
 
-        String url = "jdbc:mysql://localhost:3306/todoit";
-        String user = "root";
-        String password = "root";
+        // Create a new MySQL-connection:
+        DatabaseConnection databaseConnection = new MySQLDatabaseConnection();
 
-        // Establish a connection:
-        try (Connection connection = DriverManager.getConnection(url, user, password)) {
+        // Establish a connection to the database:
+        try (Connection connection = databaseConnection.getConnection()){
             System.out.println("✅ Connection successful!");
+
+            /* This section will be used to test methods from the database-classes. */
 
             // Prepare a statement:
             PreparedStatement ps = connection.prepareStatement("SELECT * FROM person WHERE first_name = ?");
@@ -31,8 +35,13 @@ public class Main {
 
             }
 
+/*            // Working SQL-injection: Just change the ID to match the person.
+            String userInput = "' OR person_id = 3; --";
+            Statement stmt = connection.createStatement();
+            String sql = "DELETE FROM person WHERE first_name = '" + userInput;
+            stmt.executeUpdate(sql);*/
 
-        } catch (SQLException e) {
+        } catch (SQLException e){
             System.err.println("❌ Failed to connect to the database:");
             System.err.println("Error message: " + e.getMessage());
             System.err.println("SQL state: " + e.getSQLState());
