@@ -35,12 +35,6 @@ public class Main {
 
             }
 
-/*            // Working SQL-injection: Just change the ID to match the person.
-            String userInput = "' OR person_id = 3; --";
-            Statement stmt = connection.createStatement();
-            String sql = "DELETE FROM person WHERE first_name = '" + userInput;
-            stmt.executeUpdate(sql);*/
-
         } catch (SQLException e){
             System.err.println("❌ Failed to connect to the database:");
             System.err.println("Error message: " + e.getMessage());
