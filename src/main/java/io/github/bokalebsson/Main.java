@@ -14,7 +14,7 @@ public class Main {
         People peopleDao = new PeopleDAO();
 
         // Create a new DBPerson
-        DBPerson newPerson = new DBPerson("Greger", "Pettersson");
+        DBPerson newPerson = new DBPerson("Elin", "Hansson");
         DBPerson createdPerson = peopleDao.create(newPerson);
 
         if (createdPerson != null) {
@@ -34,6 +34,15 @@ public class Main {
             for (DBPerson p : persons) {
                 System.out.println(p);
             }
+        }
+
+        // Fetch a person with findById:
+        DBPerson foundPerson = peopleDao.findById(2);
+
+        if (foundPerson != null) {
+            System.out.println("✅ Person found: \n" + foundPerson);
+        } else {
+            System.out.println("⚠️ No person found.\n");
         }
 
     }
