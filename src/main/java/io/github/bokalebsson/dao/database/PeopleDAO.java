@@ -12,7 +12,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-public class PeopleImpl implements People {
+public class PeopleDAO implements People {
 
     private final DatabaseConnection databaseConnection = new MySQLDatabaseConnection();
 
