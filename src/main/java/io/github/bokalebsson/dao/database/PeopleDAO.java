@@ -13,6 +13,10 @@ public class PeopleDAO implements People {
 
     private final DatabaseConnection databaseConnection = new MySQLDatabaseConnection();
 
+
+    //TODO: Refactor the code to throw SQL exceptions, and let other classes and/or methods handle the error handling
+    // to inform the user that something went wrong.
+
     @Override
     public DBPerson create(DBPerson dbPerson) {
         String sql = "INSERT INTO person (first_name, last_name) VALUES (?, ?)";
