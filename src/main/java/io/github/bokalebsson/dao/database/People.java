@@ -1,4 +1,4 @@
-package io.github.bokalebsson.dao;
+package io.github.bokalebsson.dao.database;
 
 import io.github.bokalebsson.model.Person;
 

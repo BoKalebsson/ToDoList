@@ -1,7 +1,7 @@
 package io.github.bokalebsson;
 
-import io.github.bokalebsson.dao.database.DatabaseConnection;
-import io.github.bokalebsson.dao.database.MySQLDatabaseConnection;
+import io.github.bokalebsson.dao.connections.DatabaseConnection;
+import io.github.bokalebsson.dao.connections.MySQLDatabaseConnection;
 
 import java.sql.*;
 
