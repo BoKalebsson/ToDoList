@@ -13,6 +13,16 @@ public class Main {
         // Create a PeopleDAO instance:
         People peopleDao = new PeopleDAO();
 
+        // Create a new DBPerson
+        DBPerson newPerson = new DBPerson("Greger", "Pettersson");
+        DBPerson createdPerson = peopleDao.create(newPerson);
+
+        if (createdPerson != null) {
+            System.out.println("✅ Person created successfully: \n" + createdPerson);
+        } else {
+            System.out.println("⚠️ Person could not be created.");
+        }
+
         // Call findAll() to fetch all persons from the database:
         Collection<DBPerson> persons = peopleDao.findAll();
 
