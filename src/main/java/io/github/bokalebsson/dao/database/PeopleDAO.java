@@ -158,19 +158,10 @@ public class PeopleDAO implements People {
         try (Connection connection = databaseConnection.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql);
         ){
-            // Set the parameter in preparedStatement to the id to delete in the database:
+
             preparedStatement.setInt(1, id);
-
-            // Execute the query:
             int affectedRows = preparedStatement.executeUpdate();
-
-            // Check if rows in database got affected:
-            if (affectedRows == 0) {
-                System.out.println("ℹ️ No person found with id: " + id);
-                return false;
-            }
-
-            return true;
+            return affectedRows > 0;
 
         } catch (SQLException e) {
             System.err.println("❌ Something went wrong deleting the person:");
