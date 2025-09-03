@@ -136,7 +136,7 @@ public class PeopleDAO implements People {
             }
 
         } catch (SQLException e) {
-            System.err.println("❌ Something went wrong while finding the person:");
+            System.err.println("❌ Something went wrong finding the person:");
             System.err.println("Error message: " + e.getMessage());
             System.err.println("SQL state: " + e.getSQLState());
             System.err.println("Error code: " + e.getErrorCode());
@@ -152,6 +152,32 @@ public class PeopleDAO implements People {
 
     @Override
     public boolean deleteById(int id) {
-        return false;
+
+        String sql = "DELETE FROM person WHERE person_id = ?";
+
+        try (Connection connection = databaseConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        ){
+            // Set the parameter in preparedStatement to the id to delete in the database:
+            preparedStatement.setInt(1, id);
+
+            // Execute the query:
+            int affectedRows = preparedStatement.executeUpdate();
+
+            // Check if rows in database got affected:
+            if (affectedRows == 0) {
+                System.out.println("ℹ️ No person found with id: " + id);
+                return false;
+            }
+
+            return true;
+
+        } catch (SQLException e) {
+            System.err.println("❌ Something went wrong deleting the person:");
+            System.err.println("Error message: " + e.getMessage());
+            System.err.println("SQL state: " + e.getSQLState());
+            System.err.println("Error code: " + e.getErrorCode());
+            return false;
+        }
     }
 }
