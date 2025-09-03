@@ -113,7 +113,36 @@ public class PeopleDAO implements People {
 
     @Override
     public Collection<DBPerson> findByName(String name) {
-        return List.of();
+        List<DBPerson> persons = new ArrayList<>();
+
+        String sql = "SELECT person_id, first_name, last_name FROM person WHERE first_name LIKE ? OR last_name LIKE ?";
+
+        try (Connection connection = databaseConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql);
+             ){
+
+            // Set the parameter in preparedStatement to the name to search for in the database:
+            preparedStatement.setString(1, "%" + name + "%");
+            preparedStatement.setString(2, "%" + name + "%");
+
+            // Execute the query:
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()){
+                int id = resultSet.getInt("person_id");
+                String firstName = resultSet.getString("first_name");
+                String lastName = resultSet.getString("last_name");
+                persons.add(new DBPerson(id, firstName, lastName));
+            }
+
+        } catch (SQLException e) {
+            System.err.println("❌ Something went wrong while finding the person:");
+            System.err.println("Error message: " + e.getMessage());
+            System.err.println("SQL state: " + e.getSQLState());
+            System.err.println("Error code: " + e.getErrorCode());
+            return Collections.emptyList();
+        }
+        return persons;
     }
 
     @Override
