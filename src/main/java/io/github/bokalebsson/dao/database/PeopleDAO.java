@@ -147,7 +147,32 @@ public class PeopleDAO implements People {
 
     @Override
     public DBPerson update(DBPerson dbPerson) {
-        return null;
+
+        String sql = "UPDATE person SET first_name = ?, last_name = ? WHERE person_id = ?";
+
+        try (Connection connection = databaseConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        ){
+
+            preparedStatement.setString(1, dbPerson.getFirstName());
+            preparedStatement.setString(2, dbPerson.getLastName());
+            preparedStatement.setInt(3, dbPerson.getId());
+
+            int affectedRows = preparedStatement.executeUpdate();
+            if (affectedRows > 0) {
+                return dbPerson;
+            } else {
+                System.out.println("ℹ️ No person found with id: " + dbPerson.getId());
+                return null;
+            }
+
+        } catch (SQLException e) {
+            System.err.println("❌ Something went wrong updating the person:");
+            System.err.println("Error message: " + e.getMessage());
+            System.err.println("SQL state: " + e.getSQLState());
+            System.err.println("Error code: " + e.getErrorCode());
+            return null;
+        }
     }
 
     @Override
