@@ -18,25 +18,22 @@ public class PeopleDAO implements People {
     // to inform the user that something went wrong.
 
     @Override
-    public DBPerson create(DBPerson dbPerson) {
+    public DBPerson create(DBPerson dbPerson) throws SQLException {
         String sql = "INSERT INTO person (first_name, last_name) VALUES (?, ?)";
 
         try (Connection connection = databaseConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-             ){
+             PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
+             ) {
 
-            // Set the values for first_name and last_name:
             preparedStatement.setString(1, dbPerson.getFirstName());
             preparedStatement.setString(2, dbPerson.getLastName());
 
-            // Check if rows in database got affected:
             int affectedRows = preparedStatement.executeUpdate();
 
             if (affectedRows == 0) {
                 throw new SQLException("⚠️ Creating person failed, no rows affected.");
             }
 
-            // Fetching the generated person_id from database:
             try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
                     int generatedId = generatedKeys.getInt(1);
@@ -45,14 +42,7 @@ public class PeopleDAO implements People {
                     throw new SQLException("⚠️ Creating person failed, no ID obtained.");
                 }
             }
-
-        } catch (SQLException e) {
-            System.err.println("❌ Something went wrong creating the person:");
-            System.err.println("Error message: " + e.getMessage());
-            System.err.println("SQL state: " + e.getSQLState());
-            System.err.println("Error code: " + e.getErrorCode());
         }
-        return null;
     }
 
     @Override
