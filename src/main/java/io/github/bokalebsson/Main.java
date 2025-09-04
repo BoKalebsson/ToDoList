@@ -14,7 +14,7 @@ public class Main {
         People peopleDao = new PeopleDAO();
 
         // Create a new DBPerson
-        DBPerson newPerson = new DBPerson("Elin", "Hansson");
+        DBPerson newPerson = new DBPerson("Märta", "Johansson");
         DBPerson createdPerson = peopleDao.create(newPerson);
 
         if (createdPerson != null) {
