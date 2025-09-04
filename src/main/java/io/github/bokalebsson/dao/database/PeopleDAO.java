@@ -46,14 +46,14 @@ public class PeopleDAO implements People {
     }
 
     @Override
-    public Collection<DBPerson> findAll() {
+    public Collection<DBPerson> findAll() throws SQLException {
         List<DBPerson> persons = new ArrayList<>();
 
         String sql = "SELECT person_id, first_name, last_name FROM person";
 
         try (Connection connection = databaseConnection.getConnection();
-                PreparedStatement preparedStatement = connection.prepareStatement(sql);
-                ResultSet resultSet = preparedStatement.executeQuery()){
+             PreparedStatement preparedStatement = connection.prepareStatement(sql);
+             ResultSet resultSet = preparedStatement.executeQuery()){
 
             while (resultSet.next()){
                 int id = resultSet.getInt("person_id");
@@ -61,13 +61,6 @@ public class PeopleDAO implements People {
                 String lastName = resultSet.getString("last_name");
                 persons.add(new DBPerson(id, firstName, lastName));
             }
-
-        } catch (SQLException e) {
-            System.err.println("❌ Something went wrong while fetching persons:");
-            System.err.println("Error message: " + e.getMessage());
-            System.err.println("SQL state: " + e.getSQLState());
-            System.err.println("Error code: " + e.getErrorCode());
-            return Collections.emptyList();
         }
         return persons;
     }
