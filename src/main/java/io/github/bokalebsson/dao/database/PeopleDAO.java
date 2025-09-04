@@ -138,24 +138,17 @@ public class PeopleDAO implements People {
     }
 
     @Override
-    public boolean deleteById(int id) {
+    public boolean deleteById(int id) throws SQLException{
 
         String sql = "DELETE FROM person WHERE person_id = ?";
 
         try (Connection connection = databaseConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql);
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)
         ){
 
             preparedStatement.setInt(1, id);
             int affectedRows = preparedStatement.executeUpdate();
             return affectedRows > 0;
-
-        } catch (SQLException e) {
-            System.err.println("❌ Something went wrong deleting the person:");
-            System.err.println("Error message: " + e.getMessage());
-            System.err.println("SQL state: " + e.getSQLState());
-            System.err.println("Error code: " + e.getErrorCode());
-            return false;
         }
     }
 }
