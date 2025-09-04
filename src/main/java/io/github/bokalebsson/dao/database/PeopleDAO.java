@@ -66,35 +66,26 @@ public class PeopleDAO implements People {
     }
 
     @Override
-    public DBPerson findById(int id) {
+    public DBPerson findById(int id) throws SQLException{
 
         String sql = "SELECT person_id, first_name, last_name FROM person WHERE person_id = ?";
 
         try (Connection connection = databaseConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql);
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)
              ) {
 
-            // Set the parameter in preparedStatement to the id to search for in the database:
             preparedStatement.setInt(1, id);
 
-            // Execute the query:
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            // Return the person found:
-            if (resultSet.next()){
-                return new DBPerson(
-                        resultSet.getInt("person_id"),
-                        resultSet.getString("first_name"),
-                        resultSet.getString("last_name")
-                );
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    return new DBPerson(
+                            resultSet.getInt("person_id"),
+                            resultSet.getString("first_name"),
+                            resultSet.getString("last_name")
+                    );
+                }
             }
-
-        } catch (SQLException e) {
-        System.err.println("❌ Something went wrong finding the person:");
-        System.err.println("Error message: " + e.getMessage());
-        System.err.println("SQL state: " + e.getSQLState());
-        System.err.println("Error code: " + e.getErrorCode());
-    }
+        }
         return null;
     }
 
