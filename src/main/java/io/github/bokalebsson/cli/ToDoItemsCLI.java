@@ -148,7 +148,38 @@ public class ToDoItemsCLI {
         }
     }
 
-    private void findByDoneStatus() {}
+    private void findByDoneStatus() {
+        Boolean isDone = null;
+
+        while (isDone == null) {
+            System.out.print("Show completed ToDos? (y = yes, n = show only not completed): ");
+            String input = scanner.nextLine().trim().toLowerCase();
+
+            if (input.equals("y")) {
+                isDone = true;
+            } else if (input.equals("n")) {
+                isDone = false;
+            } else {
+                System.out.println("⚠️ Invalid input. Please enter 'y' or 'n'.");
+            }
+        }
+
+        try {
+            Collection<DBTodo> todos = toDoItemsDAO.findByDoneStatus(isDone);
+
+            if (todos.isEmpty()) {
+                System.out.println("⚠️ No ToDos found for your selection. (Completed: " + (isDone ? "Yes" : "No") + ")");
+            } else {
+                System.out.println("\n=== ToDos ===");
+                for (DBTodo todo : todos) {
+                    System.out.println(todo);
+                }
+            }
+        } catch (SQLException e) {
+            ExceptionHandler.handle(e);
+        }
+    }
+
     private void findByAssignee() {}
     private void findByUnassignedToDoItems() {}
     private void updateToDo() {}
