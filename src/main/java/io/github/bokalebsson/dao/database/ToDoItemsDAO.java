@@ -226,7 +226,27 @@ public class ToDoItemsDAO implements ToDoItems {
 
     @Override
     public DBTodo update(DBTodo dbTodo) throws SQLException {
-        return null;
+        String sql = "UPDATE todo_item SET title = ?, description = ?, deadline = ?, done = ?, assignee_id = ?  WHERE todo_id = ?";
+
+        try (Connection connection = databaseConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)
+        ){
+
+            preparedStatement.setString(1, dbTodo.getTitle());
+            preparedStatement.setString(2, dbTodo.getDescription());
+            preparedStatement.setDate(3, Date.valueOf(dbTodo.getDeadline()));
+            preparedStatement.setBoolean(4, dbTodo.isDone());
+            preparedStatement.setInt(5, dbTodo.getAssigneeId());
+            preparedStatement.setInt(6, dbTodo.getId());
+
+            int affectedRows = preparedStatement.executeUpdate();
+
+            if (affectedRows > 0) {
+                return dbTodo;
+            } else {
+                return null;
+            }
+        }
     }
 
     @Override
