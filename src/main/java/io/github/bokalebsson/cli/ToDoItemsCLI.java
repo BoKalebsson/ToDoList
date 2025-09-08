@@ -340,7 +340,7 @@ public class ToDoItemsCLI {
         try {
             boolean success = toDoItemsDAO.deleteById(id);
             if (success) {
-                System.out.println("✅ ToDo-item deleted successfully.");
+                System.out.println("✅ ToDo-item deleted successfully: " + todo.getTitle());
             } else {
                 System.out.println("⚠️ Deletion failed. Item may no longer exist.");
             }
