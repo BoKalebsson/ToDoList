@@ -198,5 +198,48 @@ public class PeopleCLI {
         }
     }
 
-    private void deletePerson() {}
+    private void deletePerson() {
+        System.out.print("Enter ID of person to delete: ");
+        String input = scanner.nextLine().trim();
+        int id;
+        try {
+            id = Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            System.out.println("\n⚠️ Invalid ID format.");
+            return;
+        }
+
+        try {
+            DBPerson person = peopleDAO.findById(id);
+
+            if (person == null) {
+                System.out.println("\n⚠️ No person found with ID " + id);
+                return;
+            }
+
+            System.out.println("\nYou are about to delete: ID: " + person.getId() + " | " + person.getFirstName() + " " + person.getLastName());
+
+        } catch (SQLException e) {
+            ExceptionHandler.handle(e);
+            return;
+        }
+
+        System.out.print("Are you sure you want to delete person with ID " + id + "? (y/n): ");
+        String confirm = scanner.nextLine().trim().toLowerCase();
+        if (!confirm.equals("y")) {
+            System.out.println("\n❌ Deletion cancelled.");
+            return;
+        }
+
+        try {
+            boolean success = peopleDAO.deleteById(id);
+            if (success) {
+                System.out.println("\n✅ Person deleted successfully.");
+            } else {
+                System.out.println("\n⚠️ No person found with ID: " + id);
+            }
+        } catch (SQLException e) {
+            ExceptionHandler.handle(e);
+        }
+    }
 }
