@@ -268,13 +268,19 @@ public class ToDoItemsCLI {
         // Deadline (optional):
         LocalDate deadline = readDeadline(todo.getDeadline());
 
-        // Done status
-        System.out.print("Is this ToDo-item done? (y/n, current: " + (todo.isDone() ? "yes" : "no") + "): ");
+        // Done status:
+        boolean done = todo.isDone();
+        System.out.print("Is this ToDo-item done? (y/n, current: " + (done ? "yes" : "no") + "): ");
         String doneInput = scanner.nextLine().trim().toLowerCase();
-        boolean done = doneInput.equals("y");
+        if (doneInput.equals("y")) {
+            done = true;
+        } else if (doneInput.equals("n")) {
+            done = false;
+        }
 
         // Assignee (optional)
-        System.out.print("Enter assignee ID or press Enter to leave unassigned (current: " + todo.getAssigneeId() + "): ");
+        String currentAssignee = (todo.getAssigneeId() != null) ? todo.getAssigneeId().toString() : "none";
+        System.out.print("Enter assignee ID or press Enter to leave unassigned (current: " + currentAssignee + "): ");
         Integer assigneeId = null;
         String assigneeInput = scanner.nextLine().trim();
         if (!assigneeInput.isEmpty()) {
@@ -358,7 +364,7 @@ public class ToDoItemsCLI {
 
         while (true) {
             if (currentDeadline == null) {
-                System.out.print("Enter deadline (yyyy-MM-dd) or press Enter to skip: ");
+                System.out.print("No deadline set. Enter deadline (yyyy-MM-dd) or press Enter to skip: ");
             } else {
                 System.out.print("Current deadline: " + currentDeadline + "\nEnter new deadline (yyyy-MM-dd) or press Enter to keep current: ");
             }
