@@ -80,6 +80,7 @@ public class PeopleCLI {
             ExceptionHandler.handle(e);
         }
     }
+
     private void listAllPeople() {
         try {
             Collection<DBPerson> people = peopleDAO.findAll();
@@ -98,7 +99,31 @@ public class PeopleCLI {
             ExceptionHandler.handle(e);
         }
     }
-    private void findById() {}
+
+    private void findById() {
+        System.out.print("Enter person ID: ");
+        String input = scanner.nextLine();
+
+        int id;
+        try {
+            id = Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            System.out.println("⚠️ Invalid input. Please enter a valid number.");
+            return;
+        }
+
+        try {
+            DBPerson person = peopleDAO.findById(id);
+            if (person == null) {
+                System.out.println("⚠️ No person found with ID " + id);
+            } else {
+                System.out.println("ID: " + person.getId() + " | Name: " + person.getFirstName() + " " + person.getLastName());
+            }
+        } catch (SQLException e) {
+            ExceptionHandler.handle(e);
+        }
+    }
+
     private void findByName() {}
     private void updatePerson() {}
     private void deletePerson() {}
