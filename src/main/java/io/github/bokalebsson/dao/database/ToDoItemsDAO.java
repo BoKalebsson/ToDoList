@@ -108,8 +108,33 @@ public class ToDoItemsDAO implements ToDoItems {
     }
 
     @Override
-    public Collection<DBTodo> findByDoneStatus(boolean isDone) throws SQLException {
-        return List.of();
+    public Collection<DBTodo> findByDoneStatus(boolean status) throws SQLException {
+        List<DBTodo> todos = new ArrayList<>();
+
+        String sql = "SELECT * FROM todo_item WHERE done = ?";
+
+        try (Connection connection = databaseConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)){
+
+            preparedStatement.setBoolean(1, status);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()){
+                while (resultSet.next()){
+                    Date deadlineDate = resultSet.getDate("deadline");
+                    LocalDate deadline = (deadlineDate != null) ? deadlineDate.toLocalDate() : null;
+
+                    todos.add(new DBTodo(
+                            resultSet.getInt("todo_id"),
+                            resultSet.getString("title"),
+                            resultSet.getString("description"),
+                            deadline,
+                            resultSet.getBoolean("done"),
+                            resultSet.getInt("assignee_id")
+                    ));
+                }
+            }
+        }
+        return todos;
     }
 
     @Override
