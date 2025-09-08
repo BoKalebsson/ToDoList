@@ -11,7 +11,7 @@ public class DBTodo {
     private String description;
     private LocalDate deadline;
     private boolean isDone;
-    private int assigneeId;
+    private Integer assigneeId;
 
     // Constructor for loading DBTodos from the database (with ID):
     public DBTodo(int id, String title, String description, LocalDate deadline, boolean isDone, int assigneeId) {
@@ -53,7 +53,7 @@ public class DBTodo {
         return isDone;
     }
 
-    public int getAssigneeId() {
+    public Integer getAssigneeId() {
         return assigneeId;
     }
 
@@ -74,7 +74,7 @@ public class DBTodo {
         this.isDone = done;
     }
 
-    public void setAssigneeId(int assigneeId) {
+    public void setAssigneeId(Integer assigneeId) {
         this.assigneeId = assigneeId;
     }
 
