@@ -4,6 +4,8 @@ import io.github.bokalebsson.dao.connections.DatabaseConnection;
 import io.github.bokalebsson.dao.connections.MySQLDatabaseConnection;
 
 import java.sql.*;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -50,7 +52,28 @@ public class ToDoItemsDAO implements ToDoItems {
 
     @Override
     public Collection<DBTodo> findAll() throws SQLException {
-        return List.of();
+        List<DBTodo> todos = new ArrayList<>();
+
+        String sql = "SELECT * FROM todo_item";
+
+        try (Connection connection = databaseConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql);
+             ResultSet resultSet = preparedStatement.executeQuery()){
+
+            while (resultSet.next()){
+                int id = resultSet.getInt("todo_id");
+                String title = resultSet.getString("title");
+                String description = resultSet.getString("description");
+
+                Date deadlineDate = resultSet.getDate("deadline");
+                LocalDate deadline = (deadlineDate != null) ? deadlineDate.toLocalDate() : null;
+
+                boolean done = resultSet.getBoolean("done");
+                int assigneeId = resultSet.getInt("assignee_id");
+                todos.add(new DBTodo(id, title, description, deadline, done, assigneeId));
+            }
+        }
+        return todos;
     }
 
     @Override
