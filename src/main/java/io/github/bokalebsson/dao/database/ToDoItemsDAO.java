@@ -251,6 +251,15 @@ public class ToDoItemsDAO implements ToDoItems {
 
     @Override
     public boolean deleteById(int id) throws SQLException {
-        return false;
+
+        String sql = "DELETE FROM todo_item WHERE todo_id = ?";
+
+        try (Connection connection = databaseConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)
+        ){
+            preparedStatement.setInt(1, id);
+            int affectedRows = preparedStatement.executeUpdate();
+            return affectedRows > 0;
+        }
     }
 }
