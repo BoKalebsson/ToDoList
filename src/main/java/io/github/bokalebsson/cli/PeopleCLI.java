@@ -187,6 +187,8 @@ public class PeopleCLI {
         }
 
         try {
+            person.setFirstName(firstName);
+            person.setLastName(lastName);
             DBPerson updated = peopleDAO.update(person);
             if (updated != null) {
                 System.out.println("✅ Person updated: ID " + updated.getId() + " | " + updated.getFirstName() + " " + updated.getLastName());
