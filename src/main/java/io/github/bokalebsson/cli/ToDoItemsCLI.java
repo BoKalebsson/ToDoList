@@ -6,6 +6,7 @@ import io.github.bokalebsson.util.ExceptionHandler;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.Collection;
 import java.util.Scanner;
 
 public class ToDoItemsCLI {
@@ -103,7 +104,25 @@ public class ToDoItemsCLI {
         }
     }
 
-    private void listAllToDos() {}
+    private void listAllToDos() {
+        try {
+            Collection<DBTodo> todos = toDoItemsDAO.findAll();
+
+            if (todos.isEmpty()) {
+                System.out.println("⚠️ No ToDo items found in the database.");
+                return;
+            }
+
+            System.out.println("\n=== ToDo-Items in Database ===");
+            for (DBTodo todo : todos) {
+                System.out.println(todo);
+            }
+
+        } catch (SQLException e) {
+            ExceptionHandler.handle(e);
+        }
+    }
+
     private void findById() {}
     private void findByDoneStatus() {}
     private void findByAssignee() {}
