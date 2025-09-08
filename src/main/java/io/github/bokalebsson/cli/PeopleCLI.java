@@ -1,7 +1,10 @@
 package io.github.bokalebsson.cli;
 
 import io.github.bokalebsson.dao.impl.PeopleDAO;
+import io.github.bokalebsson.model.DBPerson;
+import io.github.bokalebsson.util.ExceptionHandler;
 
+import java.sql.SQLException;
 import java.util.Scanner;
 
 public class PeopleCLI {
@@ -47,7 +50,35 @@ public class PeopleCLI {
         System.out.println("0. Back to main menu");
     }
 
-    private void createPerson() {}
+    private void createPerson() {
+        String firstName = "";
+        String lastName = "";
+
+        while (firstName.isBlank()) {
+            System.out.print("Enter first name: ");
+            firstName = scanner.nextLine().trim();
+            if (firstName.isBlank()) {
+                System.out.println("⚠️ First name cannot be empty.");
+            }
+        }
+
+        while (lastName.isBlank()) {
+            System.out.print("Enter last name: ");
+            lastName = scanner.nextLine().trim();
+            if (lastName.isBlank()) {
+                System.out.println("⚠️ Last name cannot be empty.");
+            }
+        }
+
+        DBPerson dbPerson = new DBPerson(firstName, lastName);
+
+        try {
+            DBPerson createdPerson = peopleDAO.create(dbPerson);
+            System.out.println("✅ Person created: " + createdPerson.getFirstName() + " " + createdPerson.getLastName());
+        } catch (SQLException e) {
+            ExceptionHandler.handle(e);
+        }
+    }
     private void listAllPeople() {}
     private void findById() {}
     private void findByName() {}
