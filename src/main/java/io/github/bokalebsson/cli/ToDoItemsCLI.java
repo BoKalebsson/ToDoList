@@ -123,7 +123,31 @@ public class ToDoItemsCLI {
         }
     }
 
-    private void findById() {}
+    private void findById() {
+        System.out.print("Enter ToDo ID: ");
+        String input = scanner.nextLine().trim();
+
+        int id;
+        try {
+            id = Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            System.out.println("⚠️ Invalid ID format. Please enter a valid number.");
+            return;
+        }
+
+        try {
+            DBTodo todo = toDoItemsDAO.findById(id);
+
+            if (todo == null) {
+                System.out.println("⚠️ No ToDo found with ID " + id);
+            } else {
+                System.out.println(todo);
+            }
+        } catch (SQLException e) {
+            ExceptionHandler.handle(e);
+        }
+    }
+
     private void findByDoneStatus() {}
     private void findByAssignee() {}
     private void findByUnassignedToDoItems() {}
