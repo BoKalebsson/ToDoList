@@ -224,7 +224,85 @@ public class ToDoItemsCLI {
             ExceptionHandler.handle(e);
         }
     }
-    private void updateToDo() {}
+    private void updateToDo() {
+        // Step 1: Ask for the ID:
+        System.out.print("Enter ID of ToDo-item to update: ");
+        String input = scanner.nextLine().trim();
+        int id;
+        try {
+            id = Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            System.out.println("⚠️ Invalid ID format.");
+            return;
+        }
+
+        // Step 2: Fetch from DAO:
+        DBTodo todo;
+        try {
+            todo = toDoItemsDAO.findById(id);
+            if (todo == null) {
+                System.out.println("⚠️ No ToDo-item found with the ID: " + id);
+                return;
+            }
+        } catch (SQLException e) {
+            ExceptionHandler.handle(e);
+            return;
+        }
+
+        // Step 3: Update fields:
+        // Title (required)
+        String title = "";
+        while (title.isBlank()) {
+            System.out.print("Enter new title (current: " + todo.getTitle() + "): ");
+            title = scanner.nextLine().trim();
+            if (title.isBlank()) {
+                System.out.println("⚠️ Title cannot be empty.");
+            }
+        }
+
+        // Description (optional):
+        System.out.print("Enter new description (current: " + todo.getDescription() + "): ");
+        String description = scanner.nextLine().trim();
+
+        // Deadline (optional):
+        System.out.println("Current deadline: " + todo.getDeadline());
+        LocalDate deadline = readDeadline();
+
+        // Done status
+        System.out.print("Is this ToDo-item done? (y/n, current: " + (todo.isDone() ? "yes" : "no") + "): ");
+        String doneInput = scanner.nextLine().trim().toLowerCase();
+        boolean done = doneInput.equals("y");
+
+        // Assignee (optional)
+        System.out.print("Enter assignee ID or press Enter to leave unassigned (current: " + todo.getAssigneeId() + "): ");
+        Integer assigneeId = null;
+        String assigneeInput = scanner.nextLine().trim();
+        if (!assigneeInput.isEmpty()) {
+            try {
+                assigneeId = Integer.parseInt(assigneeInput);
+            } catch (NumberFormatException e) {
+                System.out.println("⚠️ Invalid ID format, leaving unassigned.");
+                assigneeId = null;
+            }
+        }
+
+        // Step 4: Create updated DBTodo:
+        DBTodo updatedTodo = new DBTodo(todo.getId(), title, description, deadline, done, assigneeId);
+
+        // Step 5: Save update in DAO:
+        try {
+            DBTodo result = toDoItemsDAO.update(updatedTodo);
+            if (result != null) {
+                System.out.println("✅ ToDo-item updated successfully: ");
+                System.out.println(result);
+            } else {
+                System.out.println("⚠️ Update failed.");
+            }
+        } catch (SQLException e) {
+            ExceptionHandler.handle(e);
+        }
+    }
+
     private void deleteToDo() {}
 
     private LocalDate readDeadline() {
