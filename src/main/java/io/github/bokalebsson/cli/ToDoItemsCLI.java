@@ -6,6 +6,7 @@ import io.github.bokalebsson.util.ExceptionHandler;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.Collection;
 import java.util.Scanner;
 
@@ -265,8 +266,7 @@ public class ToDoItemsCLI {
         String description = scanner.nextLine().trim();
 
         // Deadline (optional):
-        System.out.println("Current deadline: " + todo.getDeadline());
-        LocalDate deadline = readDeadline();
+        LocalDate deadline = readDeadline(todo.getDeadline());
 
         // Done status
         System.out.print("Is this ToDo-item done? (y/n, current: " + (todo.isDone() ? "yes" : "no") + "): ");
@@ -350,10 +350,19 @@ public class ToDoItemsCLI {
     }
 
     private LocalDate readDeadline() {
-        LocalDate deadline = null;
+        return readDeadline(null);
+    }
+
+    private LocalDate readDeadline(LocalDate currentDeadline) {
+        LocalDate deadline = currentDeadline;
 
         while (true) {
-            System.out.print("Enter deadline (yyyy-MM-dd) or press Enter to skip: ");
+            if (currentDeadline == null) {
+                System.out.print("Enter deadline (yyyy-MM-dd) or press Enter to skip: ");
+            } else {
+                System.out.print("Current deadline: " + currentDeadline + "\nEnter new deadline (yyyy-MM-dd) or press Enter to keep current: ");
+            }
+
             String input = scanner.nextLine().trim();
 
             if (input.isEmpty()) {
@@ -361,9 +370,17 @@ public class ToDoItemsCLI {
             }
 
             try {
-                deadline = LocalDate.parse(input);
+                LocalDate parsedDate = LocalDate.parse(input);
+
+                if (parsedDate.isBefore(LocalDate.now())) {
+                    System.out.println("⚠️ Deadline cannot be in the past. Today is " + LocalDate.now() + ". Please enter a future date.");
+                    continue;
+                }
+
+                deadline = parsedDate;
                 break;
-            } catch (Exception e) {
+
+            } catch (DateTimeParseException e) {
                 System.out.println("⚠️ Invalid date format. Please use yyyy-MM-dd.");
             }
         }
