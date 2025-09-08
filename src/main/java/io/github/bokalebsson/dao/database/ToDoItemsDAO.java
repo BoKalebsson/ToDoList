@@ -168,7 +168,32 @@ public class ToDoItemsDAO implements ToDoItems {
 
     @Override
     public Collection<DBTodo> findByAssignee(DBPerson dbPerson) throws SQLException {
-        return List.of();
+        List<DBTodo> todos = new ArrayList<>();
+
+        String sql = "SELECT * FROM todo_item WHERE assignee_id = ?";
+
+        try (Connection connection = databaseConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)){
+
+            preparedStatement.setInt(1, dbPerson.getId());
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()){
+                while (resultSet.next()){
+                    Date deadlineDate = resultSet.getDate("deadline");
+                    LocalDate deadline = (deadlineDate != null) ? deadlineDate.toLocalDate() : null;
+
+                    todos.add(new DBTodo(
+                            resultSet.getInt("todo_id"),
+                            resultSet.getString("title"),
+                            resultSet.getString("description"),
+                            deadline,
+                            resultSet.getBoolean("done"),
+                            resultSet.getInt("assignee_id")
+                    ));
+                }
+            }
+        }
+        return todos;
     }
 
     @Override
