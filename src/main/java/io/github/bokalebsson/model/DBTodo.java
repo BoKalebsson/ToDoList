@@ -82,14 +82,14 @@ public class DBTodo {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("-- ToDo Information --").append("\n");
+        sb.append("\n-- ToDo Information --").append("\n");
         sb.append("Id: ").append(getId()).append("\n");
         sb.append("Title: ").append(getTitle()).append("\n");
         sb.append("Description: ").append(getDescription()).append("\n");
         sb.append("Deadline: ").append(getDeadline()).append("\n");
         sb.append("Done: ").append(isDone()).append("\n");
         sb.append("Assigned to: ").append(getAssigneeId()).append("\n");
-        sb.append("---------------------------").append("\n");
+        sb.append("---------------------------");
         return sb.toString();
     }
 
