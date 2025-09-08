@@ -45,14 +45,14 @@ public class ToDoItemsCLI {
 
     private void printMenu() {
         System.out.println("\nToDo Menu:");
-        System.out.println("1. Create ToDo item");
-        System.out.println("2. List all ToDo items");
-        System.out.println("3. Find ToDo by ID");
-        System.out.println("4. Find ToDos by done status");
-        System.out.println("5. Find ToDos by assignee ID");
-        System.out.println("6. Find unassigned ToDos");
-        System.out.println("7. Update ToDo");
-        System.out.println("8. Delete ToDo");
+        System.out.println("1. Create ToDo-item");
+        System.out.println("2. List all ToDo-items");
+        System.out.println("3. Find ToDo-item by ID");
+        System.out.println("4. Find ToDo-items by done status");
+        System.out.println("5. Find ToDo-items by assignee ID");
+        System.out.println("6. Find unassigned ToDo-items");
+        System.out.println("7. Update ToDo-item");
+        System.out.println("8. Delete ToDo-item");
         System.out.println("0. Back to main menu");
     }
 
@@ -98,7 +98,7 @@ public class ToDoItemsCLI {
         // Save to database:
         try {
             DBTodo created = toDoItemsDAO.create(todo);
-            System.out.println("✅ ToDo created: ID " + created.getId() + " | " + created.getTitle());
+            System.out.println("✅ ToDo-item created: ID " + created.getId() + " | " + created.getTitle());
         } catch (SQLException e) {
             ExceptionHandler.handle(e);
         }
@@ -109,11 +109,11 @@ public class ToDoItemsCLI {
             Collection<DBTodo> todos = toDoItemsDAO.findAll();
 
             if (todos.isEmpty()) {
-                System.out.println("⚠️ No ToDo items found in the database.");
+                System.out.println("⚠️ No ToDo-items found in the database.");
                 return;
             }
 
-            System.out.println("\n=== ToDo-Items in Database ===");
+            System.out.println("\n=== ToDo-items in Database ===");
             for (DBTodo todo : todos) {
                 System.out.println(todo);
             }
@@ -124,7 +124,7 @@ public class ToDoItemsCLI {
     }
 
     private void findById() {
-        System.out.print("Enter ToDo ID: ");
+        System.out.print("Enter ToDo-item ID: ");
         String input = scanner.nextLine().trim();
 
         int id;
@@ -139,7 +139,7 @@ public class ToDoItemsCLI {
             DBTodo todo = toDoItemsDAO.findById(id);
 
             if (todo == null) {
-                System.out.println("⚠️ No ToDo found with ID " + id);
+                System.out.println("⚠️ No ToDo-item found with ID " + id);
             } else {
                 System.out.println(todo);
             }
@@ -152,7 +152,7 @@ public class ToDoItemsCLI {
         Boolean isDone = null;
 
         while (isDone == null) {
-            System.out.print("Show completed ToDos? (y = yes, n = show only not completed): ");
+            System.out.print("Show completed ToDo-items? (y = yes, n = show only not completed): ");
             String input = scanner.nextLine().trim().toLowerCase();
 
             if (input.equals("y")) {
@@ -168,9 +168,9 @@ public class ToDoItemsCLI {
             Collection<DBTodo> todos = toDoItemsDAO.findByDoneStatus(isDone);
 
             if (todos.isEmpty()) {
-                System.out.println("⚠️ No ToDos found for your selection. (Completed: " + (isDone ? "Yes" : "No") + ")");
+                System.out.println("⚠️ No ToDo-items found for your selection. (Completed: " + (isDone ? "Yes" : "No") + ")");
             } else {
-                System.out.println("\n=== ToDos ===");
+                System.out.println("\n=== ToDo-items ===");
                 for (DBTodo todo : todos) {
                     System.out.println(todo);
                 }
@@ -196,9 +196,9 @@ public class ToDoItemsCLI {
             Collection<DBTodo> todos = toDoItemsDAO.findByAssignee(assigneeId);
 
             if (todos.isEmpty()) {
-                System.out.println("⚠️ No ToDo-Items found for person with ID: " + assigneeId);
+                System.out.println("⚠️ No ToDo-items found for person with ID: " + assigneeId);
             } else {
-                System.out.println("\n=== ToDo-Items assigned to person with ID: " + assigneeId + " ===");
+                System.out.println("\n=== ToDo-items assigned to person with ID: " + assigneeId + " ===");
                 for (DBTodo todo : todos) {
                     System.out.println(todo);
                 }
@@ -208,7 +208,22 @@ public class ToDoItemsCLI {
         }
     }
 
-    private void findByUnassignedToDoItems() {}
+    private void findByUnassignedToDoItems() {
+        try {
+            Collection<DBTodo> todos = toDoItemsDAO.findByUnassignedToDoItems();
+
+            if (todos.isEmpty()) {
+                System.out.println("⚠️ No unassigned ToDo-items found.");
+            } else {
+                System.out.println("\n=== Unassigned ToDo-items ===");
+                for (DBTodo todo : todos) {
+                    System.out.println(todo);
+                }
+            }
+        } catch (SQLException e) {
+            ExceptionHandler.handle(e);
+        }
+    }
     private void updateToDo() {}
     private void deleteToDo() {}
 
