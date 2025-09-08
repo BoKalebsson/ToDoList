@@ -251,7 +251,13 @@ public class ToDoItemsDAO implements ToDoItems {
             preparedStatement.setString(2, dbTodo.getDescription());
             preparedStatement.setDate(3, Date.valueOf(dbTodo.getDeadline()));
             preparedStatement.setBoolean(4, dbTodo.isDone());
-            preparedStatement.setInt(5, dbTodo.getAssigneeId());
+
+            if (dbTodo.getAssigneeId() != null) {
+                preparedStatement.setInt(5, dbTodo.getAssigneeId());
+            } else {
+                preparedStatement.setNull(5, java.sql.Types.INTEGER);
+            }
+
             preparedStatement.setInt(6, dbTodo.getId());
 
             int affectedRows = preparedStatement.executeUpdate();
