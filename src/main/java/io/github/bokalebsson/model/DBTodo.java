@@ -14,7 +14,7 @@ public class DBTodo {
     private Integer assigneeId;
 
     // Constructor for loading DBTodos from the database (with ID):
-    public DBTodo(int id, String title, String description, LocalDate deadline, boolean isDone, int assigneeId) {
+    public DBTodo(int id, String title, String description, LocalDate deadline, boolean isDone, Integer assigneeId) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -24,7 +24,7 @@ public class DBTodo {
     }
 
     // Constructor for creating new DBTodos (without ID):
-    public DBTodo(String title, String description, LocalDate deadline, boolean isDone, int assigneeId) {
+    public DBTodo(String title, String description, LocalDate deadline, boolean isDone, Integer assigneeId) {
         this.title = title;
         this.description = description;
         this.deadline = deadline;
