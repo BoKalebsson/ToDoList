@@ -1,10 +1,15 @@
 package io.github.bokalebsson.cli;
 
+import io.github.bokalebsson.dao.impl.PeopleDAO;
+import io.github.bokalebsson.dao.impl.ToDoItemsDAO;
+
 import java.util.Scanner;
 
 public class CLI {
 
     private final Scanner scanner = new Scanner(System.in);
+    private final PeopleCLI peopleCLI = new PeopleCLI(new PeopleDAO(), scanner);
+    private final ToDoItemsCLI toDoItemsCLI = new ToDoItemsCLI(new ToDoItemsDAO(), scanner);
     private boolean running = true;
 
     public void start() {
@@ -33,11 +38,11 @@ public class CLI {
     }
 
     private void handlePersonMenu() {
-        System.out.println("Soon.");
+        peopleCLI.start();
     }
 
     private void handleToDoMenu() {
-        System.out.println("Soon.");
+        toDoItemsCLI.start();
     }
 
     private void exitApplication() {
