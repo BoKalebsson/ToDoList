@@ -5,6 +5,7 @@ import io.github.bokalebsson.model.DBPerson;
 import io.github.bokalebsson.util.ExceptionHandler;
 
 import java.sql.SQLException;
+import java.util.Collection;
 import java.util.Scanner;
 
 public class PeopleCLI {
@@ -79,7 +80,24 @@ public class PeopleCLI {
             ExceptionHandler.handle(e);
         }
     }
-    private void listAllPeople() {}
+    private void listAllPeople() {
+        try {
+            Collection<DBPerson> people = peopleDAO.findAll();
+
+            if (people.isEmpty()) {
+                System.out.println("⚠️ No people found in the database.");
+                return;
+            }
+
+            System.out.println("\n=== People in Database ===");
+            for (DBPerson person : people) {
+                System.out.println("ID: " + person.getId() + " | Name: " + person.getFirstName() + " " + person.getLastName());
+            }
+
+        } catch (SQLException e) {
+            ExceptionHandler.handle(e);
+        }
+    }
     private void findById() {}
     private void findByName() {}
     private void updatePerson() {}
