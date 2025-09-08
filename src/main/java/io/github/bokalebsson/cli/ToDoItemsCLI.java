@@ -180,7 +180,34 @@ public class ToDoItemsCLI {
         }
     }
 
-    private void findByAssignee() {}
+    private void findByAssignee() {
+        System.out.print("Enter assignee ID: ");
+        String input = scanner.nextLine().trim();
+
+        int assigneeId;
+        try {
+            assigneeId = Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            System.out.println("⚠️ Invalid ID format.");
+            return;
+        }
+
+        try {
+            Collection<DBTodo> todos = toDoItemsDAO.findByAssignee(assigneeId);
+
+            if (todos.isEmpty()) {
+                System.out.println("⚠️ No ToDo-Items found for person with ID: " + assigneeId);
+            } else {
+                System.out.println("\n=== ToDo-Items assigned to person with ID: " + assigneeId + " ===");
+                for (DBTodo todo : todos) {
+                    System.out.println(todo);
+                }
+            }
+        } catch (SQLException e) {
+            ExceptionHandler.handle(e);
+        }
+    }
+
     private void findByUnassignedToDoItems() {}
     private void updateToDo() {}
     private void deleteToDo() {}
