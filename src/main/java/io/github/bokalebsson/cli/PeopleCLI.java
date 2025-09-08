@@ -124,7 +124,79 @@ public class PeopleCLI {
         }
     }
 
-    private void findByName() {}
-    private void updatePerson() {}
+    private void findByName() {
+        System.out.print("Enter first or last name to search: ");
+        String name = scanner.nextLine().trim();
+
+        if (name.isEmpty()) {
+            System.out.println("⚠️ Name cannot be empty.");
+            return;
+        }
+
+        try {
+            Collection<DBPerson> persons = peopleDAO.findByName(name);
+            if (persons.isEmpty()) {
+                System.out.println("⚠️ No person found with name: " + name);
+            } else {
+                System.out.println("Found persons:");
+                for (DBPerson person : persons) {
+                    System.out.println("ID: " + person.getId() + " | Name: " + person.getFirstName() + " " + person.getLastName());
+                }
+            }
+        } catch (SQLException e) {
+            ExceptionHandler.handle(e);
+        }
+    }
+
+    private void updatePerson() {
+        System.out.print("Enter ID of person to update: ");
+        String input = scanner.nextLine().trim();
+
+        int id;
+        try {
+            id = Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            System.out.println("⚠️ Invalid ID format.");
+            return;
+        }
+
+        DBPerson person;
+        try {
+            person = peopleDAO.findById(id);
+            if (person == null) {
+                System.out.println("⚠️ No person found with ID: " + id);
+                return;
+            }
+        } catch (SQLException e) {
+            ExceptionHandler.handle(e);
+            return;
+        }
+
+        System.out.print("Enter new first name (current: " + person.getFirstName() + "): ");
+        String firstName = scanner.nextLine().trim();
+        if (firstName.isEmpty()) {
+            System.out.println("⚠️ First name cannot be empty.");
+            return;
+        }
+
+        System.out.print("Enter new last name (current: " + person.getLastName() + "): ");
+        String lastName = scanner.nextLine().trim();
+        if (lastName.isEmpty()) {
+            System.out.println("⚠️ Last name cannot be empty.");
+            return;
+        }
+
+        try {
+            DBPerson updated = peopleDAO.update(person);
+            if (updated != null) {
+                System.out.println("✅ Person updated: ID " + updated.getId() + " | " + updated.getFirstName() + " " + updated.getLastName());
+            } else {
+                System.out.println("⚠️ Update failed.");
+            }
+        } catch (SQLException e) {
+            ExceptionHandler.handle(e);
+        }
+    }
+
     private void deletePerson() {}
 }
