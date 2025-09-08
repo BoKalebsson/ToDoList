@@ -2,7 +2,7 @@ package io.github.bokalebsson.cli;
 
 import java.util.Scanner;
 
-public class CLIController {
+public class CLI {
 
     private final Scanner scanner = new Scanner(System.in);
     private boolean running = true;
@@ -41,7 +41,7 @@ public class CLIController {
     }
 
     private void exitApplication() {
-        System.out.println("👋 Exiting Application...");
+        System.out.println("\n👋 Exiting Application...");
         running = false;
     }
 
