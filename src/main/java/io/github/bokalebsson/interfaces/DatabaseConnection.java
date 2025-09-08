@@ -1,4 +1,4 @@
-package io.github.bokalebsson.dao.connections;
+package io.github.bokalebsson.interfaces;
 
 import java.sql.Connection;
 import java.sql.SQLException;

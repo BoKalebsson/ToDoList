@@ -1,5 +1,7 @@
 package io.github.bokalebsson.dao.connections;
 
+import io.github.bokalebsson.interfaces.DatabaseConnection;
+
 import java.sql.*;
 
 public class MySQLDatabaseConnection implements DatabaseConnection {

@@ -1,4 +1,7 @@
-package io.github.bokalebsson.dao.database;
+package io.github.bokalebsson.interfaces;
+
+import io.github.bokalebsson.model.DBPerson;
+import io.github.bokalebsson.model.DBTodo;
 
 import java.sql.SQLException;
 import java.util.Collection;

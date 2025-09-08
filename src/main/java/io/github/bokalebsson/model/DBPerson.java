@@ -1,4 +1,4 @@
-package io.github.bokalebsson.dao.database;
+package io.github.bokalebsson.model;
 
 import java.util.Objects;
 

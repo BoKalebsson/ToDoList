@@ -1,7 +1,10 @@
-package io.github.bokalebsson.dao.database;
+package io.github.bokalebsson.dao.impl;
 
-import io.github.bokalebsson.dao.connections.DatabaseConnection;
+import io.github.bokalebsson.interfaces.DatabaseConnection;
 import io.github.bokalebsson.dao.connections.MySQLDatabaseConnection;
+import io.github.bokalebsson.interfaces.ToDoItems;
+import io.github.bokalebsson.model.DBPerson;
+import io.github.bokalebsson.model.DBTodo;
 
 import java.sql.*;
 import java.time.LocalDate;

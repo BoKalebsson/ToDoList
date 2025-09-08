@@ -1,12 +1,13 @@
-package io.github.bokalebsson.dao.database;
+package io.github.bokalebsson.dao.impl;
 
-import io.github.bokalebsson.dao.connections.DatabaseConnection;
+import io.github.bokalebsson.interfaces.DatabaseConnection;
 import io.github.bokalebsson.dao.connections.MySQLDatabaseConnection;
+import io.github.bokalebsson.interfaces.People;
+import io.github.bokalebsson.model.DBPerson;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 public class PeopleDAO implements People {
