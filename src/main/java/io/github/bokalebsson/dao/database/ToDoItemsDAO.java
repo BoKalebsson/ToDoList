@@ -78,6 +78,32 @@ public class ToDoItemsDAO implements ToDoItems {
 
     @Override
     public DBTodo findById(int id) throws SQLException {
+
+        String sql = "SELECT * FROM todo_item WHERE todo_id = ?";
+
+        try (Connection connection = databaseConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)
+        ) {
+
+            preparedStatement.setInt(1, id);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    Date deadlineDate = resultSet.getDate("deadline");
+                    LocalDate deadline = (deadlineDate != null) ? deadlineDate.toLocalDate() : null;
+
+
+                    return new DBTodo(
+                            resultSet.getInt("todo_id"),
+                            resultSet.getString("title"),
+                            resultSet.getString("description"),
+                            deadline,
+                            resultSet.getBoolean("done"),
+                            resultSet.getInt("assignee_id")
+                    );
+                }
+            }
+        }
         return null;
     }
 
