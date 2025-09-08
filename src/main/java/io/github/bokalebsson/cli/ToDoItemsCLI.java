@@ -303,7 +303,51 @@ public class ToDoItemsCLI {
         }
     }
 
-    private void deleteToDo() {}
+    private void deleteToDo() {
+        System.out.print("Enter ID of ToDo-item to delete: ");
+        String input = scanner.nextLine().trim();
+
+        int id;
+        try {
+            id = Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            System.out.println("⚠️ Invalid ID format.");
+            return;
+        }
+
+        DBTodo todo;
+        try {
+            todo = toDoItemsDAO.findById(id);
+            if (todo == null) {
+                System.out.println("⚠️ No ToDo-item found with the ID: " + id);
+                return;
+            }
+        } catch (SQLException e) {
+            ExceptionHandler.handle(e);
+            return;
+        }
+
+        System.out.println("\nYou are about to delete the following ToDo-item:");
+        System.out.println(todo);
+
+        System.out.print("Are you sure you want to delete this ToDo-item? (y/n): ");
+        String confirm = scanner.nextLine().trim().toLowerCase();
+        if (!confirm.equals("y")) {
+            System.out.println("❌ Deletion cancelled.");
+            return;
+        }
+
+        try {
+            boolean success = toDoItemsDAO.deleteById(id);
+            if (success) {
+                System.out.println("✅ ToDo-item deleted successfully.");
+            } else {
+                System.out.println("⚠️ Deletion failed. Item may no longer exist.");
+            }
+        } catch (SQLException e) {
+            ExceptionHandler.handle(e);
+        }
+    }
 
     private LocalDate readDeadline() {
         LocalDate deadline = null;
