@@ -1,49 +1,54 @@
 package io.github.bokalebsson;
 
-import io.github.bokalebsson.dao.database.DBPerson;
-import io.github.bokalebsson.dao.database.People;
-import io.github.bokalebsson.dao.database.PeopleDAO;
+import io.github.bokalebsson.dao.database.DBTodo;
+import io.github.bokalebsson.dao.database.ToDoItems;
+import io.github.bokalebsson.dao.database.ToDoItemsDAO;
 
-import java.sql.*;
+import java.time.LocalDate;
 import java.util.Collection;
 
 public class Main {
     public static void main(String[] args) {
 
-        // Create a PeopleDAO instance:
-        People peopleDao = new PeopleDAO();
+        // Create a ToDoItemsDAO instance:
+        ToDoItems todoDao = new ToDoItemsDAO();
 
-        // Create a new DBPerson
-        DBPerson newPerson = new DBPerson("Märta", "Johansson");
-        DBPerson createdPerson = peopleDao.create(newPerson);
+        // Create a new DBTodo:
+        DBTodo newTodo = new DBTodo(
+                "Handla mat",
+                "Mjölk, bröd, ost",
+                LocalDate.of(2025, 9, 10),
+                false,
+                1
+        );
 
-        if (createdPerson != null) {
-            System.out.println("✅ Person created successfully: \n" + createdPerson);
-        } else {
-            System.out.println("⚠️ Person could not be created.");
-        }
+        // Testing create()-method:
+        try {
+            DBTodo createdTodo = todoDao.create(newTodo);
 
-        // Call findAll() to fetch all persons from the database:
-        Collection<DBPerson> persons = peopleDao.findAll();
-
-        // Print the results:
-        if (persons.isEmpty()) {
-            System.out.println("⚠️ No persons found in the database.");
-        } else {
-            System.out.println("✅ Found " + persons.size() + " persons:");
-            for (DBPerson p : persons) {
-                System.out.println(p);
+            if (createdTodo != null) {
+                System.out.println("✅ ToDo created successfully:\n" + createdTodo);
+            } else {
+                System.out.println("⚠️ ToDo could not be created.");
             }
+
+            // Testing findAll()-method:
+            Collection<DBTodo> todos = todoDao.findAll();
+
+            if (todos.isEmpty()) {
+                System.out.println("⚠️ No ToDos found in the database.");
+            } else {
+                System.out.println("✅ Found " + todos.size() + " ToDos:");
+                for (DBTodo t : todos) {
+                    System.out.println(t);
+                }
+            }
+
+        } catch (Exception e) {
+            System.err.println("❌ Something went wrong:");
+            e.printStackTrace();
         }
 
-        // Fetch a person with findById:
-        DBPerson foundPerson = peopleDao.findById(2);
-
-        if (foundPerson != null) {
-            System.out.println("✅ Person found: \n" + foundPerson);
-        } else {
-            System.out.println("⚠️ No person found.\n");
-        }
 
     }
 
