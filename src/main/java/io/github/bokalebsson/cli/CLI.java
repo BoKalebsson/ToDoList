@@ -13,40 +13,64 @@ public class CLI {
     private boolean running = true;
 
     public void start() {
-        System.out.println("=== ToDo Application CLI ===");
+        printWelcomeBanner();
 
         while (running) {
             printMainMenu();
 
-            System.out.print("Choose an option: ");
-            String input = scanner.nextLine();
+            System.out.print("🔹 Choose an option: ");
+            String input = scanner.nextLine().trim();
 
             switch (input) {
                 case "1" -> handlePersonMenu();
                 case "2" -> handleToDoMenu();
                 case "3" -> exitApplication();
-                default -> System.out.println("⚠️ Invalid option. Please try again.");
+                default -> System.out.println("⚠️ Invalid input. Please try again.");
             }
         }
     }
 
+    private void printWelcomeBanner() {
+        System.out.println("\n====================================");
+        System.out.println("     📝 Welcome to ToDo-Manager!");
+        System.out.println("   Manage your tasks and people.");
+        System.out.println("====================================");
+    }
+
     private void printMainMenu() {
-        System.out.println("\nMain Menu:");
-        System.out.println("1. Handle persons");
-        System.out.println("2. Handle ToDo-items");
-        System.out.println("3. Exit");
+        System.out.println("\n====================================");
+        System.out.println("             MAIN MENU");
+        System.out.println("====================================");
+        System.out.println("1. 🗂️ Manage People");
+        System.out.println("2. 📌 Manage ToDo-items");
+        System.out.println("3. 🔒 Exit Application");
+        System.out.println("====================================");
     }
 
     private void handlePersonMenu() {
-        peopleCLI.start();
+        try {
+            peopleCLI.start();
+        } catch (Exception e) {
+            System.out.println("⚠️ An error occurred with the Person-menu: " + e.getMessage());
+        }
     }
 
     private void handleToDoMenu() {
-        toDoItemsCLI.start();
+        try {
+            toDoItemsCLI.start();
+        } catch (Exception e) {
+            System.out.println("⚠️ An error occurred with the ToDo-menu: " + e.getMessage());
+        }
     }
 
     private void exitApplication() {
-        System.out.println("\n👋 Exiting Application...");
+        System.out.println("\n====================================");
+        System.out.println(" 👋 Thank you for using ToDo-Manager!");
+        System.out.println(" 🗂️ All changes have been saved.");
+        System.out.println(" 🔒 Application closed safely.");
+        System.out.println("====================================");
+        System.out.println("     Have a productive day! ✨");
+        System.out.println("====================================");
         running = false;
     }
 
