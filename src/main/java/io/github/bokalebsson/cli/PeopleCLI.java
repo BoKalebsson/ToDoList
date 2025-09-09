@@ -24,8 +24,8 @@ public class PeopleCLI {
         while (running) {
             printMenu();
 
-            System.out.print("Choose an option: ");
-            String input = scanner.nextLine();
+            System.out.print("🔹 Choose an option: ");
+            String input = scanner.nextLine().trim();
 
             switch (input) {
                 case "1" -> createPerson();
@@ -41,14 +41,17 @@ public class PeopleCLI {
     }
 
     private void printMenu() {
-        System.out.println("\nPerson Menu:");
-        System.out.println("1. Create person");
-        System.out.println("2. List all people");
-        System.out.println("3. Find person by ID");
-        System.out.println("4. Find person by name");
-        System.out.println("5. Update person");
-        System.out.println("6. Delete person");
-        System.out.println("0. Back to main menu");
+        System.out.println("\n====================================");
+        System.out.println("             PERSON MENU");
+        System.out.println("====================================");
+        System.out.println("1. ➕ Create person");
+        System.out.println("2. 📋 List all people");
+        System.out.println("3. 🔎 Find person by ID");
+        System.out.println("4. 🔍 Find person by name");
+        System.out.println("5. ✏️ Update person");
+        System.out.println("6. 🗑️ Delete person");
+        System.out.println("0. 🔙 Back to main menu");
+        System.out.println("====================================");
     }
 
     private void createPerson() {
@@ -90,9 +93,9 @@ public class PeopleCLI {
                 return;
             }
 
-            System.out.println("\n=== People in Database ===");
+            System.out.println("\n📋 === People in Database ===");
             for (DBPerson person : people) {
-                System.out.println("ID: " + person.getId() + " | Name: " + person.getFirstName() + " " + person.getLastName());
+                System.out.println("🆔 ID: " + person.getId() + " | 👤 Name: " + person.getFirstName() + " " + person.getLastName());
             }
 
         } catch (SQLException e) {
@@ -101,8 +104,8 @@ public class PeopleCLI {
     }
 
     private void findById() {
-        System.out.print("Enter person ID: ");
-        String input = scanner.nextLine();
+        System.out.print("🆔 Enter person ID: ");
+        String input = scanner.nextLine().trim();
 
         int id;
         try {
@@ -117,7 +120,7 @@ public class PeopleCLI {
             if (person == null) {
                 System.out.println("⚠️ No person found with ID " + id);
             } else {
-                System.out.println("ID: " + person.getId() + " | Name: " + person.getFirstName() + " " + person.getLastName());
+                System.out.println("🆔 ID: " + person.getId() + " | 👤 Name: " + person.getFirstName() + " " + person.getLastName());
             }
         } catch (SQLException e) {
             ExceptionHandler.handle(e);
@@ -138,9 +141,9 @@ public class PeopleCLI {
             if (persons.isEmpty()) {
                 System.out.println("⚠️ No person found with name: " + name);
             } else {
-                System.out.println("Found persons:");
+                System.out.println("\n📋 === Found Persons ===");
                 for (DBPerson person : persons) {
-                    System.out.println("ID: " + person.getId() + " | Name: " + person.getFirstName() + " " + person.getLastName());
+                    System.out.println("🆔 ID: " + person.getId() + " | 👤 Name: " + person.getFirstName() + " " + person.getLastName());
                 }
             }
         } catch (SQLException e) {
@@ -149,7 +152,7 @@ public class PeopleCLI {
     }
 
     private void updatePerson() {
-        System.out.print("Enter ID of person to update: ");
+        System.out.print("🆔 Enter ID of person to update: ");
         String input = scanner.nextLine().trim();
 
         int id;
@@ -191,7 +194,7 @@ public class PeopleCLI {
             person.setLastName(lastName);
             DBPerson updated = peopleDAO.update(person);
             if (updated != null) {
-                System.out.println("✅ Person updated: ID " + updated.getId() + " | " + updated.getFirstName() + " " + updated.getLastName());
+                System.out.println("✏️ Person updated: 🆔 ID " + updated.getId() + " | 👤 Name: " + updated.getFirstName() + " " + updated.getLastName());
             } else {
                 System.out.println("⚠️ Update failed.");
             }
@@ -219,7 +222,7 @@ public class PeopleCLI {
                 return;
             }
 
-            System.out.println("\nYou are about to delete: ID: " + person.getId() + " | " + person.getFirstName() + " " + person.getLastName());
+            System.out.println("\nYou are about to delete: 🆔 ID: " + person.getId() + " | 👤 Name: " + person.getFirstName() + " " + person.getLastName());
 
         } catch (SQLException e) {
             ExceptionHandler.handle(e);
@@ -236,7 +239,7 @@ public class PeopleCLI {
         try {
             boolean success = peopleDAO.deleteById(id);
             if (success) {
-                System.out.println("\n✅ Person deleted successfully.");
+                System.out.println("\n🗑️ Person deleted successfully.");
             } else {
                 System.out.println("\n⚠️ No person found with ID: " + id);
             }
