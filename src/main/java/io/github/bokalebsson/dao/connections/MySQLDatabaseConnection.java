@@ -12,6 +12,9 @@ public class MySQLDatabaseConnection implements DatabaseConnection {
 
     @Override
     public Connection getConnection() throws SQLException {
+        if (URL == null || USER == null || PASSWORD == null) {
+            throw new IllegalStateException("⚠️ Database credentials not set in environment variables!");
+        }
         return DriverManager.getConnection(URL, USER, PASSWORD);
     }
 
