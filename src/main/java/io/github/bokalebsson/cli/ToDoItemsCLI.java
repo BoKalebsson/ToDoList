@@ -398,12 +398,14 @@ public class ToDoItemsCLI {
 
     private void printToDo(DBTodo todo) {
         String assignee = (todo.getAssigneeId() != null) ? todo.getAssigneeId().toString() : "none";
-        System.out.println("🆔 ID: " + todo.getId()
-                + " | 📝 Title: " + todo.getTitle()
-                + " | 📄 Description: " + todo.getDescription()
-                + " | 📅 Deadline: " + (todo.getDeadline() != null ? todo.getDeadline() : "none")
-                + " | ✅ Done: " + (todo.isDone() ? "yes" : "no")
-                + " | 👤 Assignee ID: " + assignee);
+        System.out.println("📝 ToDo Item:");
+        System.out.println("  🆔 ID: " + todo.getId());
+        System.out.println("  📝 Title: " + todo.getTitle());
+        System.out.println("  📄 Description: " + (todo.getDescription() != null ? todo.getDescription() : "none"));
+        System.out.println("  📅 Deadline: " + (todo.getDeadline() != null ? todo.getDeadline() : "none"));
+        System.out.println("  ✅ Done: " + (todo.isDone() ? "yes" : "no"));
+        System.out.println("  👤 Assignee ID: " + assignee);
+        System.out.println("====================================");
     }
 
 }
