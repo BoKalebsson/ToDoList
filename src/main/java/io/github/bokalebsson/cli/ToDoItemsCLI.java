@@ -117,7 +117,7 @@ public class ToDoItemsCLI {
                 return;
             }
 
-            System.out.println("\n=== ToDo-items in Database ===");
+            System.out.println("\n📋 === ToDo-items in Database ===");
             for (DBTodo todo : todos) {
                 printToDo(todo);
             }
