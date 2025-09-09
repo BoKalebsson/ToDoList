@@ -26,8 +26,8 @@ public class ToDoItemsCLI {
         while (running) {
             printMenu();
 
-            System.out.print("Choose an option: ");
-            String input = scanner.nextLine();
+            System.out.print("🔹 Choose an option: ");
+            String input = scanner.nextLine().trim();
 
             switch (input) {
                 case "1" -> createToDo();
@@ -45,16 +45,19 @@ public class ToDoItemsCLI {
     }
 
     private void printMenu() {
-        System.out.println("\nToDo Menu:");
-        System.out.println("1. Create ToDo-item");
-        System.out.println("2. List all ToDo-items");
-        System.out.println("3. Find ToDo-item by ID");
-        System.out.println("4. Find ToDo-items by done status");
-        System.out.println("5. Find ToDo-items by assignee ID");
-        System.out.println("6. Find unassigned ToDo-items");
-        System.out.println("7. Update ToDo-item");
-        System.out.println("8. Delete ToDo-item");
-        System.out.println("0. Back to main menu");
+        System.out.println("\n====================================");
+        System.out.println("             TODO MENU");
+        System.out.println("====================================");
+        System.out.println("1. ➕ Create ToDo-item");
+        System.out.println("2. 📋 List all ToDo-items");
+        System.out.println("3. 🔎 Find ToDo-item by ID");
+        System.out.println("4. ✅ Find ToDo-items by done status");
+        System.out.println("5. 👤 Find ToDo-items by assignee ID");
+        System.out.println("6. 🕵️ Find unassigned ToDo-items");
+        System.out.println("7. ✏️ Update ToDo-item");
+        System.out.println("8. 🗑️ Delete ToDo-item");
+        System.out.println("0. 🔙 Back to main menu");
+        System.out.println("====================================");
     }
 
     private void createToDo() {
@@ -116,7 +119,7 @@ public class ToDoItemsCLI {
 
             System.out.println("\n=== ToDo-items in Database ===");
             for (DBTodo todo : todos) {
-                System.out.println(todo);
+                printToDo(todo);
             }
 
         } catch (SQLException e) {
@@ -142,7 +145,7 @@ public class ToDoItemsCLI {
             if (todo == null) {
                 System.out.println("⚠️ No ToDo-item found with ID " + id);
             } else {
-                System.out.println(todo);
+                printToDo(todo);
             }
         } catch (SQLException e) {
             ExceptionHandler.handle(e);
@@ -173,7 +176,7 @@ public class ToDoItemsCLI {
             } else {
                 System.out.println("\n=== ToDo-items ===");
                 for (DBTodo todo : todos) {
-                    System.out.println(todo);
+                    printToDo(todo);
                 }
             }
         } catch (SQLException e) {
@@ -201,7 +204,7 @@ public class ToDoItemsCLI {
             } else {
                 System.out.println("\n=== ToDo-items assigned to person with ID: " + assigneeId + " ===");
                 for (DBTodo todo : todos) {
-                    System.out.println(todo);
+                    printToDo(todo);
                 }
             }
         } catch (SQLException e) {
@@ -218,7 +221,7 @@ public class ToDoItemsCLI {
             } else {
                 System.out.println("\n=== Unassigned ToDo-items ===");
                 for (DBTodo todo : todos) {
-                    System.out.println(todo);
+                    printToDo(todo);
                 }
             }
         } catch (SQLException e) {
@@ -300,7 +303,7 @@ public class ToDoItemsCLI {
             DBTodo result = toDoItemsDAO.update(updatedTodo);
             if (result != null) {
                 System.out.println("✅ ToDo-item updated successfully: ");
-                System.out.println(result);
+                printToDo(result);
             } else {
                 System.out.println("⚠️ Update failed.");
             }
@@ -334,7 +337,7 @@ public class ToDoItemsCLI {
         }
 
         System.out.println("\nYou are about to delete the following ToDo-item:");
-        System.out.println(todo);
+        printToDo(todo);
 
         System.out.print("Are you sure you want to delete this ToDo-item? (y/n): ");
         String confirm = scanner.nextLine().trim().toLowerCase();
@@ -391,6 +394,16 @@ public class ToDoItemsCLI {
             }
         }
         return deadline;
+    }
+
+    private void printToDo(DBTodo todo) {
+        String assignee = (todo.getAssigneeId() != null) ? todo.getAssigneeId().toString() : "none";
+        System.out.println("🆔 ID: " + todo.getId()
+                + " | 📝 Title: " + todo.getTitle()
+                + " | 📄 Description: " + todo.getDescription()
+                + " | 📅 Deadline: " + (todo.getDeadline() != null ? todo.getDeadline() : "none")
+                + " | ✅ Done: " + (todo.isDone() ? "yes" : "no")
+                + " | 👤 Assignee ID: " + assignee);
     }
 
 }
